@@ -1,12 +1,25 @@
 import { Component } from '@angular/core';
-import { Radio } from './radio';
-import { Text } from './text';
-import { Number } from './number';
-import { Checkbox } from './checkbox';
+import { Radio } from './vanilla/radio';
+import { Text } from './vanilla/text';
+import { Number } from './vanilla/number';
+import { Checkbox } from './vanilla/checkbox';
+import { CheckboxMaterial } from './material/checkbox';
+import { NumberMaterial } from './material/number';
+import { TextMaterial } from './material/text';
+import { RadioMaterial } from './material/radio';
 
 @Component({
   selector: 'app-form-primitive-examples',
-  imports: [Radio, Text, Checkbox, Number],
+  imports: [
+    Radio,
+    Text,
+    Checkbox,
+    Number,
+    CheckboxMaterial,
+    NumberMaterial,
+    TextMaterial,
+    RadioMaterial,
+  ],
   template: `
     <div>
       <p>
@@ -20,6 +33,16 @@ import { Checkbox } from './checkbox';
       <app-text />
       <app-checkbox />
       <app-number />
+
+      <p>
+        <a href="https://material.angular.dev/components/categories" target="_blank"
+          >Material examples</a
+        >
+      </p>
+      <app-radio-material />
+      <app-text-material />
+      <app-checkbox-material />
+      <app-number-material />
     </div>
   `,
 })
