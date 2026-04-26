@@ -8,12 +8,16 @@ import { MatRadioModule } from '@angular/material/radio';
   imports: [FormField, MatRadioModule],
   template: `
     @let form = this.form();
-
-    <mat-radio-group aria-label="Select an option" [formField]="form.type">
-      <mat-radio-button value="A">A</mat-radio-button>
-      <mat-radio-button value="B">B</mat-radio-button>
-    </mat-radio-group>
-
+    <form style="display: inline-block;">
+      <label>
+        <input type="radio" value="A" [formField]="form.type" />
+        <span>A</span>
+      </label>
+      <label>
+        <input type="radio" value="B" [formField]="form.type" />
+        <span>B</span>
+      </label>
+    </form>
     <label>
       Subform A:
       <input type="text" [formField]="form.a.value" />
