@@ -3,10 +3,11 @@ import { Links } from './links';
 import { BillPay } from './forms/bill-pay';
 import { ConditionalReset } from './forms/conditional-reset-fields/conditional-reset';
 import { FormArrays } from './forms/form-arrays/form-arrays';
+import { FormPrimitiveExamples } from './forms/form-primitive-examples/form-primitive-examples';
 
 @Component({
   selector: 'app-root',
-  imports: [Links, BillPay, ConditionalReset, FormArrays],
+  imports: [Links, BillPay, ConditionalReset, FormArrays, FormPrimitiveExamples],
   template: `
     <h1>Signal Forms + NgRx + NgRx Toolkit</h1>
 
@@ -28,6 +29,9 @@ import { FormArrays } from './forms/form-arrays/form-arrays';
       NgRx itself? I (Michael Small) am not sure and cannot speak for the NgRx team. But I am
       experimenting.
     </p>
+
+    <h2>Form Primitive Examples</h2>
+    <app-form-primitive-examples />
 
     <h2>Form Arrays</h2>
 
