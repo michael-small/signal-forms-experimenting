@@ -33,21 +33,3 @@ export function withFormState<DomainModel, FormModel>(args: {
     })),
   );
 }
-
-type MethodDictionary = Record<string, (...args: any[]) => void>;
-
-export function withFormStateImperativeHandlers<DomainModel, FormModel>(methods: MethodDictionary) {
-  return signalStoreFeature(
-    withMethods((store) => ({
-      ...methods,
-    })),
-    withHooks({
-      onInit(store) {
-        const mtds = Object.entries(methods);
-        mtds.forEach(([name, fn]) => {
-          fn();
-        });
-      },
-    }),
-  );
-}

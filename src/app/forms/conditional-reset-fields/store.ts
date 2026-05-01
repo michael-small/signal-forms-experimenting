@@ -1,13 +1,4 @@
-import {
-  patchState,
-  signalMethod,
-  signalStore,
-  withComputed,
-  withFeature,
-  withLinkedState,
-  withMethods,
-  withProps,
-} from '@ngrx/signals';
+import { signalStore, withFeature, withMethods, withProps } from '@ngrx/signals';
 import { updateState, withDevtools, withResource } from '@angular-architects/ngrx-toolkit';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { EntityDataService } from './entity.service';
@@ -19,7 +10,7 @@ import {
   numbersDefault,
   textDefault,
 } from './form-model-domain-model.service';
-import { withFormState, withFormStateImperativeHandlers } from '../withFormState.store.feature';
+import { withFormState } from '../withFormState.store.feature';
 
 /**
  * @description Unlike reactive forms, there is no `patchValue`/`setValue` layer.
@@ -86,12 +77,4 @@ export const Store = signalStore(
       save,
     };
   }),
-  withFeature((store) =>
-    withFormStateImperativeHandlers({
-      setFieldType: signalMethod(() => {
-        patchState(store, { formValue: { ...store.formValue(), fieldType: 'number' } });
-        console.log('hit the fn');
-      }),
-    }),
-  ),
 );
