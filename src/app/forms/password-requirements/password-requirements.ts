@@ -39,6 +39,21 @@ function passwordSchema(
     message: 'Password must contain at least one uppercase letter',
   });
 
+  // TWO ASYNC APPROACHES
+  // 1) validateHttp - API endpoint directly inside
+  // 2) validateAsync - reference a resource
+  //
+  // The working code uses #2, but the following is what you would substiture to use #1
+  //
+  // ---Async validator approach #1 - validateHttp to call API directly---
+  // validateHttp(schema.password, {
+  // request: () => {
+  //   return 'https://swapi.info/api/films';
+  // },
+  // onSuccess: (values: SWAPIStarWarsMovies[], ctx) => {
+  // ..... rest of the same logic
+  //
+  // ---Async validator approach #2 - use an existing resource---
   validateAsync(schema.password, {
     params: () => null, // none needed, just fullfil signature
     factory: () => moviesResource,
