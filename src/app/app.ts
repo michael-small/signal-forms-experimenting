@@ -4,10 +4,18 @@ import { BillPay } from './forms/bill-pay';
 import { ConditionalReset } from './forms/conditional-reset-fields/conditional-reset';
 import { FormArrays } from './forms/form-arrays/form-arrays';
 import { FormPrimitiveExamples } from './forms/form-primitive-examples/form-primitive-examples';
+import { PasswordRequirements } from './forms/password-requirements/password-requirements';
 
 @Component({
   selector: 'app-root',
-  imports: [Links, BillPay, ConditionalReset, FormArrays, FormPrimitiveExamples],
+  imports: [
+    Links,
+    BillPay,
+    ConditionalReset,
+    FormArrays,
+    FormPrimitiveExamples,
+    PasswordRequirements,
+  ],
   template: `
     <h1>Signal Forms + NgRx + NgRx Toolkit</h1>
 
@@ -29,6 +37,9 @@ import { FormPrimitiveExamples } from './forms/form-primitive-examples/form-prim
       NgRx itself? I (Michael Small) am not sure and cannot speak for the NgRx team. But I am
       experimenting.
     </p>
+
+    <h2>Password Requirements - Validators Combination Exercise</h2>
+    <app-password-requirements />
 
     <h2>Form Primitive Examples</h2>
     <app-form-primitive-examples />
