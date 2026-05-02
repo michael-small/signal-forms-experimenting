@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   form,
   FormField,
@@ -8,12 +8,18 @@ import {
   pattern,
   required,
   SchemaPathTree,
+  validateAsync,
 } from '@angular/forms/signals';
+import { SWAPIStarWarsMovies, SWAPIStore } from './async-stuff';
+import { HttpResourceRef } from '@angular/common/http';
 
 // Brainstorming various validators, whether they are good or bad from a security perspective
 // Required, min length, max length, arbitrary list of banned common passwords
 
-function passwordSchema(schema: SchemaPathTree<{ password: string }>) {
+function passwordSchema(
+  schema: SchemaPathTree<{ password: string }>,
+  moviesResource: HttpResourceRef<SWAPIStarWarsMovies[]>,
+) {
   required(schema.password, {
     message: 'Password is required',
   });
@@ -31,6 +37,29 @@ function passwordSchema(schema: SchemaPathTree<{ password: string }>) {
   // TODO - if this gets to multiple patterns, make it into its own schema function
   pattern(schema.password, /[A-Z]/, {
     message: 'Password must contain at least one uppercase letter',
+  });
+
+  validateAsync(schema.password, {
+    params: () => null, // none needed, just fullfil signature
+    factory: () => moviesResource,
+    onSuccess: (values, ctx) => {
+      const releaseYears = values
+        .map((movie) => movie.release_date) // YYYY-MM-DD
+        .map((val) => val.split('-')[0]);
+
+      const passwordValue = ctx.stateOf(schema.password).value();
+
+      return releaseYears.find((year) => passwordValue.includes(year))
+        ? null
+        : {
+            kind: 'bad',
+            message: 'Password should include a release year (YYYY) of a Star Wars movie.',
+          };
+    },
+    onError: () => ({
+      kind: 'serverError',
+      message: 'Could not verify password',
+    }),
   });
 }
 
@@ -53,11 +82,13 @@ function passwordSchema(schema: SchemaPathTree<{ password: string }>) {
   `,
 })
 export class PasswordRequirements {
+  readonly #starWarsMoviesStore = inject(SWAPIStore);
+
   private model = signal({
     password: '',
   });
 
   protected form = form(this.model, (schema) => {
-    passwordSchema(schema);
+    passwordSchema(schema, this.#starWarsMoviesStore.movies);
   });
 }
