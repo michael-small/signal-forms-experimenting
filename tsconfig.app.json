@@ -11,8 +11,16 @@
   "angularCompilerOptions": {
     "extendedDiagnostics": {
       "checks": {
-        "nullishCoalescingNotNullable": "suppress",
-        "optionalChainNotNullable": "suppress"
+        "invalidBananaInBox": "error",
+        "nullishCoalescingNotNullable": "error",
+        "textAttributeNotBinding": "error",
+        "suffixNotSupported": "error",
+        "optionalChainNotNullable": "error",
+        "interpolatedSignalNotInvoked": "error",
+        "uninvokedFunctionInEventBinding": "error",
+        "unparenthesizedNullishCoalescing": "error",
+        "uninvokedTrackFunction": "error",
+        "uninvokedFunctionInTextInterpolation": "error"
       }
     }
   }
