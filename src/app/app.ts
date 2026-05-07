@@ -5,6 +5,7 @@ import { ConditionalReset } from './forms/conditional-reset-fields/conditional-r
 import { FormArrays } from './forms/form-arrays/form-arrays';
 import { FormPrimitiveExamples } from './forms/form-primitive-examples/form-primitive-examples';
 import { PasswordRequirements } from './forms/password-requirements/password-requirements';
+import { ParentModelInputs } from './forms/splitting-strategies/model-inputs/parent';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ import { PasswordRequirements } from './forms/password-requirements/password-req
     FormArrays,
     FormPrimitiveExamples,
     PasswordRequirements,
+    ParentModelInputs,
   ],
   template: `
     <h1>Signal Forms + NgRx + NgRx Toolkit</h1>
@@ -37,6 +39,11 @@ import { PasswordRequirements } from './forms/password-requirements/password-req
       NgRx itself? I (Michael Small) am not sure and cannot speak for the NgRx team. But I am
       experimenting.
     </p>
+
+    <h2>Splitting Up Forms</h2>
+
+    <h3>Model Inputs</h3>
+    <app-parent-model-inputs />
 
     <h2>Password Requirements - Validators Combination Exercise</h2>
     <app-password-requirements />
