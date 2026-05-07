@@ -7,6 +7,7 @@ import { FormPrimitiveExamples } from './forms/form-primitive-examples/form-prim
 import { PasswordRequirements } from './forms/password-requirements/password-requirements';
 import { ParentModelInputs } from './forms/splitting-strategies/model-inputs/parent';
 import { ParentFieldTreeInputs } from './forms/splitting-strategies/field-tree/parent';
+import { ParentService } from './forms/splitting-strategies/service/parent';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,7 @@ import { ParentFieldTreeInputs } from './forms/splitting-strategies/field-tree/p
     PasswordRequirements,
     ParentModelInputs,
     ParentFieldTreeInputs,
+    ParentService,
   ],
   template: `
     <h1>Signal Forms + NgRx + NgRx Toolkit</h1>
@@ -43,6 +45,9 @@ import { ParentFieldTreeInputs } from './forms/splitting-strategies/field-tree/p
     </p>
 
     <h2>Splitting Up Forms</h2>
+
+    <h3>Service</h3>
+    <app-parent-service />
 
     <h3>Field Tree Inputs</h3>
     <app-parent-field-tree-inputs />
