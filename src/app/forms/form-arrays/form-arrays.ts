@@ -4,14 +4,15 @@ import { SubformA } from './subform-a';
 import { SubformB } from './subform-b';
 import { FormService } from './form.service';
 import { JsonPipe } from '@angular/common';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-form-arrays',
-  imports: [FormField, SubformA, SubformB, JsonPipe],
+  imports: [FormField, SubformA, SubformB, JsonPipe, MatTabsModule],
   providers: [FormService],
   template: `
-    <div>
-      <section>
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
+      <mat-tab label="Basic Array & Array Tracking">
         <h3>Basic Array & Array Tracking</h3>
 
         <div id="basic-array">
@@ -40,11 +41,8 @@ import { JsonPipe } from '@angular/common';
             >-- Angular Docs: "Tracking values for array fields"</a
           >
         </p>
-      </section>
-
-      <section>
-        <h3>Differing Objects</h3>
-
+      </mat-tab>
+      <mat-tab label="Differing Objects">
         <p>
           Disclaimer: I am not sure if the following approach for how child items are handled in
           child components is the intended best practice. But it seems to work fine? Will check with
@@ -65,8 +63,8 @@ import { JsonPipe } from '@angular/common';
 
         <pre>{{ formService.differingObjectsArrayForm().value() | json }}</pre>
         <pre>Errors: {{ formService.differingObjectsArrayForm().errorSummary() | json }}</pre>
-      </section>
-    </div>
+      </mat-tab>
+    </mat-tab-group>
   `,
   styles: `
     #basic-array,
