@@ -7,6 +7,7 @@ import { CheckboxMaterial } from './material/checkbox';
 import { NumberMaterial } from './material/number';
 import { TextMaterial } from './material/text';
 import { RadioMaterial } from './material/radio';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-form-primitive-examples',
@@ -19,6 +20,7 @@ import { RadioMaterial } from './material/radio';
     NumberMaterial,
     TextMaterial,
     RadioMaterial,
+    MatTabsModule,
   ],
   template: `
     <div>
@@ -29,20 +31,24 @@ import { RadioMaterial } from './material/radio';
           >Basic Native Form Controls</a
         >
       </p>
-      <app-radio />
-      <app-text />
-      <app-checkbox />
-      <app-number />
+      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
+        <mat-tab label="Radio"> <app-radio /></mat-tab>
+        <mat-tab label="Text"> <app-text /></mat-tab>
+        <mat-tab label="Checkbox"> <app-checkbox /></mat-tab>
+        <mat-tab label="Number"> <app-number /></mat-tab>
+      </mat-tab-group>
 
       <p>
         <a href="https://material.angular.dev/components/categories" target="_blank"
           >Material examples</a
         >
       </p>
-      <app-radio-material />
-      <app-text-material />
-      <app-checkbox-material />
-      <app-number-material />
+      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
+        <mat-tab label="Radio"> <app-radio-material /></mat-tab>
+        <mat-tab label="Text"> <app-text-material /></mat-tab>
+        <mat-tab label="Checkbox"> <app-checkbox-material /></mat-tab>
+        <mat-tab label="Number"> <app-number-material /></mat-tab>
+      </mat-tab-group>
     </div>
   `,
 })
