@@ -59,7 +59,7 @@ const billPaySchema = schema<BillPayFormModel>((billPay) => {
 });
 
 @Component({
-  selector: 'app-bill-pay',
+  selector: 'app-static-over-dynamic-form-models',
   imports: [FormField, FormRoot, JsonPipe],
   template: `
     <a
@@ -136,7 +136,7 @@ const billPaySchema = schema<BillPayFormModel>((billPay) => {
     }
   `,
 })
-export class BillPay {
+export class StaticOverDynamicFormModels {
   readonly #billPayService = inject(BillPayService);
   readonly #domainToFormMappings = inject(DomainAndFormMappings);
   readonly router = inject(Router);
