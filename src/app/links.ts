@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-links',
   template: `
-    <h2>Links</h2>
     <ul>
       <li>
         Core technologies
