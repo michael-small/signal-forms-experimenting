@@ -19,9 +19,6 @@ import { SplittingStrategies } from './forms/splitting-strategies/splitting-stra
     FormArrays,
     FormPrimitiveExamples,
     PasswordRequirements,
-    ParentModelInputs,
-    ParentFieldTreeInputs,
-    ParentService,
     SplittingStrategies,
   ],
   template: `
