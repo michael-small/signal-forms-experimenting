@@ -8,6 +8,7 @@ import { PasswordRequirements } from './forms/password-requirements/password-req
 import { ParentModelInputs } from './forms/splitting-strategies/model-inputs/parent';
 import { ParentFieldTreeInputs } from './forms/splitting-strategies/field-tree/parent';
 import { ParentService } from './forms/splitting-strategies/service/parent';
+import { SplittingStrategies } from './forms/splitting-strategies/splitting-strategies';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,7 @@ import { ParentService } from './forms/splitting-strategies/service/parent';
     ParentModelInputs,
     ParentFieldTreeInputs,
     ParentService,
+    SplittingStrategies,
   ],
   template: `
     <h1>Signal Forms + NgRx + NgRx Toolkit</h1>
@@ -45,15 +47,7 @@ import { ParentService } from './forms/splitting-strategies/service/parent';
     </p>
 
     <h2>Splitting Up Forms</h2>
-
-    <h3>Service</h3>
-    <app-parent-service />
-
-    <h3>Field Tree Inputs</h3>
-    <app-parent-field-tree-inputs />
-
-    <h3>Model Inputs</h3>
-    <app-parent-model-inputs />
+    <app-splitting-strategies />
 
     <h2>Password Requirements - Validators Combination Exercise</h2>
     <app-password-requirements />
