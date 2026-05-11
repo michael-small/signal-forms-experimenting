@@ -1,18 +1,13 @@
-import { bootstrapApplication } from '@angular/platform-browser';
 import { Component, inject } from '@angular/core';
-import {
-  patchState,
-  signalStore,
-  withHooks,
-  withMethods,
-  withProps,
-  withState,
-} from '@ngrx/signals';
+import { patchState, signalStore, withMethods, withProps, withState } from '@ngrx/signals';
 import { HttpClient } from '@angular/common/http';
-import { rxMutation, withMutations, withStorageSync } from '@angular-architects/ngrx-toolkit';
+import { rxMutation, withResource } from '@angular-architects/ngrx-toolkit';
 import { FormsModule } from '@angular/forms';
 import { form, FormField } from '@angular/forms/signals';
 import { delegatedSignal } from '../../prototypes/delegatedSignal/delegated-signal';
+import { map } from 'rxjs';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 interface Todo {
   id: number;
@@ -23,25 +18,35 @@ interface Todo {
 
 let currentId = 11;
 
-interface MutationParameter {
-  operation: () => void;
-  onSuccess: () => void;
-  onError: () => void;
-}
-
 const TodoStore = signalStore(
   { providedIn: 'root' },
-  withState({ todos: new Array<Todo>() }),
   withProps(() => ({
     _http: inject(HttpClient),
   })),
+  withResource(
+    (store) => {
+      return {
+        todos: rxResource({
+          stream: () => {
+            return store._http
+              .get<Todo[]>('https://jsonplaceholder.typicode.com/todos')
+              .pipe(map((todos) => todos.slice(0, 10)));
+          },
+          defaultValue: [],
+        }),
+      };
+    },
+    {
+      errorHandling: 'previous value',
+    },
+  ),
   withMethods((store) => ({
     addTodo: rxMutation({
       operation(todo: Todo) {
         return store._http.post<Todo>('https://jsonplaceholder.typicode.com/todos', todo);
       },
       onSuccess(todo) {
-        patchState(store, { todos: [...store.todos(), todo] });
+        patchState(store, { todosValue: [...store.todosValue(), todo] });
       },
     }),
     removeTodo: rxMutation({
@@ -50,7 +55,7 @@ const TodoStore = signalStore(
       },
       onSuccess(_removedTodo, id) {
         patchState(store, {
-          todos: store.todos().filter((filteredTodo) => filteredTodo.id !== id),
+          todosValue: store.todosValue().filter((filteredTodo) => filteredTodo.id !== id),
         });
       },
     }),
@@ -60,49 +65,27 @@ const TodoStore = signalStore(
       },
       onSuccess(updatedTodo) {
         patchState(store, {
-          todos: store
-            .todos()
+          todosValue: store
+            .todosValue()
             .map((filteredTodo) =>
               filteredTodo.id === updatedTodo.id ? updatedTodo : filteredTodo,
             ),
         });
       },
     }),
-    toggleCompleted: (id: number) =>
-      patchState(store, {
-        todos: store.todos().map((todo) => ({
-          ...todo,
-          completed: todo.id === id ? !todo.completed : todo.completed,
-        })),
-      }),
-    updateTitle: (id: number, title: string) =>
-      patchState(store, {
-        todos: store.todos().map((todo) => ({
-          ...todo,
-          title: todo.id === id ? title : todo.title,
-        })),
-      }),
     patchTodos: (updatedTodos: Todo[]) =>
       patchState(store, {
-        todos: store.todos().map((todo) => {
+        todosValue: store.todosValue().map((todo) => {
           const updatedTodo = updatedTodos.find((t) => t.id === todo.id);
           return updatedTodo ? updatedTodo : todo;
         }),
       }),
   })),
-
-  withHooks((store) => ({
-    onInit() {
-      store._http.get<Todo[]>('https://jsonplaceholder.typicode.com/todos').subscribe((todos) => {
-        patchState(store, { todos: todos.slice(0, 10) });
-      });
-    },
-  })),
 );
 
 @Component({
   selector: 'app-full-crud',
-  imports: [FormsModule, FormField],
+  imports: [FormsModule, FormField, MatCheckboxModule],
   template: `
     <h1>Todo List</h1>
     <table>
@@ -119,12 +102,10 @@ const TodoStore = signalStore(
           <tr>
             <td>{{ todo.id }}</td>
             <td>
-              <input [formField]="form[$index].title" />
+              <input [formField]="form[$index].title" type="text" />
             </td>
             <td>
-              <button (click)="toggleCompleted(todo.id)">
-                {{ todo.completed ? 'Yes' : 'No' }}
-              </button>
+              <mat-checkbox [formField]="form[$index].completed"></mat-checkbox>
             </td>
             <td>
               <button (click)="saveTodo(todo)">Save</button>
@@ -143,7 +124,7 @@ export class FullCRUD {
   readonly #todoStore = inject(TodoStore);
 
   readonly #todos = delegatedSignal({
-    source: this.#todoStore.todos,
+    source: this.#todoStore.todosValue,
     update: (todos) => this.#todoStore.patchTodos(todos),
   });
 
@@ -164,13 +145,5 @@ export class FullCRUD {
 
   protected removeTodo(id: number) {
     this.#todoStore.removeTodo(id);
-  }
-
-  protected toggleCompleted(id: number) {
-    this.#todoStore.toggleCompleted(id);
-  }
-
-  protected updateTitle(id: number, title: string) {
-    this.#todoStore.updateTitle(id, title);
   }
 }
