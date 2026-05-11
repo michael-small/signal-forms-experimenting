@@ -11,25 +11,24 @@ import { map, Observable } from 'rxjs';
  *
  * Perhaps it could also prescribe form submission handling
  */
-export function withFormState<DomainModel, FormModel>(args: {
-  formDataStream: Observable<DomainModel>;
+export function withFormInitializing<DomainModel, FormModel>(args: {
+  formDomainDataStream: Observable<DomainModel>;
   defaultFormModel: FormModel;
-  mappingFn: (domain: DomainModel) => FormModel;
+  mapDomainToFormFn: (domain: DomainModel) => FormModel;
 }) {
   return signalStoreFeature(
     withResource(
       () => ({
-        form: rxResource({
-          stream: () => args.formDataStream.pipe(map(args.mappingFn)),
+        _formStore: rxResource({
+          stream: () => args.formDomainDataStream.pipe(map(args.mapDomainToFormFn)),
           defaultValue: args.defaultFormModel,
         }),
       }),
       { errorHandling: 'previous value' },
     ),
     withMethods((store) => ({
-      mapFormState: () => store.formValue(),
       setFormState: (formValue: FormModel) =>
-        updateState(store, 'set Form State', { formValue: formValue }),
+        updateState(store, 'set Form State', { _formStoreValue: formValue }),
     })),
   );
 }

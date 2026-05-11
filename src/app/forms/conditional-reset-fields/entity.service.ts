@@ -48,7 +48,7 @@ export class EntityDataService {
         value: 0,
       },
       text: {
-        comparator: 'equals',
+        comparator: 'equivalent',
         value: 'test',
       },
     }).pipe(delay(1000));

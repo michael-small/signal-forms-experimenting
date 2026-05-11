@@ -1,4 +1,4 @@
-import { signalStore, withFeature, withMethods, withProps } from '@ngrx/signals';
+import { signalStore, withFeature, withLinkedState, withMethods, withProps } from '@ngrx/signals';
 import { updateState, withDevtools, withResource } from '@angular-architects/ngrx-toolkit';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { EntityDataService } from './entity.service';
@@ -6,11 +6,12 @@ import { inject } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import {
   defaultFormModel,
+  FormModel,
   FormModelDomainModelService,
   numbersDefault,
   textDefault,
 } from './form-model-domain-model.service';
-import { withFormState } from '../withFormState.store.feature';
+import { withFormInitializing } from '../withFormState.store.feature';
 
 /**
  * @description Unlike reactive forms, there is no `patchValue`/`setValue` layer.
@@ -28,10 +29,11 @@ export const Store = signalStore(
   })),
   withDevtools('ConditionalResetFormStore'),
   withFeature((store) =>
-    withFormState({
-      formDataStream: store._dataService.getFormData(),
+    withFormInitializing({
+      formDomainDataStream: store._dataService.getFormData(),
       defaultFormModel: defaultFormModel,
-      mappingFn: (domain) => store._formModelDomainModelService.mapDomainToFormModel(domain),
+      mapDomainToFormFn: (domain) =>
+        store._formModelDomainModelService.mapDomainToFormModel(domain),
     }),
   ),
   withResource(
@@ -41,33 +43,45 @@ export const Store = signalStore(
         defaultValue: [],
       }),
       dbFields: rxResource({
-        params: () => store.formValue().dbTable,
+        params: () => store._formStoreValue().dbTable,
         stream: (source) => store._dataService.getTableFields(source.params),
         defaultValue: [],
       }),
     }),
     { errorHandling: 'previous value' },
   ),
+  // TODO - should this be made a feature itself, with it beign the one that maps the value to the state?
+  withLinkedState((store) => {
+    return {
+      formTemplateValue: () => {
+        // TODO - would be good for this to be a proper linkedSignal where you can access the previous value
+        const formStoreValue = store._formStoreValue();
+        return {
+          ...formStoreValue,
+          numbers: formStoreValue.fieldType === 'number' ? formStoreValue.numbers : numbersDefault,
+          text: formStoreValue.fieldType === 'text' ? formStoreValue.text : textDefault,
+        };
+      },
+    };
+  }),
   withMethods((store) => {
     function setFieldType(): void {
       const selectedDbField = store
         .dbFieldsValue()
-        ?.find((field) => field.id === store.formValue().dbField);
+        ?.find((field) => field.id === store._formStoreValue().dbField);
 
       if (selectedDbField) {
         updateState(store, 'set Field Type', {
-          formValue: {
-            ...store.formValue(),
+          _formStoreValue: {
+            ...store._formStoreValue(),
             fieldType: selectedDbField.type,
-            numbers: selectedDbField.type === 'number' ? store.formValue().numbers : numbersDefault,
-            text: selectedDbField.type === 'text' ? store.formValue().text : textDefault,
           },
         });
       }
     }
 
     function save() {
-      const formData = store.formValue();
+      const formData = store.formTemplateValue();
       const domainModel = store._formModelDomainModelService.mapFormModelToDomain(formData);
       return firstValueFrom(store._dataService.save(domainModel));
     }

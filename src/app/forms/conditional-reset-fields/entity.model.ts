@@ -5,7 +5,7 @@ export const numberComparators = [
 ] as const;
 
 export const textComparators = [
-  { value: 'equals', label: 'Equals' },
+  { value: 'equivalent', label: 'Equivalent' },
   { value: 'contains', label: 'Contains' },
 ] as const;
 

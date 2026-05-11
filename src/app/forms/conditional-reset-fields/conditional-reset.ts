@@ -113,7 +113,7 @@ export class ConditionalReset {
    * - Updating the store on form changes (update)
    */
   protected delegated = delegatedSignal({
-    source: () => this.store.mapFormState(),
+    source: () => this.store.formTemplateValue(),
     update: (value) => this.store.setFormState(value),
   });
 
