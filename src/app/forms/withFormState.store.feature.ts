@@ -14,14 +14,14 @@ import { map, Observable } from 'rxjs';
 export function withFormState<DomainModel, FormModel>(args: {
   formDataStream: Observable<DomainModel>;
   defaultFormModel: FormModel;
-  mapDomainToFormFn: (domain: DomainModel) => FormModel;
-  mapFormToDomainFn: (form: FormModel) => DomainModel;
+  mapDomainToFormFn: (domain: DomainModel, extras?: unknown) => FormModel;
+  mapFormToDomainFn: (form: FormModel, extras?: unknown) => DomainModel;
 }) {
   return signalStoreFeature(
     withResource(
       () => ({
         form: rxResource({
-          stream: () => args.formDataStream.pipe(map(args.mapDomainToFormFn)),
+          stream: () => args.formDataStream.pipe(map((domain) => args.mapDomainToFormFn(domain))),
           defaultValue: args.defaultFormModel,
         }),
       }),
