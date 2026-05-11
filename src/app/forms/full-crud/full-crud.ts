@@ -9,9 +9,10 @@ import {
   withState,
 } from '@ngrx/signals';
 import { HttpClient } from '@angular/common/http';
-import { rxMutation, withMutations } from '@angular-architects/ngrx-toolkit';
+import { rxMutation, withMutations, withStorageSync } from '@angular-architects/ngrx-toolkit';
 import { FormsModule } from '@angular/forms';
-import { FormField } from '@angular/forms/signals';
+import { form, FormField } from '@angular/forms/signals';
+import { delegatedSignal } from '../../prototypes/delegatedSignal/delegated-signal';
 
 interface Todo {
   id: number;
@@ -30,7 +31,7 @@ interface MutationParameter {
 
 const TodoStore = signalStore(
   { providedIn: 'root' },
-  withState({ todos: [] as Todo[] }),
+  withState({ todos: new Array<Todo>() }),
   withProps(() => ({
     _http: inject(HttpClient),
   })),
@@ -47,13 +48,13 @@ const TodoStore = signalStore(
       operation(id: number) {
         return store._http.delete<Todo>(`https://jsonplaceholder.typicode.com/todos/${id}`);
       },
-      onSuccess(removedTodo, id) {
+      onSuccess(_removedTodo, id) {
         patchState(store, {
           todos: store.todos().filter((filteredTodo) => filteredTodo.id !== id),
         });
       },
     }),
-    editTodo: rxMutation({
+    saveTodo: rxMutation({
       operation(todo: Todo) {
         return store._http.put<Todo>(`https://jsonplaceholder.typicode.com/todos/${todo.id}`, todo);
       },
@@ -81,6 +82,13 @@ const TodoStore = signalStore(
           title: todo.id === id ? title : todo.title,
         })),
       }),
+    patchTodos: (updatedTodos: Todo[]) =>
+      patchState(store, {
+        todos: store.todos().map((todo) => {
+          const updatedTodo = updatedTodos.find((t) => t.id === todo.id);
+          return updatedTodo ? updatedTodo : todo;
+        }),
+      }),
   })),
 
   withHooks((store) => ({
@@ -92,7 +100,6 @@ const TodoStore = signalStore(
   })),
 );
 
-// TODO - signal-form-ify
 @Component({
   selector: 'app-full-crud',
   imports: [FormsModule, FormField],
@@ -108,11 +115,11 @@ const TodoStore = signalStore(
         </tr>
       </thead>
       <tbody>
-        @for (todo of todos(); track todo.id) {
+        @for (todo of form().value(); track todo.id) {
           <tr>
             <td>{{ todo.id }}</td>
             <td>
-              <input [value]="todo.title" (input)="updateTitle(todo.id, $event.target.value)" />
+              <input [formField]="form[$index].title" />
             </td>
             <td>
               <button (click)="toggleCompleted(todo.id)">
@@ -120,8 +127,8 @@ const TodoStore = signalStore(
               </button>
             </td>
             <td>
-              <button (click)="editTodo(todo)">Edit</button>
-              <button (click)="removeTodo(todo.id)">Remove</button>
+              <button (click)="saveTodo(todo)">Save</button>
+              <button (click)="removeTodo(todo.id)">X</button>
             </td>
           </tr>
         }
@@ -135,7 +142,12 @@ const TodoStore = signalStore(
 export class FullCRUD {
   readonly #todoStore = inject(TodoStore);
 
-  protected readonly todos = this.#todoStore.todos;
+  readonly #todos = delegatedSignal({
+    source: this.#todoStore.todos,
+    update: (todos) => this.#todoStore.patchTodos(todos),
+  });
+
+  protected form = form(this.#todos);
 
   protected addTodo() {
     this.#todoStore.addTodo({
@@ -146,8 +158,8 @@ export class FullCRUD {
     });
   }
 
-  protected editTodo(todo: Todo) {
-    this.#todoStore.editTodo(todo);
+  protected saveTodo(todo: Todo) {
+    this.#todoStore.saveTodo(todo);
   }
 
   protected removeTodo(id: number) {
