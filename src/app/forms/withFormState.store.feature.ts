@@ -1,12 +1,12 @@
 import { updateState, withResource } from '@angular-architects/ngrx-toolkit';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { signalStoreFeature, withHooks, withMethods } from '@ngrx/signals';
+import { signalStoreFeature, withComputed, withHooks, withMethods } from '@ngrx/signals';
 import { map, Observable } from 'rxjs';
 
 /**
  * @description RxJS first feature for:
  * - Syncing form data
- * - Handing default value
+ * - Handling default value
  * - Domain to form mapping
  *
  * Perhaps it could also prescribe form submission handling
@@ -14,13 +14,14 @@ import { map, Observable } from 'rxjs';
 export function withFormState<DomainModel, FormModel>(args: {
   formDataStream: Observable<DomainModel>;
   defaultFormModel: FormModel;
-  mappingFn: (domain: DomainModel) => FormModel;
+  mapDomainToFormFn: (domain: DomainModel) => FormModel;
+  mapFormToDomainFn: (form: FormModel) => DomainModel;
 }) {
   return signalStoreFeature(
     withResource(
       () => ({
         form: rxResource({
-          stream: () => args.formDataStream.pipe(map(args.mappingFn)),
+          stream: () => args.formDataStream.pipe(map(args.mapDomainToFormFn)),
           defaultValue: args.defaultFormModel,
         }),
       }),
@@ -30,6 +31,9 @@ export function withFormState<DomainModel, FormModel>(args: {
       mapFormState: () => store.formValue(),
       setFormState: (formValue: FormModel) =>
         updateState(store, 'set Form State', { formValue: formValue }),
+    })),
+    withComputed((store) => ({
+      domainModel: () => args.mapFormToDomainFn(store.formValue()),
     })),
   );
 }

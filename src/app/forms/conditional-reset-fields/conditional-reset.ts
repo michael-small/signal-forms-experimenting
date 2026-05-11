@@ -93,6 +93,7 @@ function querySchema(schema: SchemaPathTree<FormModel>) {
           <input type="text" [formField]="form.text.value" />
         </label>
       }
+      <button type="submit" [disabled]="form().invalid()">Submit</button>
     </form>
 
     <pre>Form Value: {{ form().value() | json }}</pre>

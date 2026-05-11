@@ -31,7 +31,9 @@ export const Store = signalStore(
     withFormState({
       formDataStream: store._dataService.getFormData(),
       defaultFormModel: defaultFormModel,
-      mappingFn: (domain) => store._formModelDomainModelService.mapDomainToFormModel(domain),
+      mapDomainToFormFn: (domain) =>
+        store._formModelDomainModelService.mapDomainToFormModel(domain),
+      mapFormToDomainFn: (form) => store._formModelDomainModelService.mapFormModelToDomain(form),
     }),
   ),
   withResource(
@@ -67,9 +69,7 @@ export const Store = signalStore(
     }
 
     function save() {
-      const formData = store.formValue();
-      const domainModel = store._formModelDomainModelService.mapFormModelToDomain(formData);
-      return firstValueFrom(store._dataService.save(domainModel));
+      return firstValueFrom(store._dataService.save(store.domainModel()));
     }
 
     return {
