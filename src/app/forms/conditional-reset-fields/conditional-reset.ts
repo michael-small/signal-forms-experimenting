@@ -32,11 +32,15 @@ function querySchema(schema: SchemaPathTree<FormModel>) {
   required(schema.dbTable, { message: 'DB Table is required' });
   required(schema.dbField, { message: 'DB Field is required' });
 
-  hidden(schema.numbers, ({ valueOf }) => valueOf(schema.fieldType) !== 'number');
+  hidden(schema.numbers, {
+    when: ({ valueOf }) => valueOf(schema.fieldType) !== 'number',
+  });
   required(schema.numbers.comparator, { message: 'Number Comparator is required' });
   min(schema.numbers.value, 0);
 
-  hidden(schema.text, ({ valueOf }) => valueOf(schema.fieldType) !== 'text');
+  hidden(schema.text, {
+    when: ({ valueOf }) => valueOf(schema.fieldType) !== 'text',
+  });
   required(schema.text.comparator, { message: 'Text Comparator is required' });
   required(schema.text.value, { message: 'Text Value is required' });
 }

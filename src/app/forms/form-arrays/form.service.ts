@@ -34,10 +34,14 @@ const initialDifferingObjects: DifferingObject[] = [
 function ItemSchema(item: SchemaPathTree<DifferingObject>) {
   required(item.type);
 
-  hidden(item.a, ({ valueOf }) => valueOf(item.type) !== 'A');
+  hidden(item.a, {
+    when: ({ valueOf }) => valueOf(item.type) !== 'A',
+  });
   required(item.a.value, { message: 'Value for A is required' });
 
-  hidden(item.b, ({ valueOf }) => valueOf(item.type) !== 'B');
+  hidden(item.b, {
+    when: ({ valueOf }) => valueOf(item.type) !== 'B',
+  });
   required(item.b.value, { message: 'Value for B is required' });
 }
 
