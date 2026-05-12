@@ -4,6 +4,7 @@ import { PasswordRequirements } from './password-requirements/password-requireme
 import { ConditionalReset } from './conditional-reset-fields/conditional-reset';
 import { StaticOverDynamicFormModels } from './static-over-dynamic-form-models';
 import { MatTabsModule } from '@angular/material/tabs';
+import { FullCRUD } from './full-crud/full-crud';
 
 @Component({
   selector: 'app-complex-topics',
@@ -12,6 +13,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     PasswordRequirements,
     ConditionalReset,
     StaticOverDynamicFormModels,
+    FullCRUD,
     MatTabsModule,
   ],
   template: `
@@ -27,6 +29,9 @@ import { MatTabsModule } from '@angular/material/tabs';
       </mat-tab>
       <mat-tab label="Prefer Static Over Dynamic Form Models">
         <app-static-over-dynamic-form-models />
+      </mat-tab>
+      <mat-tab label="Full CRUD Example">
+        <app-full-crud />
       </mat-tab>
     </mat-tab-group>
   `,

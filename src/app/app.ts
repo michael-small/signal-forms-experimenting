@@ -8,7 +8,7 @@ import { FullCRUD } from './forms/full-crud/full-crud';
 
 @Component({
   selector: 'app-root',
-  imports: [Links, FormArrays, FormPrimitiveExamples, About, ComplexTopics, FullCRUD],
+  imports: [Links, FormArrays, FormPrimitiveExamples, About, ComplexTopics],
   template: `
     <h1>Signal Forms + NgRx + NgRx Toolkit</h1>
 
@@ -26,9 +26,6 @@ import { FullCRUD } from './forms/full-crud/full-crud';
 
     <h2>Complex Topics</h2>
     <app-complex-topics />
-
-    <h2>Full CRUD</h2>
-    <app-full-crud />
   `,
 })
 export class App {}
