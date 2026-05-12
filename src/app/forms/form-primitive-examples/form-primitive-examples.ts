@@ -23,33 +23,44 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatTabsModule,
   ],
   template: `
-    <div>
-      <p>
-        <a
-          href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Basic_native_form_controls"
-          target="_blank"
-          >Basic Native Form Controls</a
-        >
-      </p>
-      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
-        <mat-tab label="Radio"> <app-radio /></mat-tab>
-        <mat-tab label="Text"> <app-text /></mat-tab>
-        <mat-tab label="Checkbox"> <app-checkbox /></mat-tab>
-        <mat-tab label="Number"> <app-number /></mat-tab>
-      </mat-tab-group>
+    <div id="primitives">
+      <div>
+        <p>
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Basic_native_form_controls"
+            target="_blank"
+            >Basic Native Form Controls</a
+          >
+        </p>
+        <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
+          <mat-tab label="Radio"> <app-radio /></mat-tab>
+          <mat-tab label="Text"> <app-text /></mat-tab>
+          <mat-tab label="Checkbox"> <app-checkbox /></mat-tab>
+          <mat-tab label="Number"> <app-number /></mat-tab>
+        </mat-tab-group>
+      </div>
 
-      <p>
-        <a href="https://material.angular.dev/components/categories" target="_blank"
-          >Material examples</a
-        >
-      </p>
-      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
-        <mat-tab label="Radio"> <app-radio-material /></mat-tab>
-        <mat-tab label="Text"> <app-text-material /></mat-tab>
-        <mat-tab label="Checkbox"> <app-checkbox-material /></mat-tab>
-        <mat-tab label="Number"> <app-number-material /></mat-tab>
-      </mat-tab-group>
+      <div>
+        <p>
+          <a href="https://material.angular.dev/components/categories" target="_blank"
+            >Material examples</a
+          >
+        </p>
+        <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
+          <mat-tab label="Radio"> <app-radio-material /></mat-tab>
+          <mat-tab label="Text"> <app-text-material /></mat-tab>
+          <mat-tab label="Checkbox"> <app-checkbox-material /></mat-tab>
+          <mat-tab label="Number"> <app-number-material /></mat-tab>
+        </mat-tab-group>
+      </div>
     </div>
+  `,
+  styles: `
+    #primitives {
+      display: flex;
+      gap: 2rem;
+      justify-content: space-around;
+    }
   `,
 })
 export class FormPrimitiveExamples {}
