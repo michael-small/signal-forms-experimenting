@@ -12,11 +12,16 @@ import { FullCRUD } from './forms/full-crud/full-crud';
   template: `
     <h1>Signal Forms + NgRx + NgRx Toolkit</h1>
 
-    <h2>Links</h2>
-    <app-links />
-
-    <h2>About</h2>
-    <app-about />
+    <div id="info">
+      <div>
+        <h2>Links</h2>
+        <app-links />
+      </div>
+      <div>
+        <h2>About</h2>
+        <app-about />
+      </div>
+    </div>
 
     <h2>Form Primitive Examples</h2>
     <app-form-primitive-examples />
@@ -26,6 +31,12 @@ import { FullCRUD } from './forms/full-crud/full-crud';
 
     <h2>Complex Topics</h2>
     <app-complex-topics />
+  `,
+  styles: `
+    #info {
+      display: flex;
+      gap: 2rem;
+    }
   `,
 })
 export class App {}
