@@ -66,4 +66,12 @@ export class FormService {
       };
     });
   }
+
+  public removeItem(index: number) {
+    this.model.update((current) => {
+      return {
+        items: current.items.toSpliced(index, 1),
+      };
+    });
+  }
 }
