@@ -9,6 +9,7 @@ import { TextMaterial } from './material/text';
 import { RadioMaterial } from './material/radio';
 import { MatTabsModule } from '@angular/material/tabs';
 import { AutocompleteMaterial } from './material/extras/autocomplete';
+import { ButtonToggleMaterial } from './material/extras/button-toggle';
 
 @Component({
   selector: 'app-form-primitive-examples',
@@ -23,6 +24,7 @@ import { AutocompleteMaterial } from './material/extras/autocomplete';
     RadioMaterial,
     MatTabsModule,
     AutocompleteMaterial,
+    ButtonToggleMaterial,
   ],
   template: `
     <div id="primitives">
@@ -65,6 +67,7 @@ import { AutocompleteMaterial } from './material/extras/autocomplete';
       </p>
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
         <mat-tab label="Autocomplete"> <app-autocomplete-material /></mat-tab>
+        <mat-tab label="Button Toggle"> <app-button-toggle-material /></mat-tab>
       </mat-tab-group>
     </div>
   `,
