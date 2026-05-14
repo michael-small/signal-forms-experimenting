@@ -10,6 +10,7 @@ import { RadioMaterial } from './material/radio';
 import { MatTabsModule } from '@angular/material/tabs';
 import { AutocompleteMaterial } from './material/extras/autocomplete';
 import { ButtonToggleMaterial } from './material/extras/button-toggle';
+import { SlideToggleMaterial } from './material/extras/slide-toggle';
 
 @Component({
   selector: 'app-form-primitive-examples',
@@ -25,6 +26,7 @@ import { ButtonToggleMaterial } from './material/extras/button-toggle';
     MatTabsModule,
     AutocompleteMaterial,
     ButtonToggleMaterial,
+    SlideToggleMaterial,
   ],
   template: `
     <div id="primitives">
@@ -68,6 +70,7 @@ import { ButtonToggleMaterial } from './material/extras/button-toggle';
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
         <mat-tab label="Autocomplete"> <app-autocomplete-material /></mat-tab>
         <mat-tab label="Button Toggle"> <app-button-toggle-material /></mat-tab>
+        <mat-tab label="Slide Toggle"> <app-slide-toggle-material /></mat-tab>
       </mat-tab-group>
     </div>
   `,
