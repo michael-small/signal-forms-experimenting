@@ -11,19 +11,29 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
   selector: 'app-button-toggle-material',
   template: `
     <section>
-      <h3>Multiple selection</h3>
-      <mat-button-toggle-group aria-label="Ingredients" multiple [formField]="form">
+      <h3>Single selection</h3>
+      <mat-button-toggle-group aria-label="Ingredients" [formField]="formSingle">
         <mat-button-toggle value="flour">Flour</mat-button-toggle>
         <mat-button-toggle value="eggs">Eggs</mat-button-toggle>
         <mat-button-toggle value="sugar">Sugar</mat-button-toggle>
       </mat-button-toggle-group>
     </section>
+    <pre>single value: {{ formSingle().value() | json }}</pre>
 
-    <pre>value: {{ form().value() | json }}</pre>
+    <section>
+      <h3>Multiple selection</h3>
+      <mat-button-toggle-group aria-label="Ingredients" multiple [formField]="formMultiple">
+        <mat-button-toggle value="flour">Flour</mat-button-toggle>
+        <mat-button-toggle value="eggs">Eggs</mat-button-toggle>
+        <mat-button-toggle value="sugar">Sugar</mat-button-toggle>
+      </mat-button-toggle-group>
+    </section>
+    <pre>multiple value: {{ formMultiple().value() | json }}</pre>
   `,
-  imports: [MatButtonToggleModule, MatCheckboxModule, FormField, JsonPipe],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [MatButtonToggleModule, FormField, JsonPipe],
 })
 export class ButtonToggleMaterial {
-  form = form(signal<string[]>([]));
+  formSingle = form(signal<string>(''));
+
+  formMultiple = form(signal<string[]>([]));
 }
