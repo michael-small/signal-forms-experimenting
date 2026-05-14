@@ -8,6 +8,7 @@ import { NumberMaterial } from './material/number';
 import { TextMaterial } from './material/text';
 import { RadioMaterial } from './material/radio';
 import { MatTabsModule } from '@angular/material/tabs';
+import { AutocompleteMaterial } from './material/autocomplete';
 
 @Component({
   selector: 'app-form-primitive-examples',
@@ -21,6 +22,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     TextMaterial,
     RadioMaterial,
     MatTabsModule,
+    AutocompleteMaterial,
   ],
   template: `
     <div id="primitives">
@@ -53,6 +55,17 @@ import { MatTabsModule } from '@angular/material/tabs';
           <mat-tab label="Number"> <app-number-material /></mat-tab>
         </mat-tab-group>
       </div>
+    </div>
+
+    <div>
+      <p>
+        <a href="https://material.angular.dev/components/categories" target="_blank"
+          >Material, more stuff</a
+        >
+      </p>
+      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
+        <mat-tab label="Autocomplete"> <app-autocomplete-material /></mat-tab>
+      </mat-tab-group>
     </div>
   `,
   styles: `
