@@ -11,6 +11,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { AutocompleteMaterial } from './material/extras/autocomplete';
 import { ButtonToggleMaterial } from './material/extras/button-toggle';
 import { SlideToggleMaterial } from './material/extras/slide-toggle';
+import { SliderMaterial } from './material/extras/slider';
 
 @Component({
   selector: 'app-form-primitive-examples',
@@ -27,6 +28,7 @@ import { SlideToggleMaterial } from './material/extras/slide-toggle';
     AutocompleteMaterial,
     ButtonToggleMaterial,
     SlideToggleMaterial,
+    SliderMaterial,
   ],
   template: `
     <div id="primitives">
@@ -71,6 +73,7 @@ import { SlideToggleMaterial } from './material/extras/slide-toggle';
         <mat-tab label="Autocomplete"> <app-autocomplete-material /></mat-tab>
         <mat-tab label="Button Toggle"> <app-button-toggle-material /></mat-tab>
         <mat-tab label="Slide Toggle"> <app-slide-toggle-material /></mat-tab>
+        <mat-tab label="Slider"> <app-slider-material /></mat-tab>
       </mat-tab-group>
     </div>
   `,
