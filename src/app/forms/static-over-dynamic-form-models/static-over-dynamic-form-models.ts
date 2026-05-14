@@ -35,9 +35,13 @@ const defaultFormModel: BillPayFormModel = {
 // Using `hidden` for the irrelevant part is good. A discriminated union is bad.
 const billPaySchema = schema<BillPayFormModel>((billPay) => {
   // Hide credit card details when user has selected a method other than credit card.
-  hidden(billPay.method.card, ({ valueOf }) => valueOf(billPay.method.type) !== 'card');
+  hidden(billPay.method.card, {
+    when: ({ valueOf }) => valueOf(billPay.method.type) !== 'card',
+  });
   // Hide bank account details when user has selected a method other than bank account.
-  hidden(billPay.method.bank, ({ valueOf }) => valueOf(billPay.method.type) !== 'bank');
+  hidden(billPay.method.bank, {
+    when: ({ valueOf }) => valueOf(billPay.method.type) !== 'bank',
+  });
 
   // I imagine there is a better way than doing this individually for each field
   required(billPay.name);
