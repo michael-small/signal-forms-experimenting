@@ -8,7 +8,7 @@ import { NumberMaterial } from './material/number';
 import { TextMaterial } from './material/text';
 import { RadioMaterial } from './material/radio';
 import { MatTabsModule } from '@angular/material/tabs';
-import { AutocompleteMaterial } from './material/autocomplete';
+import { AutocompleteMaterial } from './material/extras/autocomplete';
 
 @Component({
   selector: 'app-form-primitive-examples',
