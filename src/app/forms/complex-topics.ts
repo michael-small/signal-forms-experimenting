@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { SplittingStrategies } from './splitting-strategies/splitting-strategies';
 import { PasswordRequirements } from './password-requirements/password-requirements';
 import { ConditionalReset } from './conditional-reset-fields/conditional-reset';
-import { StaticOverDynamicFormModels } from './static-over-dynamic-form-models';
+import { StaticOverDynamicFormModels } from './static-over-dynamic-form-models/static-over-dynamic-form-models';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FullCRUD } from './full-crud/full-crud';
 

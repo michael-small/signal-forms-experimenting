@@ -13,11 +13,11 @@ import {
   BillPayDomainModel,
   BillPayFormModel,
   DomainAndFormMappings,
-} from './bill-pay-dynamic-validation-modeling/bill-pay.model';
+} from '../bill-pay-dynamic-validation-modeling/bill-pay.model';
 import {
   BillPayService,
   defaultBillPayData,
-} from './bill-pay-dynamic-validation-modeling/bill-pay.service';
+} from '../bill-pay-dynamic-validation-modeling/bill-pay.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 
@@ -61,74 +61,7 @@ const billPaySchema = schema<BillPayFormModel>((billPay) => {
 @Component({
   selector: 'app-static-over-dynamic-form-models',
   imports: [FormField, FormRoot, JsonPipe],
-  template: `
-    <a
-      href="https://angular.dev/guide/forms/signals/model-design#avoid-models-with-dynamic-structure"
-      target="_blank"
-    >
-      <h2>Docs example: Avoid models with dynamic structure</h2>
-    </a>
-    <p>
-      Using <code>hidden</code> for the irrelevant part is good. A discriminated union is bad. While
-      all fields are marked as required, only the non-hidden fields are validated against.
-    </p>
-    <form [formRoot]="billForm">
-      <fieldset>
-        <legend>Type</legend>
-
-        <div>
-          <input type="radio" id="card" value="card" [formField]="billForm.method.type" />
-          <label for="card">Credit Card</label>
-        </div>
-
-        <div>
-          <input type="radio" id="bank" value="bank" [formField]="billForm.method.type" />
-          <label for="bank">Bank Account</label>
-        </div>
-      </fieldset>
-
-      <label style="display: block; margin: 1rem 0">
-        Name
-        <input type="text" [formField]="billForm.name" />
-      </label>
-
-      @if (billForm().value().method.type === 'card') {
-        <div class="flex">
-          <label>
-            Card Number
-            <input type="text" [formField]="billForm.method.card.cardNumber" />
-          </label>
-          <label>
-            Security Code
-            <input type="text" [formField]="billForm.method.card.securityCode" />
-          </label>
-          <label>
-            Expiration
-            <input type="text" [formField]="billForm.method.card.expiration" />
-          </label>
-        </div>
-      } @else if (billForm().value().method.type === 'bank') {
-        <div class="flex">
-          <label>
-            Account Number
-            <input type="text" [formField]="billForm.method.bank.accountNumber" />
-          </label>
-          <label>
-            Routing Number
-            <input type="text" [formField]="billForm.method.bank.routingNumber" />
-          </label>
-        </div>
-      }
-      <button type="submit" [disabled]="!billForm().valid()">Submit</button>
-    </form>
-
-    <pre>Value: {{ billForm().value() | json }}</pre>
-    <pre>Valid: {{ billForm().valid() | json }}</pre>
-    <pre>Submit errors: {{ billForm().errors() | json }}</pre>
-
-    <pre>Forced submit error: {{ throwError() }}</pre>
-    <button (click)="throwError.update(err => !err)">Toggle error on save</button>
-  `,
+  templateUrl: './static-over-dynamic-form-models.html',
   styles: `
     .flex {
       display: flex;
@@ -139,9 +72,8 @@ const billPaySchema = schema<BillPayFormModel>((billPay) => {
 export class StaticOverDynamicFormModels {
   readonly #billPayService = inject(BillPayService);
   readonly #domainToFormMappings = inject(DomainAndFormMappings);
-  readonly router = inject(Router);
 
-  protected throwError = signal(false);
+  protected throwError = signal(false); // for forcing error
 
   // Faked HTTP data w/delay
   private billResource = rxResource({
@@ -153,7 +85,9 @@ export class StaticOverDynamicFormModels {
   private billModel = linkedSignal({
     source: this.billResource.value,
     computation: (domainModel) => {
-      return domainModel ? this.mapDomainToForm(domainModel) : defaultFormModel;
+      return domainModel
+        ? this.#domainToFormMappings.mapDomainToForm(domainModel)
+        : defaultFormModel;
     },
   });
 
@@ -165,7 +99,7 @@ export class StaticOverDynamicFormModels {
         // 1) Helper function for this
         // 2) HTML:<button (click)="onSave()"> with TS: `async onSave() { ... }`
         const result: TreeValidationResult<any> = await this.#billPayService.saveBillingInfo(
-          this.mapFormToDomain(field().value()),
+          this.#domainToFormMappings.mapFormToDomain(field().value()),
           this.throwError(),
         );
 
@@ -177,10 +111,4 @@ export class StaticOverDynamicFormModels {
       },
     },
   });
-
-  private mapDomainToForm: (domainModel: BillPayDomainModel) => BillPayFormModel =
-    this.#domainToFormMappings.mapDomainToForm;
-
-  private mapFormToDomain: (formModel: BillPayFormModel) => BillPayDomainModel =
-    this.#domainToFormMappings.mapFormToDomain;
 }
