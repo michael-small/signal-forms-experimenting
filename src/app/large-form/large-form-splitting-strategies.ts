@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { ProfileFormInputTree } from './input-tree/profile-form';
+import { ProfileFormInputModel } from './input-model/profile-form';
 
 @Component({
   selector: 'app-large-form-splitting-strategies',
-  imports: [ProfileFormInputTree],
+  imports: [ProfileFormInputTree, ProfileFormInputModel],
   template: `
     <h1>Large Form splitting strategies</h1>
 
@@ -16,6 +17,8 @@ import { ProfileFormInputTree } from './input-tree/profile-form';
     </p>
 
     <app-profile-form-input-tree />
+
+    <app-profile-form-input-model />
   `,
 })
 export class LargeFormSplittingStrategies {}

@@ -29,5 +29,5 @@ import { FieldState } from '@angular/forms/signals';
   `,
 })
 export class ValidationErrors {
-  readonly fieldState = input.required<FieldState<unknown, string>>();
+  readonly fieldState = input.required<FieldState<unknown, string | number>>();
 }
