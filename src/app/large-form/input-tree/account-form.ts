@@ -1,10 +1,10 @@
 import { Component, input } from '@angular/core';
-import { FieldTree, FormField, required, SchemaPathTree } from '@angular/forms/signals';
+import { FieldTree, FormField } from '@angular/forms/signals';
 import { ValidationErrors } from '../validation-errors';
 import { Account } from '../form.model';
 
 @Component({
-  selector: 'app-account-form',
+  selector: 'app-account-form-input-tree',
   imports: [FormField, ValidationErrors],
   template: `
     @let form = this.form();
@@ -27,6 +27,6 @@ import { Account } from '../form.model';
     }
   `,
 })
-export class AccountForm {
+export class AccountFormInputTree {
   readonly form = input.required<FieldTree<Account>>();
 }

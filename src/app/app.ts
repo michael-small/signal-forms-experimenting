@@ -4,16 +4,22 @@ import { FormArrays } from './forms/form-arrays/form-arrays';
 import { FormPrimitiveExamples } from './forms/form-primitive-examples/form-primitive-examples';
 import { About } from './about';
 import { ComplexTopics } from './forms/complex-topics';
-import { FullCRUD } from './forms/full-crud/full-crud';
-import { ProfileForm } from './large-form/input-tree/profile-form';
+import { LargeFormSplittingStrategies } from './large-form/large-form-splitting-strategies';
 
 @Component({
   selector: 'app-root',
-  imports: [Links, FormArrays, FormPrimitiveExamples, About, ComplexTopics, ProfileForm],
+  imports: [
+    Links,
+    FormArrays,
+    FormPrimitiveExamples,
+    About,
+    ComplexTopics,
+    LargeFormSplittingStrategies,
+  ],
   template: `
     <h1>Signal Forms + NgRx + NgRx Toolkit</h1>
 
-    <app-profile-form />
+    <app-large-form-splitting-strategies />
 
     <div id="info">
       <div>

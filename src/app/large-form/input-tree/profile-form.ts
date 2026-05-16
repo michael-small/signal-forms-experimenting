@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { form, FormRoot } from '@angular/forms/signals';
-import { AccountForm } from './account-form';
+import { AccountFormInputTree } from './account-form';
 import { Account, accountSchema, createAccountModel } from '../form.model';
 
 export interface Profile {
@@ -8,23 +8,15 @@ export interface Profile {
 }
 
 @Component({
-  selector: 'app-profile-form',
-  imports: [AccountForm, FormRoot],
+  selector: 'app-profile-form-input-tree',
+  imports: [AccountFormInputTree, FormRoot],
   template: `
-    <p>
-      <a
-        href="https://github.com/brianmtreese/signal-forms-composition-example-after"
-        target="_blank"
-        >Example and the error summary component sourced from Brian Treese</a
-      >
-    </p>
-
     <form [formRoot]="form">
-      <app-account-form [form]="form.account" />
+      <app-account-form-input-tree [form]="form.account" />
     </form>
   `,
 })
-export class ProfileForm {
+export class ProfileFormInputTree {
   readonly model = signal<Profile>({
     account: createAccountModel(),
   });
