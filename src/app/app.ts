@@ -5,12 +5,15 @@ import { FormPrimitiveExamples } from './forms/form-primitive-examples/form-prim
 import { About } from './about';
 import { ComplexTopics } from './forms/complex-topics';
 import { FullCRUD } from './forms/full-crud/full-crud';
+import { ProfileForm } from './large-form/input-tree/profile-form';
 
 @Component({
   selector: 'app-root',
-  imports: [Links, FormArrays, FormPrimitiveExamples, About, ComplexTopics],
+  imports: [Links, FormArrays, FormPrimitiveExamples, About, ComplexTopics, ProfileForm],
   template: `
     <h1>Signal Forms + NgRx + NgRx Toolkit</h1>
+
+    <app-profile-form />
 
     <div id="info">
       <div>
