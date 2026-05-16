@@ -15,11 +15,6 @@ import { Account } from '../form.model';
       <input type="text" [formField]="form.firstName" />
       <app-validation-errors [fieldState]="form.firstName()" />
     </label>
-    <label>
-      Last Name:
-      <input type="text" [formField]="form.lastName" />
-      <app-validation-errors [fieldState]="form.lastName()" />
-    </label>
   `,
   styles: `
     label {
