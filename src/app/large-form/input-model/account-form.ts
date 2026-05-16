@@ -6,7 +6,6 @@ import { ValidationErrors } from '../validation-errors';
   selector: 'app-account-form-input-model',
   imports: [FormField, ValidationErrors],
   template: `
-    <h2>Account Information</h2>
     <label>
       First Name:
       <input type="text" [formField]="form" />

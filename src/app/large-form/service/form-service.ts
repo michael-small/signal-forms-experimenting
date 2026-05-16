@@ -1,10 +1,6 @@
 import { Service, signal } from '@angular/core';
-import { Account, accountSchema, createAccountModel } from '../form.model';
+import { accountSchema, createAccountModel, Profile } from '../form.model';
 import { form } from '@angular/forms/signals';
-
-export interface Profile {
-  account: Account;
-}
 
 @Service()
 export class FormService {

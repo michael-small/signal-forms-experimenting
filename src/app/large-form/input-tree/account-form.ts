@@ -9,7 +9,6 @@ import { Account } from '../form.model';
   template: `
     @let form = this.form();
 
-    <h2>Account Information</h2>
     <label>
       First Name:
       <input type="text" [formField]="form.firstName" />

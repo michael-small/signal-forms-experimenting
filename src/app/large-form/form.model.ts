@@ -1,5 +1,9 @@
 import { required, SchemaPathTree } from '@angular/forms/signals';
 
+export interface Profile {
+  account: Account;
+}
+
 export interface Account {
   firstName: string;
 }
