@@ -5,6 +5,7 @@ import { FormPrimitiveExamples } from './forms/form-primitive-examples/form-prim
 import { About } from './about';
 import { ComplexTopics } from './forms/complex-topics';
 import { LargeFormSplittingStrategies } from './large-form/large-form-splitting-strategies';
+import { ShowingErrorsConditions } from './forms/showing-errors-conditions/showing-errors-conditions';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ import { LargeFormSplittingStrategies } from './large-form/large-form-splitting-
     About,
     ComplexTopics,
     LargeFormSplittingStrategies,
+    ShowingErrorsConditions,
   ],
   template: `
     <h1>Signal Forms + NgRx + NgRx Toolkit</h1>
@@ -37,6 +39,9 @@ import { LargeFormSplittingStrategies } from './large-form/large-form-splitting-
 
     <h2>Form Arrays</h2>
     <app-form-arrays />
+
+    <h2>Showing Errors Conditions</h2>
+    <app-showing-errors-conditions />
 
     <h2>Complex Topics</h2>
     <app-complex-topics />
