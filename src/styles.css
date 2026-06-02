@@ -1,4 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
 :root {
-  margin: 1rem;
+  --angular-pink: #e90464;
+  --angular-purple: #8514f5;
+}
+
+/* https://docs.google.com/presentation/d/1DaG9oqxkSRwOrP2E-iNzVCpv2pAq_MVb7N8Uv_sCpk0/edit?usp=sharing */
+h2 {
+  color: var(--angular-pink);
+}
+h3 {
+  color: var(--angular-purple);
 }
