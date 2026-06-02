@@ -1,12 +1,15 @@
-<a
-  href="https://angular.dev/guide/forms/signals/model-design#avoid-models-with-dynamic-structure"
-  target="_blank"
->
+<a href="https://angular.dev/guide/forms/signals/model-design#avoid-models-with-dynamic-structure" target="_blank">
   <h2>Docs example: Avoid models with dynamic structure</h2>
 </a>
 <p>
   Using <code>hidden</code> for the irrelevant part is good. A discriminated union is bad. While all
   fields are marked as required, only the non-hidden fields are validated against.
+</p>
+<p><a href="https://next.angular.dev/guide/forms/signals/form-logic#conditional-logic-with-applywhen"
+    target="_blank">Also consider
+    <code>applyWhen</code> for conditional validation.</a></p>
+
+<p><a href="https://github.com/angular/angular/pull/69057/files" target="_blank">Outstanding PR for docs about this.</a>
 </p>
 
 <form [formRoot]="billForm">
@@ -30,31 +33,31 @@
   </label>
 
   @if (billForm().value().method.type === 'card') {
-    <div class="flex">
-      <label>
-        Card Number
-        <input type="text" [formField]="billForm.method.card.cardNumber" />
-      </label>
-      <label>
-        Security Code
-        <input type="text" [formField]="billForm.method.card.securityCode" />
-      </label>
-      <label>
-        Expiration
-        <input type="text" [formField]="billForm.method.card.expiration" />
-      </label>
-    </div>
+  <div class="flex">
+    <label>
+      Card Number
+      <input type="text" [formField]="billForm.method.card.cardNumber" />
+    </label>
+    <label>
+      Security Code
+      <input type="text" [formField]="billForm.method.card.securityCode" />
+    </label>
+    <label>
+      Expiration
+      <input type="text" [formField]="billForm.method.card.expiration" />
+    </label>
+  </div>
   } @else if (billForm().value().method.type === 'bank') {
-    <div class="flex">
-      <label>
-        Account Number
-        <input type="text" [formField]="billForm.method.bank.accountNumber" />
-      </label>
-      <label>
-        Routing Number
-        <input type="text" [formField]="billForm.method.bank.routingNumber" />
-      </label>
-    </div>
+  <div class="flex">
+    <label>
+      Account Number
+      <input type="text" [formField]="billForm.method.bank.accountNumber" />
+    </label>
+    <label>
+      Routing Number
+      <input type="text" [formField]="billForm.method.bank.routingNumber" />
+    </label>
+  </div>
   }
   <button type="submit" [disabled]="!billForm().valid()">Submit</button>
 </form>
