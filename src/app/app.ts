@@ -19,9 +19,7 @@ import { ShowingErrorsConditions } from './forms/showing-errors-conditions/showi
     ShowingErrorsConditions,
   ],
   template: `
-    <h1>Signal Forms + NgRx + NgRx Toolkit</h1>
-
-    <app-large-form-splitting-strategies />
+    <h1>Signal Forms</h1>
 
     <div id="info">
       <div>
@@ -45,6 +43,8 @@ import { ShowingErrorsConditions } from './forms/showing-errors-conditions/showi
 
     <h2>Complex Topics</h2>
     <app-complex-topics />
+
+    <app-large-form-splitting-strategies />
   `,
   styles: `
     #info {
