@@ -1,5 +1,7 @@
 # Signal Forms Experimenting
 
+> I showcased this project on an [Angular Space livestream, with Armen Vardanyan](https://youtu.be/4MUTRInJ7Lo). Thank you everyone for the support and questions. I will drop this project in a StackBlitz once it supports the Node version of Angular 22.
+
 Learning about signal forms via practice.
 
 This project is where I messed around with various signal forms concepts for the last few
