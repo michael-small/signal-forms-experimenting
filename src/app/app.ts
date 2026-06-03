@@ -21,6 +21,11 @@ import { ShowingErrorsConditions } from './forms/showing-errors-conditions/showi
       <a href="https://angular.dev/guide/forms/signals/overview" target="_blank">Signal Forms</a>
       documentation
     </p>
+    <p>
+      This project is where I messed around with various signal forms concepts for the last few
+      months. Though some of this includes some exploration with third party libraries that I use,
+      most examples are vanilla Angular code.
+    </p>
 
     <h2>Form Primitive Examples</h2>
     <app-form-primitive-examples />
