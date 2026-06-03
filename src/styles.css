@@ -16,3 +16,7 @@ h2 {
 h3 {
   color: var(--angular-purple);
 }
+
+code {
+  font-family: 'Courier New', Courier, monospace;
+}
