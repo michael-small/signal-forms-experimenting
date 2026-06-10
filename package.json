@@ -12,9 +12,9 @@
   "packageManager": "npm@10.9.4",
   "dependencies": {
     "@angular-architects/ngrx-toolkit": "^21.0.1",
-    "@angular/aria": "^22.0.0-rc.3",
-    "@angular/material": "^22.0.0-rc.3",
-    "@angular/cdk": "^22.0.0-rc.3",
+    "@angular/aria": "^22.0.0",
+    "@angular/material": "^22.0.0",
+    "@angular/cdk": "^22.0.0",
     "@angular/common": "^22.0.0",
     "@angular/compiler": "^22.0.0",
     "@angular/core": "^22.0.0",
