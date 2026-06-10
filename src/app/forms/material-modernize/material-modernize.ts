@@ -4,6 +4,7 @@ import { ButtonToggleFormsExample } from './button-toggle-with-forms';
 import { CheckboxReactiveFormsExample } from './checkbox-with-reactive-forms';
 import { ChipsFormControlExample } from './chips-with-form-control';
 import { DateRangePickerFormsExample } from './date-range-picker-forms-integration';
+import { FormFieldErrorExample } from './form-field-with-error-messages';
 
 @Component({
   selector: 'app-material-modernize',
@@ -13,8 +14,10 @@ import { DateRangePickerFormsExample } from './date-range-picker-forms-integrati
     CheckboxReactiveFormsExample,
     ChipsFormControlExample,
     DateRangePickerFormsExample,
+    FormFieldErrorExample,
   ],
   template: `
+    <form-field-error-example />
     <date-range-picker-forms-example />
     <chips-form-control-example />
     <checkbox-reactive-forms-example />
