@@ -3,6 +3,7 @@ import { AutocompleteAutoActiveFirstOptionExample } from './highlight-first-auto
 import { ButtonToggleFormsExample } from './button-toggle-with-forms';
 import { CheckboxReactiveFormsExample } from './checkbox-with-reactive-forms';
 import { ChipsFormControlExample } from './chips-with-form-control';
+import { DateRangePickerFormsExample } from './date-range-picker-forms-integration';
 
 @Component({
   selector: 'app-material-modernize',
@@ -11,8 +12,10 @@ import { ChipsFormControlExample } from './chips-with-form-control';
     ButtonToggleFormsExample,
     CheckboxReactiveFormsExample,
     ChipsFormControlExample,
+    DateRangePickerFormsExample,
   ],
   template: `
+    <date-range-picker-forms-example />
     <chips-form-control-example />
     <checkbox-reactive-forms-example />
     <button-toggle-forms-example />
