@@ -5,6 +5,7 @@ import { CheckboxReactiveFormsExample } from './checkbox-with-reactive-forms';
 import { ChipsFormControlExample } from './chips-with-form-control';
 import { DateRangePickerFormsExample } from './date-range-picker-forms-integration';
 import { FormFieldErrorExample } from './form-field-with-error-messages';
+import { InputClearableExample } from './input-with-a-clear-button';
 
 @Component({
   selector: 'app-material-modernize',
@@ -15,8 +16,10 @@ import { FormFieldErrorExample } from './form-field-with-error-messages';
     ChipsFormControlExample,
     DateRangePickerFormsExample,
     FormFieldErrorExample,
+    InputClearableExample,
   ],
   template: `
+    <input-clearable-example />
     <form-field-error-example />
     <date-range-picker-forms-example />
     <chips-form-control-example />
