@@ -4,6 +4,7 @@ import { FormPrimitiveExamples } from './forms/form-primitive-examples/form-prim
 import { ComplexTopics } from './forms/complex-topics';
 import { LargeFormSplittingStrategies } from './large-form/large-form-splitting-strategies';
 import { ShowingErrorsConditions } from './forms/showing-errors-conditions/showing-errors-conditions';
+import { MaterialModernize } from './forms/material-modernize/material-modernize';
 
 @Component({
   selector: 'app-root',
@@ -13,9 +14,13 @@ import { ShowingErrorsConditions } from './forms/showing-errors-conditions/showi
     ComplexTopics,
     LargeFormSplittingStrategies,
     ShowingErrorsConditions,
+    MaterialModernize,
   ],
   template: `
     <h1>Signal Forms Playground</h1>
+
+    <h2>Material Modernize examples</h2>
+    <app-material-modernize />
 
     <p>
       <a href="https://angular.dev/guide/forms/signals/overview" target="_blank">Signal Forms</a>
