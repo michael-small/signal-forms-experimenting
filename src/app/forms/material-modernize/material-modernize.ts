@@ -8,6 +8,7 @@ import { FormFieldErrorExample } from './form-field-with-error-messages';
 import { InputClearableExample } from './input-with-a-clear-button';
 import { RadioNgModelExample } from './radio-with-ngModel';
 import { SelectHintErrorExample } from './select-with-form-field-features';
+import { SlideToggleFormsExample } from './slide-toggle-with-forms';
 
 @Component({
   selector: 'app-material-modernize',
@@ -21,6 +22,7 @@ import { SelectHintErrorExample } from './select-with-form-field-features';
     InputClearableExample,
     RadioNgModelExample,
     SelectHintErrorExample,
+    SlideToggleFormsExample,
   ],
   template: `
     <em
@@ -28,6 +30,7 @@ import { SelectHintErrorExample } from './select-with-form-field-features';
       with signal forms and not reactive/template forms.</em
     >
 
+    <slide-toggle-forms-example />
     <select-hint-error-example />
     <radio-ng-model-example />
     <input-clearable-example />
