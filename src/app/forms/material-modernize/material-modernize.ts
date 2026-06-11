@@ -10,6 +10,7 @@ import { RadioNgModelExample } from './radio-with-ngModel';
 import { SelectHintErrorExample } from './select-with-form-field-features';
 import { SlideToggleFormsExample } from './slide-toggle-with-forms';
 import { SliderRangeExample } from './range-slider';
+import { TimepickerFormsExample } from './timepicker-forms-integration';
 
 @Component({
   selector: 'app-material-modernize',
@@ -25,6 +26,7 @@ import { SliderRangeExample } from './range-slider';
     SelectHintErrorExample,
     SlideToggleFormsExample,
     SliderRangeExample,
+    TimepickerFormsExample,
   ],
   template: `
     <em
@@ -32,6 +34,7 @@ import { SliderRangeExample } from './range-slider';
       with signal forms and not reactive/template forms.</em
     >
 
+    <timepicker-forms-example />
     <slider-range-example />
     <slide-toggle-forms-example />
     <select-hint-error-example />
