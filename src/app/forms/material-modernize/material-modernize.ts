@@ -6,6 +6,7 @@ import { ChipsFormControlExample } from './chips-with-form-control';
 import { DateRangePickerFormsExample } from './date-range-picker-forms-integration';
 import { FormFieldErrorExample } from './form-field-with-error-messages';
 import { InputClearableExample } from './input-with-a-clear-button';
+import { RadioNgModelExample } from './radio-with-ngModel';
 
 @Component({
   selector: 'app-material-modernize',
@@ -17,8 +18,15 @@ import { InputClearableExample } from './input-with-a-clear-button';
     DateRangePickerFormsExample,
     FormFieldErrorExample,
     InputClearableExample,
+    RadioNgModelExample,
   ],
   template: `
+    <em
+      >NOTE: I name these to be exactly what they were based on from the docs, even though these are
+      with signal forms and not reactive/template forms.</em
+    >
+
+    <radio-ng-model-example />
     <input-clearable-example />
     <form-field-error-example />
     <date-range-picker-forms-example />
