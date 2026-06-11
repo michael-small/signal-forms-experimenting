@@ -9,6 +9,7 @@ import { InputClearableExample } from './input-with-a-clear-button';
 import { RadioNgModelExample } from './radio-with-ngModel';
 import { SelectHintErrorExample } from './select-with-form-field-features';
 import { SlideToggleFormsExample } from './slide-toggle-with-forms';
+import { SliderRangeExample } from './range-slider';
 
 @Component({
   selector: 'app-material-modernize',
@@ -23,6 +24,7 @@ import { SlideToggleFormsExample } from './slide-toggle-with-forms';
     RadioNgModelExample,
     SelectHintErrorExample,
     SlideToggleFormsExample,
+    SliderRangeExample,
   ],
   template: `
     <em
@@ -30,6 +32,7 @@ import { SlideToggleFormsExample } from './slide-toggle-with-forms';
       with signal forms and not reactive/template forms.</em
     >
 
+    <slider-range-example />
     <slide-toggle-forms-example />
     <select-hint-error-example />
     <radio-ng-model-example />
