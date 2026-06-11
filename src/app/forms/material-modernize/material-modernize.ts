@@ -7,6 +7,7 @@ import { DateRangePickerFormsExample } from './date-range-picker-forms-integrati
 import { FormFieldErrorExample } from './form-field-with-error-messages';
 import { InputClearableExample } from './input-with-a-clear-button';
 import { RadioNgModelExample } from './radio-with-ngModel';
+import { SelectHintErrorExample } from './select-with-form-field-features';
 
 @Component({
   selector: 'app-material-modernize',
@@ -19,6 +20,7 @@ import { RadioNgModelExample } from './radio-with-ngModel';
     FormFieldErrorExample,
     InputClearableExample,
     RadioNgModelExample,
+    SelectHintErrorExample,
   ],
   template: `
     <em
@@ -26,6 +28,7 @@ import { RadioNgModelExample } from './radio-with-ngModel';
       with signal forms and not reactive/template forms.</em
     >
 
+    <select-hint-error-example />
     <radio-ng-model-example />
     <input-clearable-example />
     <form-field-error-example />
