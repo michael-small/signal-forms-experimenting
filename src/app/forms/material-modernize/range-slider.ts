@@ -28,7 +28,7 @@ import { MatSliderModule } from '@angular/material/slider';
   imports: [MatSliderModule, FormField],
 })
 export class SliderRangeExample {
-  form = form(signal(20000));
+  form = form(signal(0));
 
   formatLabel(value: number): string {
     if (value >= 1000) {
