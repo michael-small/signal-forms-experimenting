@@ -2,6 +2,7 @@ import { inject, linkedSignal, Service } from '@angular/core';
 import { form, hidden, min, readonly, required, type SchemaPathTree } from '@angular/forms/signals';
 import { defaultConditionalFormModel, type FormModel } from './form.model';
 import { Store } from './store';
+import { TableField } from './entity.model';
 
 @Service()
 export class FormService {
@@ -13,11 +14,11 @@ export class FormService {
    * - Projecting the store state to the form (the computation)
    * - Updating the store on form changes (set)
    */
-  protected formModel = linkedSignal<FormModel>(() => this.store.mapFormState(), {
+  protected formModel = linkedSignal<FormModel>(() => this.store.getFormModel(), {
     set: (value) => {
-      const { newFormValue, fieldToReset } = this.store.setFieldType(value);
+      const { newFormValue, fieldToReset } = this.setFieldType(value);
 
-      this.store.setFormState(newFormValue);
+      this.store.setFormModel(newFormValue);
 
       this.resetFormFields(fieldToReset);
     },
@@ -50,6 +51,54 @@ export class FormService {
     } else if (fieldsToReset === 'text') {
       this.form.text().reset(defaultConditionalFormModel.text);
     }
+  }
+
+  /**
+   * @description Determines fields to reset and new form value overall based off of new and old form value
+   */
+  private setFieldType(value: FormModel): {
+    newFormValue: FormModel;
+    fieldToReset: 'numbers' | 'text' | null;
+  } {
+    return this.#setFieldType(value, this.store.getFormModel(), this.store.dbFieldsValue());
+  }
+
+  #setFieldType(
+    value: FormModel,
+    formValue: FormModel,
+    dbFieldsValue: TableField[],
+  ): {
+    newFormValue: FormModel;
+    fieldToReset: 'numbers' | 'text' | null;
+  } {
+    const oldDbField = formValue.dbField;
+    const newDbField = value.dbField;
+
+    const prevDBField = dbFieldsValue?.find((field) => field.id === oldDbField);
+    const newDBField = dbFieldsValue?.find((field) => field.id === newDbField);
+
+    const newFormValueWithResets =
+      newDBField && newDBField !== prevDBField
+        ? {
+            ...value,
+            fieldType: newDBField?.type,
+            numbers:
+              newDBField?.type === 'number' ? value.numbers : defaultConditionalFormModel.numbers,
+            text: newDBField?.type === 'text' ? value.text : defaultConditionalFormModel.text,
+          }
+        : value;
+
+    let fieldToReset: 'numbers' | 'text' | null = null;
+    if (prevDBField?.type !== newDBField?.type) {
+      fieldToReset = newDBField?.type === 'number' ? 'text' : 'numbers';
+    } else if (prevDBField?.type === newDBField?.type) {
+      fieldToReset = null;
+    }
+
+    return {
+      newFormValue: newFormValueWithResets,
+      fieldToReset: fieldToReset,
+    };
   }
 }
 

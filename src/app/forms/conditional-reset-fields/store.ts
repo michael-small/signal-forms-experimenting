@@ -44,7 +44,7 @@ export const Store = signalStore(
         defaultValue: [],
       }),
       dbFields: rxResource({
-        params: () => store.formValue().dbTable,
+        params: () => store._formModelValue().dbTable,
         stream: (source) => store._dataService.getTableFields(source.params),
         defaultValue: [],
       }),
@@ -52,64 +52,12 @@ export const Store = signalStore(
     { errorHandling: 'previous value' },
   ),
   withMethods((store) => {
-    function setFieldType(value: FormModel): {
-      newFormValue: FormModel;
-      fieldToReset: 'numbers' | 'text' | null;
-    } {
-      return _setFieldType(value, store.formValue(), store.dbFieldsValue());
-    }
-
     function save() {
       return firstValueFrom(store._dataService.save(store.domainModel()));
     }
 
     return {
-      /**
-       * @description Determines fields to reset and new form value overall based off of new and old form value
-       */
-      setFieldType,
       save,
     };
   }),
 );
-
-/**
- * @description Determines fields to reset and new form value overall based off of new and old form value
- */
-function _setFieldType(
-  value: FormModel,
-  formValue: FormModel,
-  dbFieldsValue: TableField[],
-): {
-  newFormValue: FormModel;
-  fieldToReset: 'numbers' | 'text' | null;
-} {
-  const oldDbField = formValue.dbField;
-  const newDbField = value.dbField;
-
-  const prevDBField = dbFieldsValue?.find((field) => field.id === oldDbField);
-  const newDBField = dbFieldsValue?.find((field) => field.id === newDbField);
-
-  const newFormValueWithResets =
-    newDBField && newDBField !== prevDBField
-      ? {
-          ...value,
-          fieldType: newDBField?.type,
-          numbers:
-            newDBField?.type === 'number' ? value.numbers : defaultConditionalFormModel.numbers,
-          text: newDBField?.type === 'text' ? value.text : defaultConditionalFormModel.text,
-        }
-      : value;
-
-  let fieldToReset: 'numbers' | 'text' | null = null;
-  if (prevDBField?.type !== newDBField?.type) {
-    fieldToReset = newDBField?.type === 'number' ? 'text' : 'numbers';
-  } else if (prevDBField?.type === newDBField?.type) {
-    fieldToReset = null;
-  }
-
-  return {
-    newFormValue: newFormValueWithResets,
-    fieldToReset: fieldToReset,
-  };
-}
