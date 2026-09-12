@@ -1,15 +1,24 @@
-import { signalStore, withFeature, withMethods, withProps } from '@ngrx/signals';
+import {
+  signalStore,
+  withFeature,
+  withLinkedState,
+  withMethods,
+  withProps,
+  withState,
+} from '@ngrx/signals';
+import { querySchema } from './form.service';
 import { FormService } from './form.service';
 import { updateState, withDevtools, withResource } from '@ngrx-toolkit/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { EntityDataService } from './entity.service';
-import { computed, inject } from '@angular/core';
+import { computed, inject, linkedSignal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { defaultConditionalFormModel, FormModel } from './form.model';
 import { FormToDomain } from './form-to-domain';
 import { withFormState } from '../withFormState.store.feature';
 import { TempService } from './test';
 import { TableField } from './entity.model';
+import { form } from '@angular/forms/signals';
 
 /**
  * @description Unlike reactive forms, there is no `patchValue`/`setValue` layer.
@@ -19,7 +28,7 @@ import { TableField } from './entity.model';
  * In conjunction with 22.1's `linkedSignal` + `set` arg,
  * the form state is projected for the form and updates the store on form change.
  */
-export const Store = signalStore(
+export const FormStore = signalStore(
   { providedIn: 'root' },
   withProps(() => ({
     _dataService: inject(EntityDataService),
@@ -52,12 +61,22 @@ export const Store = signalStore(
     { errorHandling: 'previous value' },
   ),
   withMethods((store) => {
+    // TODO - how to add to the feature?
     function save() {
       return firstValueFrom(store._dataService.save(store.domainModel()));
     }
 
     return {
       save,
+    };
+  }),
+  // TODO - add to feature
+  withLinkedState((store) => {
+    const ls = linkedSignal(() => store._formModelValue());
+    const _form = form(ls, (schema) => querySchema(schema));
+
+    return {
+      fv: () => _form().value(),
     };
   }),
 );

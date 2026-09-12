@@ -1,12 +1,12 @@
 import { inject, linkedSignal, Service } from '@angular/core';
 import { form, hidden, min, readonly, required, type SchemaPathTree } from '@angular/forms/signals';
 import { defaultConditionalFormModel, type FormModel } from './form.model';
-import { Store } from './store';
+import { FormStore } from './store';
 import { TableField } from './entity.model';
 
 @Service()
 export class FormService {
-  protected readonly store = inject(Store);
+  protected readonly store = inject(FormStore);
 
   /**
    * @description Connects the form state to the store.
@@ -113,7 +113,7 @@ export class FormService {
  *
  * @see {@link} https://angular.dev/guide/forms/signals/form-logic#choose-between-hidden-disabled-and-readonly
  */
-const querySchema = (schema: SchemaPathTree<FormModel>) => {
+export const querySchema = (schema: SchemaPathTree<FormModel>) => {
   readonly(schema.fieldType);
 
   required(schema.dbTable, { message: 'DB Table is required' });

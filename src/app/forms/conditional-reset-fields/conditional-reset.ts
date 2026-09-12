@@ -11,7 +11,7 @@ import {
   SchemaPathTree,
 } from '@angular/forms/signals';
 import { numberComparators, textComparators } from './entity.model';
-import { Store } from './store';
+import { FormStore } from './store';
 import { defaultConditionalFormModel, FormModel } from './form.model';
 import { FormService } from './form.service';
 
@@ -21,7 +21,7 @@ import { FormService } from './form.service';
   templateUrl: './conditional-reset.html',
 })
 export class ConditionalReset {
-  protected readonly store = inject(Store);
+  protected readonly store = inject(FormStore);
   protected readonly formService = inject(FormService);
 
   protected readonly numberComparators = numberComparators;
