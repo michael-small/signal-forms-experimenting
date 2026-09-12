@@ -20,7 +20,7 @@ export function withFormState<DomainModel, FormModel>(args: {
   return signalStoreFeature(
     withResource(
       () => ({
-        form: rxResource({
+        _formModel: rxResource({
           stream: () => args.formDataStream.pipe(map((domain) => args.mapDomainToFormFn(domain))),
           defaultValue: args.defaultFormModel,
         }),
@@ -28,12 +28,12 @@ export function withFormState<DomainModel, FormModel>(args: {
       { errorHandling: 'previous value' },
     ),
     withMethods((store) => ({
-      mapFormState: () => store.formValue(),
-      setFormState: (formValue: FormModel) =>
-        updateState(store, 'set Form State', { formValue: formValue }),
+      getFormModel: () => store._formModelValue(),
+      setFormModel: (formValue: FormModel) =>
+        updateState(store, 'set Form State', { _formModelValue: formValue }),
     })),
     withComputed((store) => ({
-      domainModel: () => args.mapFormToDomainFn(store.formValue()),
+      domainModel: () => args.mapFormToDomainFn(store._formModelValue()),
     })),
   );
 }
