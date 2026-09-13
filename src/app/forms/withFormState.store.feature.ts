@@ -6,10 +6,11 @@ import {
   withHooks,
   withLinkedState,
   withMethods,
+  withProps,
 } from '@ngrx/signals';
 import { map, Observable } from 'rxjs';
 import { linkedSignal } from '@angular/core';
-import { form, SchemaPathTree } from '@angular/forms/signals';
+import { FieldTree, form, SchemaPathTree } from '@angular/forms/signals';
 
 /**
  * @description RxJS first feature for:
@@ -44,19 +45,26 @@ export function withFormState<DomainModel, FormModel>(args: {
     withComputed((store) => ({
       domainModel: () => args.mapFormToDomainFn(store._formModelValue()),
     })),
+    withProps((store) => ({
+      form: form(
+        linkedSignal(() => store._formModelValue()),
+        (schema) => args.schema(schema),
+      ),
+    })),
     withLinkedState((store) => {
-      const ls = linkedSignal(() => store._formModelValue());
-      const _form = form(ls, (schema) => args.schema(schema));
+      const _form = store.form;
 
       return {
         _formDevtoolsData: () => {
           const value = _form().value();
+          const valid = _form().valid();
           const dirty = _form().dirty();
+          const touched = _form().touched();
           const errorSummary = _form().errorSummary();
           const disabled = _form().disabled();
           const readonly = _form().readonly();
           const submitting = _form().submitting();
-          return { value, dirty, errorSummary, disabled, readonly, submitting };
+          return { value, valid, dirty, touched, errorSummary, disabled, readonly, submitting };
         },
       };
     }),

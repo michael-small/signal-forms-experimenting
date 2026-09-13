@@ -24,26 +24,7 @@ export class FormService {
     },
   });
 
-  public form = form<FormModel>(
-    this.formModel,
-    (schema) => {
-      // The schema could all be done inline,
-      // but this function allows cleaner declaration and possible re-use
-      return querySchema(schema);
-    },
-    {
-      submission: {
-        action: async () => {
-          // Error handling on save can differ a lot from app to app.
-          // In my everyday use, we tend to handle errors as side effects directly in the call
-          // to have clear spinner blocker and feedback via a snackbar.
-          // For other workflows, consider handling errors by this submit,
-          // returning a form submission error which can be shown in the UI.
-          await this.store.save();
-        },
-      },
-    },
-  );
+  public form = this.store.form;
 
   private resetFormFields(fieldsToReset: 'numbers' | 'text' | null) {
     if (fieldsToReset === 'numbers') {
