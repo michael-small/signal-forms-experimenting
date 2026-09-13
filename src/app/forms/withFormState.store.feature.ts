@@ -49,7 +49,15 @@ export function withFormState<DomainModel, FormModel>(args: {
       const _form = form(ls, (schema) => args.schema(schema));
 
       return {
-        _formValue: () => _form().value(),
+        _formDevtoolsData: () => {
+          const value = _form().value();
+          const dirty = _form().dirty();
+          const errorSummary = _form().errorSummary();
+          const disabled = _form().disabled();
+          const readonly = _form().readonly();
+          const submitting = _form().submitting();
+          return { value, dirty, errorSummary, disabled, readonly, submitting };
+        },
       };
     }),
   );
