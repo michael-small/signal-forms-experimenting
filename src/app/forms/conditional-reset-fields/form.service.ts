@@ -24,7 +24,7 @@ export class FormService {
    */
   protected formModel = linkedSignal<FormModel>(() => this.store.getFormModel(), {
     set: (value) => {
-      const { newFormValue, fieldToReset } = this.setFieldType(value);
+      const { newFormValue, fieldToReset } = this.deriveResetState(value);
 
       this.store.setFormModel(newFormValue);
 
@@ -64,14 +64,14 @@ export class FormService {
   /**
    * @description Determines fields to reset and new form value overall based off of new and old form value
    */
-  private setFieldType(value: FormModel): {
+  private deriveResetState(value: FormModel): {
     newFormValue: FormModel;
     fieldToReset: 'numbers' | 'text' | null;
   } {
-    return this.#setFieldType(value, this.store.getFormModel(), this.store.dbFieldsValue());
+    return this.#deriveResetState(value, this.store.getFormModel(), this.store.dbFieldsValue());
   }
 
-  #setFieldType(
+  #deriveResetState(
     value: FormModel,
     formValue: FormModel,
     dbFieldsValue: TableField[],
