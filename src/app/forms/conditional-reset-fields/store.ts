@@ -49,7 +49,7 @@ export const FormStore = signalStore(
       mapFormToDomainFn: (form) => store._formToDomain.mapFormModelToDomain(form, state()),
       schema: querySchema,
     });
-  }),
+  }), 
   withResource(
     (store) => ({
       dbTables: rxResource({

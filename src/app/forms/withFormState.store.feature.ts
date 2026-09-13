@@ -1,6 +1,7 @@
 import { updateState, withResource } from '@ngrx-toolkit/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import {
+  signalMethod,
   signalStoreFeature,
   withComputed,
   withHooks,
@@ -9,7 +10,7 @@ import {
   withProps,
 } from '@ngrx/signals';
 import { map, Observable } from 'rxjs';
-import { linkedSignal } from '@angular/core';
+import { linkedSignal, signal } from '@angular/core';
 import { FieldTree, form, SchemaPathTree } from '@angular/forms/signals';
 
 /**
@@ -46,32 +47,60 @@ export function withFormState<DomainModel, FormModel>(args: {
       domainModel: () => args.mapFormToDomainFn(store._formModelValue()),
     })),
     withProps((store) => ({
-      form: form(
+      _form: form(
         linkedSignal(() => store._formModelValue()),
         (schema) => args.schema(schema),
       ),
+      _dirty: signal(false),
+      _touched: signal(false),
+      _submitting: signal(false),
+    })),
+    withMethods((store) => ({
+      syncFormForDevtoolsTracking: signalMethod<{
+        form: FieldTree<FormModel, string | number, 'writable'>;
+        touched: boolean;
+        dirty: boolean;
+        submitting: boolean;
+      }>(
+        (f: {
+          form: FieldTree<FormModel, string | number, 'writable'>;
+          touched: boolean;
+          dirty: boolean;
+          submitting: boolean;
+        }) => {
+          store._form = f.form;
+          store._dirty.set(f.dirty);
+          store._touched.set(f.touched);
+          store._submitting.set(f.submitting);
+        },
+      ),
     })),
     withLinkedState((store) => {
-      const _form = store.form;
+      const _form = store._form;
+      const _dirty = store._dirty;
+      const _touched = store._touched;
+      const _submitting = store._submitting;
 
       return {
         // TODO - once I can pass in the `set` type behavior, sync to this
         _formDevtoolsData: () => {
           const value = _form().value();
           const valid = _form().valid();
-          // const dirty = _form().dirty();
-          // const touched = _form().touched();
+          const dirty = _dirty();
+          const touched = _touched();
           const errorSummary = _form().errorSummary();
           const disabled = _form().disabled();
           const readonly = _form().readonly();
-          // const submitting = _form().submitting();
+          const submitting = _submitting();
           return {
             value,
             valid,
-            /*dirty,*/ /*touched,*/ errorSummary,
+            dirty,
+            touched,
+            errorSummary,
             disabled,
             readonly,
-            // submitting,
+            submitting,
           };
         },
       };
