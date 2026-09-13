@@ -32,7 +32,11 @@ export class FormService {
     },
   });
 
-  public form = this.store.form;
+  public form = form<FormModel>(this.formModel, (schema) => {
+    // The schema could all be done inline,
+    // but this function allows cleaner declaration and possible re-use
+    return querySchema(schema);
+  });
 
   public async submit() {
     await submit(this.form, async (field) => {

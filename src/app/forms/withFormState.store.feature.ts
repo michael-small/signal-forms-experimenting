@@ -55,16 +55,24 @@ export function withFormState<DomainModel, FormModel>(args: {
       const _form = store.form;
 
       return {
+        // TODO - once I can pass in the `set` type behavior, sync to this
         _formDevtoolsData: () => {
           const value = _form().value();
           const valid = _form().valid();
-          const dirty = _form().dirty();
-          const touched = _form().touched();
+          // const dirty = _form().dirty();
+          // const touched = _form().touched();
           const errorSummary = _form().errorSummary();
           const disabled = _form().disabled();
           const readonly = _form().readonly();
-          const submitting = _form().submitting();
-          return { value, valid, dirty, touched, errorSummary, disabled, readonly, submitting };
+          // const submitting = _form().submitting();
+          return {
+            value,
+            valid,
+            /*dirty,*/ /*touched,*/ errorSummary,
+            disabled,
+            readonly,
+            // submitting,
+          };
         },
       };
     }),
