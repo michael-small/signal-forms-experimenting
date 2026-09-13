@@ -8,7 +8,7 @@ import {
 } from '@ngrx/signals';
 import { querySchema } from './form.service';
 import { FormService } from './form.service';
-import { updateState, withDevtools, withResource } from '@ngrx-toolkit/core';
+import { updateState, withDevtools, withMapper, withResource } from '@ngrx-toolkit/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { EntityDataService } from './entity.service';
 import { computed, inject, linkedSignal } from '@angular/core';
@@ -35,7 +35,10 @@ export const FormStore = signalStore(
     _formToDomain: inject(FormToDomain),
     _test: inject(TempService),
   })),
-  withDevtools('ConditionalResetFormStore'),
+  withDevtools(
+    'ConditionalResetFormStore',
+    withMapper((state) => ({ ...state, _formModelValue: '' })),
+  ),
   withFeature((store) => {
     const state = computed(() => store._test.val());
 
@@ -44,6 +47,7 @@ export const FormStore = signalStore(
       defaultFormModel: defaultConditionalFormModel,
       mapDomainToFormFn: (domain) => store._formToDomain.mapDomainToFormModel(domain),
       mapFormToDomainFn: (form) => store._formToDomain.mapFormModelToDomain(form, state()),
+      schema: querySchema,
     });
   }),
   withResource(
@@ -68,15 +72,6 @@ export const FormStore = signalStore(
 
     return {
       save,
-    };
-  }),
-  // TODO - add to feature
-  withLinkedState((store) => {
-    const ls = linkedSignal(() => store._formModelValue());
-    const _form = form(ls, (schema) => querySchema(schema));
-
-    return {
-      fv: () => _form().value(),
     };
   }),
 );

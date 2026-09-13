@@ -1,7 +1,15 @@
 import { updateState, withResource } from '@ngrx-toolkit/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { signalStoreFeature, withComputed, withHooks, withMethods } from '@ngrx/signals';
+import {
+  signalStoreFeature,
+  withComputed,
+  withHooks,
+  withLinkedState,
+  withMethods,
+} from '@ngrx/signals';
 import { map, Observable } from 'rxjs';
+import { linkedSignal } from '@angular/core';
+import { form, SchemaPathTree } from '@angular/forms/signals';
 
 /**
  * @description RxJS first feature for:
@@ -16,6 +24,7 @@ export function withFormState<DomainModel, FormModel>(args: {
   defaultFormModel: FormModel;
   mapDomainToFormFn: (domain: DomainModel, extras?: unknown) => FormModel;
   mapFormToDomainFn: (form: FormModel, extras?: unknown) => DomainModel;
+  schema: (schema: SchemaPathTree<FormModel>) => void;
 }) {
   return signalStoreFeature(
     withResource(
@@ -35,5 +44,13 @@ export function withFormState<DomainModel, FormModel>(args: {
     withComputed((store) => ({
       domainModel: () => args.mapFormToDomainFn(store._formModelValue()),
     })),
+    withLinkedState((store) => {
+      const ls = linkedSignal(() => store._formModelValue());
+      const _form = form(ls, (schema) => args.schema(schema));
+
+      return {
+        _formValue: () => _form().value(),
+      };
+    }),
   );
 }
