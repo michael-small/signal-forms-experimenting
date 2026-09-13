@@ -39,12 +39,12 @@ export class FormService {
   });
 
   constructor() {
-    this.store.syncFormForDevtoolsTracking(() => ({
-      form: this.form,
-      touched: this.form().touched(),
-      dirty: this.form().dirty(),
-      submitting: this.form().submitting(),
-    }));
+    // this.store.syncFormForDevtoolsTracking(() => ({
+    //   form: this.form,
+    //   touched: this.form().touched(),
+    //   dirty: this.form().dirty(),
+    //   submitting: this.form().submitting(),
+    // }));
   }
 
   public async submit() {

@@ -89,19 +89,19 @@ export function withFormState<DomainModel, FormModel>(args: {
           const valid = _form().valid();
           const dirty = _dirty() ?? functionMethodWarning;
           const touched = _touched() ?? functionMethodWarning;
+          const submitting = _submitting() ?? functionMethodWarning;
           const errorSummary = _form().errorSummary();
           const disabled = _form().disabled();
           const readonly = _form().readonly();
-          const submitting = _submitting() ?? functionMethodWarning;
           return {
             value,
             valid,
             dirty,
             touched,
+            submitting,
             errorSummary,
             disabled,
             readonly,
-            submitting,
           };
         },
       };
