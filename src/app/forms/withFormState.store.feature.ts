@@ -51,9 +51,9 @@ export function withFormState<DomainModel, FormModel>(args: {
         linkedSignal(() => store._formModelValue()),
         (schema) => args.schema(schema),
       ),
-      _dirty: signal(false),
-      _touched: signal(false),
-      _submitting: signal(false),
+      _dirty: signal<boolean | null>(null),
+      _touched: signal<boolean | null>(null),
+      _submitting: signal<boolean | null>(null),
     })),
     withMethods((store) => ({
       syncFormForDevtoolsTracking: signalMethod<{
@@ -81,17 +81,18 @@ export function withFormState<DomainModel, FormModel>(args: {
       const _touched = store._touched;
       const _submitting = store._submitting;
 
+      const functionMethodWarning = 'use sync fn';
       return {
         // TODO - once I can pass in the `set` type behavior, sync to this
         _formDevtoolsData: () => {
           const value = _form().value();
           const valid = _form().valid();
-          const dirty = _dirty();
-          const touched = _touched();
+          const dirty = _dirty() ?? functionMethodWarning;
+          const touched = _touched() ?? functionMethodWarning;
           const errorSummary = _form().errorSummary();
           const disabled = _form().disabled();
           const readonly = _form().readonly();
-          const submitting = _submitting();
+          const submitting = _submitting() ?? functionMethodWarning;
           return {
             value,
             valid,
