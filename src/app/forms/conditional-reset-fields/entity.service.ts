@@ -53,6 +53,6 @@ export class EntityDataService {
   }
 
   public save(data: DomainModel) {
-    return of(data).pipe(delay(500));
+    return of(data).pipe(delay(2000));
   }
 }

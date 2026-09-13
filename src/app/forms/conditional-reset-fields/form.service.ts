@@ -1,5 +1,13 @@
 import { inject, linkedSignal, Service } from '@angular/core';
-import { form, hidden, min, readonly, required, type SchemaPathTree } from '@angular/forms/signals';
+import {
+  form,
+  hidden,
+  min,
+  readonly,
+  required,
+  submit,
+  type SchemaPathTree,
+} from '@angular/forms/signals';
 import { defaultConditionalFormModel, type FormModel } from './form.model';
 import { FormStore } from './store';
 import { TableField } from './entity.model';
@@ -25,6 +33,12 @@ export class FormService {
   });
 
   public form = this.store.form;
+
+  public async submit() {
+    await submit(this.form, async (field) => {
+      await this.store.save();
+    });
+  }
 
   private resetFormFields(fieldsToReset: 'numbers' | 'text' | null) {
     if (fieldsToReset === 'numbers') {

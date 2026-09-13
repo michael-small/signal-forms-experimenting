@@ -46,7 +46,7 @@
         <input type="text" [formField]="form.text.value" />
     </label>
     }
-    <button type="submit" [disabled]="form().invalid()">Submit</button>
+    <button type="submit" [disabled]="form().invalid()" (click)="formService.submit()">Submit</button>
 
     <pre>Form Value: {{ form().value() | json }}</pre>
     <pre>Form Errors: {{ form().errorSummary() | json }}</pre>
