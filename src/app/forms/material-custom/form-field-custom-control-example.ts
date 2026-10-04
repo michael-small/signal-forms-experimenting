@@ -1,0 +1,93 @@
+import { JsonPipe } from '@angular/common';
+import { Component, effect, forwardRef, input, model, signal } from '@angular/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  apply,
+  email,
+  FormField,
+  FormValueControl,
+  form,
+  max,
+  min,
+  required,
+  ValidationError,
+} from '@angular/forms/signals';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { SignalFormControl } from '@angular/forms/signals/compat';
+import { schema } from '@angular/forms/signals';
+
+type EmailAgeValue = {
+  email: string;
+  age: number;
+};
+
+const defaultValue: EmailAgeValue = { email: '', age: 0 };
+
+export const emailAgeSchema = schema<EmailAgeValue>((value) => {
+  required(value.email, { message: 'Email is required' });
+  email(value.email, { message: 'Enter a valid email address' });
+  required(value.age, { message: 'Age is required' });
+  min(value.age, 18, { message: 'Age must be at least 18' });
+  max(value.age, 125, { message: 'Age must be no more than 125' });
+});
+
+/** @title Form field with custom email and age input control. */
+@Component({
+  selector: 'app-form-field-custom-control-example',
+  template: `
+    <app-example-email-age-input [formField]="signalForm.profile" />
+    <p>Entered value: {{ signalForm().value() | json }} {{ signalForm().valid() }}</p>
+
+    <form [formGroup]="reactiveForm">
+      <app-example-email-age-input [formField]="reactiveForm.controls.profile.fieldTree" />
+    </form>
+    <p>Entered value: {{ reactiveForm.value | json }} {{ reactiveForm.valid }}</p>
+  `,
+  imports: [FormField, forwardRef(() => EmailAgeInput), JsonPipe, ReactiveFormsModule],
+})
+export class FormFieldCustomControlExample {
+  readonly formModel = signal<{ profile: EmailAgeValue }>({
+    profile: defaultValue,
+  });
+
+  readonly signalForm = form(this.formModel, (schemaPath) => {
+    apply(schemaPath.profile, emailAgeSchema);
+  });
+
+  readonly reactiveForm = new FormGroup({
+    profile: new SignalFormControl<EmailAgeValue>(defaultValue, (value) => {
+      apply(value, emailAgeSchema);
+    }),
+  });
+}
+
+/** Custom form value control for email and age. */
+@Component({
+  selector: 'app-example-email-age-input',
+  template: `
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput type="email" [formField]="emailAgeForm.email" />
+      @for (item of emailAgeForm.email().errors(); track $index) {
+        <mat-error>{{ item.message }}</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Age</mat-label>
+      <input matInput type="number" [formField]="emailAgeForm.age" />
+      @for (item of emailAgeForm.age().errors(); track $index) {
+        <mat-error>{{ item.message }}</mat-error>
+      }
+    </mat-form-field>
+  `,
+  styleUrl: 'example-tel-input-example.css',
+  imports: [FormField, MatInput, MatError, MatFormField, ReactiveFormsModule, MatLabel],
+})
+export class EmailAgeInput implements FormValueControl<EmailAgeValue> {
+  readonly value = model<EmailAgeValue>(defaultValue);
+
+  readonly emailAgeForm = form(this.value, (schemaPath) => {
+    apply(schemaPath, emailAgeSchema);
+  });
+}
