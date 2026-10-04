@@ -41,13 +41,13 @@ export const nameSchema = schema<TelValue>((value) => {
 @Component({
   selector: 'app-form-field-custom-control-example',
   template: `
-    <app-example-tel-input [formField]="form.tel" />
-    <p>Entered value: {{ form().value() | json }} {{ form().valid() }}</p>
+    <app-example-tel-input [formField]="signalForm.tel" />
+    <p>Entered value: {{ signalForm().value() | json }} {{ signalForm().valid() }}</p>
 
-    <form [formGroup]="altFormGroup">
-      <app-example-tel-input [formField]="areaCtrl.fieldTree" />
+    <form [formGroup]="reactiveForm">
+      <app-example-tel-input [formField]="reactiveForm.controls.tel.fieldTree" />
     </form>
-    <p>Entered value: {{ altFormGroup.value | json }} {{ altFormGroup.valid }}</p>
+    <p>Entered value: {{ reactiveForm.value | json }} {{ reactiveForm.valid }}</p>
   `,
   imports: [FormField, forwardRef(() => MyTelInput), JsonPipe, ReactiveFormsModule],
 })
@@ -59,18 +59,14 @@ export class FormFieldCustomControlExample {
     },
   });
 
-  readonly form = form(this.formModel, (schemaPath) => {
+  readonly signalForm = form(this.formModel, (schemaPath) => {
     apply(schemaPath.tel, nameSchema);
   });
 
-  readonly areaCtrl = new SignalFormControl<TelValue>({ area: '', name: '' }, (value) => {
-    apply(value, nameSchema);
-  });
-
-  readonly altForm = this.areaCtrl;
-
-  readonly altFormGroup = new FormGroup({
-    tel: this.areaCtrl,
+  readonly reactiveForm = new FormGroup({
+    tel: new SignalFormControl<TelValue>({ area: '', name: '' }, (value) => {
+      apply(value, nameSchema);
+    }),
   });
 }
 
@@ -81,9 +77,11 @@ export class FormFieldCustomControlExample {
     <mat-form-field>
       <mat-label>Area code</mat-label>
       <input matInput [formField]="parts.area" />
-      <mat-hint>Include area code</mat-hint>
       @if (parts.area().getError('required')) {
         <mat-error>required</mat-error>
+      }
+      @if (parts.area().getError('minLength'); as minLengthError) {
+        <mat-error>Minimum length is {{ minLengthError.minLength }}</mat-error>
       }
     </mat-form-field>
     <mat-form-field>
@@ -91,6 +89,9 @@ export class FormFieldCustomControlExample {
       <input matInput [formField]="parts.name" />
       @if (parts.name().getError('required')) {
         <mat-error>required</mat-error>
+      }
+      @if (parts.name().getError('minLength'); as minLengthError) {
+        <mat-error>Minimum length is {{ minLengthError.minLength }}</mat-error>
       }
     </mat-form-field>
   `,
