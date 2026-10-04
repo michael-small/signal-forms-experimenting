@@ -1,6 +1,6 @@
 import { JsonPipe } from '@angular/common';
 import { Component, effect, forwardRef, model, signal, untracked } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import {
   form,
   FormField,
@@ -15,42 +15,45 @@ import { MatInput } from '@angular/material/input';
 import { SignalFormControl } from '@angular/forms/signals/compat';
 import { schema } from '@angular/forms/signals';
 
-export const nameSchema = schema<string>((name) => {
-  required(name);
-  minLength(name, 3);
-  maxLength(name, 3);
+type TelValue = {
+  area: string;
+  name: string;
+};
+
+export const nameSchema = schema<TelValue>((value) => {
+  required(value.area);
+  minLength(value.area, 3);
+  maxLength(value.area, 3);
+  required(value.name);
 });
 
 /** @title Form field with custom telephone number input control. */
 @Component({
   selector: 'app-form-field-custom-control-example',
   template: `
-    <app-example-tel-input [formField]="form.area" />
+    <app-example-tel-input [formField]="form" />
     <p>Entered value: {{ form().value() | json }} {{ form().valid() }}</p>
 
-    <form [formGroup]="altForm">
-      <app-example-tel-input [formField]="areaCtrl.fieldTree" />
-    </form>
+    <app-example-tel-input [formField]="areaCtrl.fieldTree" />
     <p>Entered value: {{ altForm.value | json }} {{ altForm.valid }}</p>
   `,
   imports: [FormField, forwardRef(() => MyTelInput), JsonPipe, ReactiveFormsModule],
 })
 export class FormFieldCustomControlExample {
-  readonly formModel = signal<{ area: string }>({
+  readonly formModel = signal<TelValue>({
     area: '',
+    name: '',
   });
 
   readonly form = form(this.formModel, (schemaPath) => {
-    apply(schemaPath.area, nameSchema);
+    apply(schemaPath, nameSchema);
   });
 
-  readonly areaCtrl = new SignalFormControl('', (area) => {
-    apply(area, nameSchema);
+  readonly areaCtrl = new SignalFormControl<TelValue>({ area: '', name: '' }, (value) => {
+    apply(value, nameSchema);
   });
 
-  readonly altForm = new FormGroup({
-    area: this.areaCtrl,
-  });
+  readonly altForm = this.areaCtrl;
 }
 
 /** Custom `MatFormFieldControl` for telephone number input. */
@@ -58,10 +61,17 @@ export class FormFieldCustomControlExample {
   selector: 'app-example-tel-input',
   template: `
     <mat-form-field>
-      <mat-label>Phone number</mat-label>
+      <mat-label>Area code</mat-label>
       <input matInput [formField]="parts.area" />
       <mat-hint>Include area code</mat-hint>
       @if (parts.area().getError('required')) {
+        <mat-error>required</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput [formField]="parts.name" />
+      @if (parts.name().getError('required')) {
         <mat-error>required</mat-error>
       }
     </mat-form-field>
@@ -69,29 +79,29 @@ export class FormFieldCustomControlExample {
   styleUrl: 'example-tel-input-example.css',
   imports: [FormField, MatInput, MatError, MatFormField, ReactiveFormsModule, MatLabel, MatHint],
 })
-export class MyTelInput implements FormValueControl<string> {
-  readonly partsModel = signal({
+export class MyTelInput implements FormValueControl<TelValue> {
+  readonly partsModel = signal<TelValue>({
     area: '',
+    name: '',
   });
 
   readonly parts = form(this.partsModel, (schemaPath) => {
-    apply(schemaPath.area, nameSchema);
+    apply(schemaPath, nameSchema);
   });
 
-  readonly value = model('');
+  readonly value = model<TelValue>({ area: '', name: '' });
 
   constructor() {
     effect(() => {
-      const { area } = this.partsModel();
-      this.value.set(area);
+      this.value.set(this.partsModel());
     });
 
     effect(() => {
-      const area = this.value();
+      const value = this.value();
       untracked(() => {
         const current = this.partsModel();
-        if (current.area !== area) {
-          this.partsModel.set({ area });
+        if (current.area !== value.area || current.name !== value.name) {
+          this.partsModel.set(value);
         }
       });
     });
