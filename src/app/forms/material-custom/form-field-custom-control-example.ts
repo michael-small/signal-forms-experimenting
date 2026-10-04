@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component, forwardRef, input, model, signal } from '@angular/core';
+import { Component, effect, forwardRef, input, model, signal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
   apply,
@@ -25,11 +25,11 @@ type EmailAgeValue = {
 const defaultValue: EmailAgeValue = { email: '', age: 0 };
 
 export const emailAgeSchema = schema<EmailAgeValue>((value) => {
-  required(value.email);
-  email(value.email);
-  required(value.age);
-  min(value.age, 18);
-  max(value.age, 125);
+  required(value.email, { message: 'Email is required' });
+  email(value.email, { message: 'Enter a valid email address' });
+  required(value.age, { message: 'Age is required' });
+  min(value.age, 18, { message: 'Age must be at least 18' });
+  max(value.age, 125, { message: 'Age must be no more than 125' });
 });
 
 /** @title Form field with custom email and age input control. */
@@ -69,27 +69,15 @@ export class FormFieldCustomControlExample {
     <mat-form-field>
       <mat-label>Email</mat-label>
       <input matInput type="email" [formField]="emailAgeForm.email" />
-      @if (emailAgeForm.email().getError('required')) {
-        <mat-error>Email is required</mat-error>
-      }
-      @if (emailAgeForm.email().getError('email')) {
-        <mat-error>Enter a valid email address</mat-error>
-      }
-      @for (error of errors(); track error.kind) {
-        <mat-error>{{ error.message }}</mat-error>
+      @for (item of emailAgeForm.email().errors(); track $index) {
+        <mat-error>{{ item.message }}</mat-error>
       }
     </mat-form-field>
     <mat-form-field>
       <mat-label>Age</mat-label>
       <input matInput type="number" [formField]="emailAgeForm.age" />
-      @if (emailAgeForm.age().getError('required')) {
-        <mat-error>Age is required</mat-error>
-      }
-      @if (emailAgeForm.age().getError('min'); as minError) {
-        <mat-error>Age must be at least {{ minError.min }}</mat-error>
-      }
-      @if (emailAgeForm.age().getError('max'); as maxError) {
-        <mat-error>Age must be no more than {{ maxError.max }}</mat-error>
+      @for (item of emailAgeForm.age().errors(); track $index) {
+        <mat-error>{{ item.message }}</mat-error>
       }
     </mat-form-field>
   `,
@@ -102,6 +90,4 @@ export class EmailAgeInput implements FormValueControl<EmailAgeValue> {
   readonly emailAgeForm = form(this.value, (schemaPath) => {
     apply(schemaPath, emailAgeSchema);
   });
-
-  readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
 }
