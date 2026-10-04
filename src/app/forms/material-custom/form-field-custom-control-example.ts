@@ -8,7 +8,7 @@ import {
   signal,
   untracked,
 } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
   form,
   FormField,
@@ -41,22 +41,26 @@ export const nameSchema = schema<TelValue>((value) => {
 @Component({
   selector: 'app-form-field-custom-control-example',
   template: `
-    <app-example-tel-input [formField]="form" />
+    <app-example-tel-input [formField]="form.tel" />
     <p>Entered value: {{ form().value() | json }} {{ form().valid() }}</p>
 
-    <app-example-tel-input [formField]="areaCtrl.fieldTree" />
-    <p>Entered value: {{ altForm.value | json }} {{ altForm.valid }}</p>
+    <form [formGroup]="altFormGroup">
+      <app-example-tel-input [formField]="areaCtrl.fieldTree" />
+    </form>
+    <p>Entered value: {{ altFormGroup.value | json }} {{ altFormGroup.valid }}</p>
   `,
   imports: [FormField, forwardRef(() => MyTelInput), JsonPipe, ReactiveFormsModule],
 })
 export class FormFieldCustomControlExample {
-  readonly formModel = signal<TelValue>({
-    area: '',
-    name: '',
+  readonly formModel = signal<{ tel: TelValue }>({
+    tel: {
+      area: '',
+      name: '',
+    },
   });
 
   readonly form = form(this.formModel, (schemaPath) => {
-    apply(schemaPath, nameSchema);
+    apply(schemaPath.tel, nameSchema);
   });
 
   readonly areaCtrl = new SignalFormControl<TelValue>({ area: '', name: '' }, (value) => {
@@ -64,6 +68,10 @@ export class FormFieldCustomControlExample {
   });
 
   readonly altForm = this.areaCtrl;
+
+  readonly altFormGroup = new FormGroup({
+    tel: this.areaCtrl,
+  });
 }
 
 /** Custom `MatFormFieldControl` for telephone number input. */
