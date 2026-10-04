@@ -1,121 +1,107 @@
 import { JsonPipe } from '@angular/common';
-import {
-  Component,
-  effect,
-  forwardRef,
-  linkedSignal,
-  model,
-  signal,
-  untracked,
-} from '@angular/core';
+import { Component, forwardRef, input, model, signal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
-  form,
-  FormField,
-  maxLength,
-  minLength,
-  required,
-  FormValueControl,
   apply,
+  email,
+  FormField,
+  FormValueControl,
+  form,
+  max,
+  min,
+  required,
+  ValidationError,
 } from '@angular/forms/signals';
-import { MatFormField, MatHint, MatLabel, MatError } from '@angular/material/form-field';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { SignalFormControl } from '@angular/forms/signals/compat';
 import { schema } from '@angular/forms/signals';
 
-type TelValue = {
-  area: string;
-  name: string;
+type EmailAgeValue = {
+  email: string;
+  age: number;
 };
 
-export const nameSchema = schema<TelValue>((value) => {
-  required(value.area);
-  minLength(value.area, 2);
-  maxLength(value.area, 3);
-  required(value.name);
-  minLength(value.name, 2);
-  maxLength(value.name, 3);
+const defaultValue: EmailAgeValue = { email: '', age: 0 };
+
+export const emailAgeSchema = schema<EmailAgeValue>((value) => {
+  required(value.email);
+  email(value.email);
+  required(value.age);
+  min(value.age, 18);
+  max(value.age, 125);
 });
 
-/** @title Form field with custom telephone number input control. */
+/** @title Form field with custom email and age input control. */
 @Component({
   selector: 'app-form-field-custom-control-example',
   template: `
-    <app-example-tel-input [formField]="signalForm.tel" />
+    <app-example-email-age-input [formField]="signalForm.profile" />
     <p>Entered value: {{ signalForm().value() | json }} {{ signalForm().valid() }}</p>
 
     <form [formGroup]="reactiveForm">
-      <app-example-tel-input [formField]="reactiveForm.controls.tel.fieldTree" />
+      <app-example-email-age-input [formField]="reactiveForm.controls.profile.fieldTree" />
     </form>
     <p>Entered value: {{ reactiveForm.value | json }} {{ reactiveForm.valid }}</p>
   `,
-  imports: [FormField, forwardRef(() => MyTelInput), JsonPipe, ReactiveFormsModule],
+  imports: [FormField, forwardRef(() => EmailAgeInput), JsonPipe, ReactiveFormsModule],
 })
 export class FormFieldCustomControlExample {
-  readonly formModel = signal<{ tel: TelValue }>({
-    tel: {
-      area: '',
-      name: '',
-    },
+  readonly formModel = signal<{ profile: EmailAgeValue }>({
+    profile: defaultValue,
   });
 
   readonly signalForm = form(this.formModel, (schemaPath) => {
-    apply(schemaPath.tel, nameSchema);
+    apply(schemaPath.profile, emailAgeSchema);
   });
 
   readonly reactiveForm = new FormGroup({
-    tel: new SignalFormControl<TelValue>({ area: '', name: '' }, (value) => {
-      apply(value, nameSchema);
+    profile: new SignalFormControl<EmailAgeValue>(defaultValue, (value) => {
+      apply(value, emailAgeSchema);
     }),
   });
 }
 
-/** Custom `MatFormFieldControl` for telephone number input. */
+/** Custom form value control for email and age. */
 @Component({
-  selector: 'app-example-tel-input',
+  selector: 'app-example-email-age-input',
   template: `
     <mat-form-field>
-      <mat-label>Area code</mat-label>
-      <input matInput [formField]="parts.area" />
-      @if (parts.area().getError('required')) {
-        <mat-error>required</mat-error>
+      <mat-label>Email</mat-label>
+      <input matInput type="email" [formField]="emailAgeForm.email" />
+      @if (emailAgeForm.email().getError('required')) {
+        <mat-error>Email is required</mat-error>
       }
-      @if (parts.area().getError('minLength'); as minLengthError) {
-        <mat-error>Minimum length is {{ minLengthError.minLength }}</mat-error>
+      @if (emailAgeForm.email().getError('email')) {
+        <mat-error>Enter a valid email address</mat-error>
+      }
+      @for (error of errors(); track error.kind) {
+        <mat-error>{{ error.message }}</mat-error>
       }
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Name</mat-label>
-      <input matInput [formField]="parts.name" />
-      @if (parts.name().getError('required')) {
-        <mat-error>required</mat-error>
+      <mat-label>Age</mat-label>
+      <input matInput type="number" [formField]="emailAgeForm.age" />
+      @if (emailAgeForm.age().getError('required')) {
+        <mat-error>Age is required</mat-error>
       }
-      @if (parts.name().getError('minLength'); as minLengthError) {
-        <mat-error>Minimum length is {{ minLengthError.minLength }}</mat-error>
+      @if (emailAgeForm.age().getError('min'); as minError) {
+        <mat-error>Age must be at least {{ minError.min }}</mat-error>
+      }
+      @if (emailAgeForm.age().getError('max'); as maxError) {
+        <mat-error>Age must be no more than {{ maxError.max }}</mat-error>
       }
     </mat-form-field>
   `,
   styleUrl: 'example-tel-input-example.css',
-  imports: [FormField, MatInput, MatError, MatFormField, ReactiveFormsModule, MatLabel, MatHint],
+  imports: [FormField, MatInput, MatError, MatFormField, ReactiveFormsModule, MatLabel],
 })
-export class MyTelInput implements FormValueControl<TelValue> {
-  readonly partsModel = linkedSignal(
-    () => {
-      return {
-        area: this.value().area,
-        name: this.value().name,
-      };
-    },
-    {
-      set: (value) => {
-        this.value.set(value);
-      },
-    },
-  );
+export class EmailAgeInput implements FormValueControl<EmailAgeValue> {
+  readonly value = model<EmailAgeValue>(defaultValue);
 
-  readonly parts = form(this.partsModel, (schemaPath) => {
-    apply(schemaPath, nameSchema);
+  readonly emailAgeForm = form(this.value, (schemaPath) => {
+    apply(schemaPath, emailAgeSchema);
   });
 
-  readonly value = model<TelValue>({ area: '', name: '' });
+  readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
 }
