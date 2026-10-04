@@ -42,13 +42,19 @@ export const emailAgeSchema = schema<EmailAgeValue>((path) => {
 @Component({
   selector: 'app-form-field-custom-control-example',
   template: `
-    <app-example-email-age-input [formField]="signalForm.profile" />
-    <p>Entered value: {{ signalForm().value() | json }} {{ signalForm().valid() }}</p>
+    <h2>Reactive Form + Signal Form both using a custom Material form component</h2>
 
+    <h3>Signal Form</h3>
+    <app-example-email-age-input [formField]="signalForm.profile" />
+    <pre>Entered value: {{ signalForm().value() | json }}</pre>
+    <p>Valid: {{ signalForm().valid() }}</p>
+
+    <h3>Reactive Form</h3>
     <form [formGroup]="reactiveForm">
       <app-example-email-age-input [formField]="reactiveForm.controls.profile.fieldTree" />
     </form>
-    <p>Entered value: {{ reactiveForm.value | json }} {{ reactiveForm.valid }}</p>
+    <pre>Entered value: {{ reactiveForm.value | json }}</pre>
+    <p>Valid: {{ reactiveForm.valid }}</p>
   `,
   imports: [FormField, forwardRef(() => EmailAgeInput), JsonPipe, ReactiveFormsModule],
 })
