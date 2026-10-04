@@ -5,6 +5,7 @@ import { ComplexTopics } from './forms/complex-topics';
 import { LargeFormSplittingStrategies } from './large-form/large-form-splitting-strategies';
 import { ShowingErrorsConditions } from './forms/showing-errors-conditions/showing-errors-conditions';
 import { MaterialModernize } from './forms/material-modernize/material-modernize';
+import { FormFieldCustomControlExample } from './forms/material-custom/form-field-custom-control-example';
 
 @Component({
   selector: 'app-root',
@@ -15,9 +16,12 @@ import { MaterialModernize } from './forms/material-modernize/material-modernize
     LargeFormSplittingStrategies,
     ShowingErrorsConditions,
     MaterialModernize,
+    FormFieldCustomControlExample,
   ],
   template: `
     <h1>Signal Forms Playground</h1>
+
+    <app-form-field-custom-control-example />
 
     <p>
       <a href="https://angular.dev/guide/forms/signals/overview" target="_blank">Signal Forms</a>
