@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component, effect, forwardRef, input, model, signal } from '@angular/core';
+import { Component, forwardRef, model, signal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
   apply,
@@ -10,7 +10,7 @@ import {
   max,
   min,
   required,
-  ValidationError,
+  validate,
 } from '@angular/forms/signals';
 import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -24,12 +24,18 @@ type EmailAgeValue = {
 
 const defaultValue: EmailAgeValue = { email: '', age: 0 };
 
-export const emailAgeSchema = schema<EmailAgeValue>((value) => {
-  required(value.email, { message: 'Email is required' });
-  email(value.email, { message: 'Enter a valid email address' });
-  required(value.age, { message: 'Age is required' });
-  min(value.age, 18, { message: 'Age must be at least 18' });
-  max(value.age, 125, { message: 'Age must be no more than 125' });
+export const emailAgeSchema = schema<EmailAgeValue>((path) => {
+  required(path.email, { message: 'Email is required' });
+  email(path.email, { message: 'Enter a valid email address' });
+  required(path.age, { message: 'Age is required' });
+  min(path.age, 18, { message: 'Age must be at least 18' });
+  max(path.age, 125, { message: 'Age must be no more than 125' });
+  validate(path, ({ valueOf }) => {
+    if (valueOf(path.email) === '' && valueOf(path.age) === 0) {
+      return { kind: 'validation', message: 'Either email or age must be provided' };
+    }
+    return null;
+  });
 });
 
 /** @title Form field with custom email and age input control. */
@@ -80,6 +86,10 @@ export class FormFieldCustomControlExample {
         <mat-error>{{ item.message }}</mat-error>
       }
     </mat-form-field>
+
+    @if (emailAgeForm().getError('validation'); as error) {
+      <p style="color: red;">{{ error.message }}</p>
+    }
   `,
   styleUrl: 'example-tel-input-example.css',
   imports: [FormField, MatInput, MatError, MatFormField, ReactiveFormsModule, MatLabel],
