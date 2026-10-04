@@ -1,5 +1,13 @@
 import { JsonPipe } from '@angular/common';
-import { Component, effect, forwardRef, model, signal, untracked } from '@angular/core';
+import {
+  Component,
+  effect,
+  forwardRef,
+  linkedSignal,
+  model,
+  signal,
+  untracked,
+} from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   form,
@@ -22,9 +30,11 @@ type TelValue = {
 
 export const nameSchema = schema<TelValue>((value) => {
   required(value.area);
-  minLength(value.area, 3);
+  minLength(value.area, 2);
   maxLength(value.area, 3);
   required(value.name);
+  minLength(value.name, 2);
+  maxLength(value.name, 3);
 });
 
 /** @title Form field with custom telephone number input control. */
@@ -80,30 +90,23 @@ export class FormFieldCustomControlExample {
   imports: [FormField, MatInput, MatError, MatFormField, ReactiveFormsModule, MatLabel, MatHint],
 })
 export class MyTelInput implements FormValueControl<TelValue> {
-  readonly partsModel = signal<TelValue>({
-    area: '',
-    name: '',
-  });
+  readonly partsModel = linkedSignal(
+    () => {
+      return {
+        area: this.value().area,
+        name: this.value().name,
+      };
+    },
+    {
+      set: (value) => {
+        this.value.set(value);
+      },
+    },
+  );
 
   readonly parts = form(this.partsModel, (schemaPath) => {
     apply(schemaPath, nameSchema);
   });
 
   readonly value = model<TelValue>({ area: '', name: '' });
-
-  constructor() {
-    effect(() => {
-      this.value.set(this.partsModel());
-    });
-
-    effect(() => {
-      const value = this.value();
-      untracked(() => {
-        const current = this.partsModel();
-        if (current.area !== value.area || current.name !== value.name) {
-          this.partsModel.set(value);
-        }
-      });
-    });
-  }
 }
