@@ -26,6 +26,8 @@ import {
   Schema,
   minLength,
   maxLength,
+  applyWhen,
+  disabled,
 } from '@angular/forms/signals';
 import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -135,12 +137,24 @@ export class EmailAgeInput implements FormValueControl<EmailAgeValue>, OnInit {
   private readonly injector = inject(Injector);
   emailAgeForm!: FieldTree<EmailAgeValue>;
 
+  loading = signal(true);
+
+  constructor() {
+    setTimeout(() => {
+      this.loading.set(false);
+    }, 5000);
+  }
   // Weird, but allows using a dynamic schema without more complicated stuff
   ngOnInit(): void {
     this.emailAgeForm = form(
       this.value,
       (schemaPath) => {
         apply(schemaPath, this.schema());
+        applyWhen(
+          schemaPath.age,
+          () => this.loading(),
+          (age) => disabled(age),
+        );
       },
       { injector: this.injector },
     );
