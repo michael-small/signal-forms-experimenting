@@ -61,6 +61,28 @@ export const emailAgeSchema = schema<EmailAgeValue>((path) => {
   maxLength(path.email, 12, { message: 'Email must be no more than 50 characters' });
 });
 
+function testSchema(loading: () => boolean) {
+  return schema<EmailAgeValue>((path) => {
+    required(path.email, { message: 'Email is required' });
+    email(path.email, { message: 'Enter a valid email address' });
+    required(path.age, { message: 'Age is required' });
+    min(path.age, 18, { message: 'Age must be at least 18' });
+    max(path.age, 125, { message: 'Age must be no more than 125' });
+    validate(path, ({ valueOf }) => {
+      if (valueOf(path.email) === '' && valueOf(path.age) === 0) {
+        return { kind: 'validation', message: 'Either email or age must be provided' };
+      }
+      return null;
+    });
+    maxLength(path.email, 12, { message: 'Email must be no more than 50 characters' });
+    applyWhen(
+      path.age,
+      () => loading(),
+      (age) => disabled(age),
+    );
+  });
+}
+
 /** @title Form field with custom email and age input control. */
 @Component({
   selector: 'app-form-field-custom-control-example',
@@ -85,7 +107,15 @@ export const emailAgeSchema = schema<EmailAgeValue>((path) => {
   imports: [FormField, forwardRef(() => EmailAgeInput), JsonPipe, ReactiveFormsModule],
 })
 export class FormFieldCustomControlExample {
-  protected readonly emailAgeSchema = emailAgeSchema;
+  loading = signal(true);
+
+  constructor() {
+    setTimeout(() => {
+      this.loading.set(false);
+    }, 5000);
+  }
+
+  protected readonly emailAgeSchema = testSchema(() => this.loading());
 
   readonly formModel = signal<{ profile: EmailAgeValue }>({
     profile: defaultValue,
@@ -137,24 +167,12 @@ export class EmailAgeInput implements FormValueControl<EmailAgeValue>, OnInit {
   private readonly injector = inject(Injector);
   emailAgeForm!: FieldTree<EmailAgeValue>;
 
-  loading = signal(true);
-
-  constructor() {
-    setTimeout(() => {
-      this.loading.set(false);
-    }, 5000);
-  }
   // Weird, but allows using a dynamic schema without more complicated stuff
   ngOnInit(): void {
     this.emailAgeForm = form(
       this.value,
       (schemaPath) => {
         apply(schemaPath, this.schema());
-        applyWhen(
-          schemaPath.age,
-          () => this.loading(),
-          (age) => disabled(age),
-        );
       },
       { injector: this.injector },
     );
