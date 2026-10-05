@@ -1,16 +1,31 @@
 import { JsonPipe } from '@angular/common';
-import { Component, forwardRef, model, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  forwardRef,
+  inject,
+  Injector,
+  input,
+  model,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
   apply,
   email,
   FormField,
+  FieldTree,
   FormValueControl,
   form,
   max,
   min,
   required,
   validate,
+  Schema,
+  minLength,
+  maxLength,
 } from '@angular/forms/signals';
 import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -24,6 +39,11 @@ type EmailAgeValue = {
 
 const defaultValue: EmailAgeValue = { email: '', age: 0 };
 
+export const emailSchema = schema<EmailAgeValue>((path) => {
+  required(path.email, { message: 'Email is required' });
+  email(path.email, { message: 'Enter a valid email address' });
+});
+
 export const emailAgeSchema = schema<EmailAgeValue>((path) => {
   required(path.email, { message: 'Email is required' });
   email(path.email, { message: 'Enter a valid email address' });
@@ -36,6 +56,7 @@ export const emailAgeSchema = schema<EmailAgeValue>((path) => {
     }
     return null;
   });
+  maxLength(path.email, 12, { message: 'Email must be no more than 50 characters' });
 });
 
 /** @title Form field with custom email and age input control. */
@@ -45,13 +66,16 @@ export const emailAgeSchema = schema<EmailAgeValue>((path) => {
     <h2>Reactive Form + Signal Form both using a custom Material form component</h2>
 
     <h3>Signal Form</h3>
-    <app-example-email-age-input [formField]="signalForm.profile" />
+    <app-example-email-age-input [formField]="signalForm.profile" [schema]="emailAgeSchema" />
     <pre>Entered value: {{ signalForm().value() | json }}</pre>
     <p>Valid: {{ signalForm().valid() }}</p>
 
     <h3>Reactive Form</h3>
     <form [formGroup]="reactiveForm">
-      <app-example-email-age-input [formField]="reactiveForm.controls.profile.fieldTree" />
+      <app-example-email-age-input
+        [formField]="reactiveForm.controls.profile.fieldTree"
+        [schema]="emailAgeSchema"
+      />
     </form>
     <pre>Entered value: {{ reactiveForm.value | json }}</pre>
     <p>Valid: {{ reactiveForm.valid }}</p>
@@ -59,6 +83,8 @@ export const emailAgeSchema = schema<EmailAgeValue>((path) => {
   imports: [FormField, forwardRef(() => EmailAgeInput), JsonPipe, ReactiveFormsModule],
 })
 export class FormFieldCustomControlExample {
+  protected readonly emailAgeSchema = emailAgeSchema;
+
   readonly formModel = signal<{ profile: EmailAgeValue }>({
     profile: defaultValue,
   });
@@ -78,32 +104,45 @@ export class FormFieldCustomControlExample {
 @Component({
   selector: 'app-example-email-age-input',
   template: `
-    <mat-form-field>
-      <mat-label>Email</mat-label>
-      <input matInput type="email" [formField]="emailAgeForm.email" />
-      @for (item of emailAgeForm.email().errors(); track $index) {
-        <mat-error>{{ item.message }}</mat-error>
-      }
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Age</mat-label>
-      <input matInput type="number" [formField]="emailAgeForm.age" />
-      @for (item of emailAgeForm.age().errors(); track $index) {
-        <mat-error>{{ item.message }}</mat-error>
-      }
-    </mat-form-field>
+    @if (!!emailAgeForm) {
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput type="email" [formField]="emailAgeForm.email" />
+        @for (item of emailAgeForm.email().errors(); track $index) {
+          <mat-error>{{ item.message }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Age</mat-label>
+        <input matInput type="number" [formField]="emailAgeForm.age" />
+        @for (item of emailAgeForm.age().errors(); track $index) {
+          <mat-error>{{ item.message }}</mat-error>
+        }
+      </mat-form-field>
 
-    @if (emailAgeForm().getError('validation'); as error) {
-      <p style="color: red;">{{ error.message }}</p>
+      @if (emailAgeForm().getError('validation'); as error) {
+        <p style="color: red;">{{ error.message }}</p>
+      }
     }
   `,
   styleUrl: 'example-tel-input-example.css',
   imports: [FormField, MatInput, MatError, MatFormField, ReactiveFormsModule, MatLabel],
 })
-export class EmailAgeInput implements FormValueControl<EmailAgeValue> {
+export class EmailAgeInput implements FormValueControl<EmailAgeValue>, OnInit {
   readonly value = model<EmailAgeValue>(defaultValue);
 
-  readonly emailAgeForm = form(this.value, (schemaPath) => {
-    apply(schemaPath, emailAgeSchema);
-  });
+  readonly schema = input<Schema<EmailAgeValue>>(emailSchema);
+  private readonly injector = inject(Injector);
+  emailAgeForm!: FieldTree<EmailAgeValue>;
+
+  // Weird, but allows using a dynamic schema without more complicated stuff
+  ngOnInit(): void {
+    this.emailAgeForm = form(
+      this.value,
+      (schemaPath) => {
+        apply(schemaPath, this.schema());
+      },
+      { injector: this.injector },
+    );
+  }
 }
