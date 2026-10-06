@@ -14,8 +14,7 @@ export class FormToDomain {
     };
   }
 
-  public mapFormModelToDomain(formModel: FormModel, stuff: number): DomainModel {
-    // console.log(stuff);
+  public mapFormModelToDomain(formModel: FormModel): DomainModel {
     return {
       databaseTable: formModel.dbTable,
       databaseField: formModel.dbField,

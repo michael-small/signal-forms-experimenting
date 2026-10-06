@@ -21,8 +21,9 @@ import { FormService } from './form.service';
   templateUrl: './conditional-reset.html',
 })
 export class ConditionalReset {
-  protected readonly store = inject(FormStore);
   protected readonly formService = inject(FormService);
+
+  protected dropdownOptions = this.formService.dropdownOptions;
 
   protected readonly numberComparators = numberComparators;
   protected readonly textComparators = textComparators;

@@ -2,7 +2,7 @@
     <label>
         DB Table
         <select [formField]="form.dbTable">
-            @for (table of store.dbTablesValue(); track table.id) {
+            @for (table of dropdownOptions().dbTables; track table.id) {
             <option [value]="table.id">{{ table.name }}</option>
             }
         </select>
@@ -11,7 +11,7 @@
     <label>
         DB Field
         <select [formField]="form.dbField">
-            @for (field of store.dbFieldsValue(); track $index) {
+            @for (field of dropdownOptions().dbFields; track $index) {
             <option [value]="field.id">{{ field.name }}</option>
             }
         </select>

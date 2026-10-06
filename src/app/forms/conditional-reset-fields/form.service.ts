@@ -1,4 +1,4 @@
-import { inject, linkedSignal, Service } from '@angular/core';
+import { computed, inject, linkedSignal, Service } from '@angular/core';
 import {
   form,
   hidden,
@@ -15,6 +15,13 @@ import { TableField } from './entity.model';
 @Service()
 export class FormService {
   protected readonly store = inject(FormStore);
+
+  public dropdownOptions = computed(() => {
+    return {
+      dbTables: this.store.dbTablesValue(),
+      dbFields: this.store.dbFieldsValue(),
+    };
+  });
 
   /**
    * @description Connects the form state to the store.

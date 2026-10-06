@@ -1,24 +1,13 @@
-import {
-  signalStore,
-  withFeature,
-  withLinkedState,
-  withMethods,
-  withProps,
-  withState,
-} from '@ngrx/signals';
+import { signalStore, withFeature, withMethods, withProps } from '@ngrx/signals';
 import { querySchema } from './form.service';
-import { FormService } from './form.service';
-import { updateState, withDevtools, withMapper, withResource } from '@ngrx-toolkit/core';
+import { withDevtools, withMapper, withResource } from '@ngrx-toolkit/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { EntityDataService } from './entity.service';
-import { computed, inject, linkedSignal } from '@angular/core';
+import { inject } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { defaultConditionalFormModel, FormModel } from './form.model';
+import { defaultConditionalFormModel } from './form.model';
 import { FormToDomain } from './form-to-domain';
 import { withFormState } from '../withFormState.store.feature';
-import { TempService } from './test';
-import { TableField } from './entity.model';
-import { form } from '@angular/forms/signals';
 
 /**
  * @description Unlike reactive forms, there is no `patchValue`/`setValue` layer.
@@ -33,23 +22,20 @@ export const FormStore = signalStore(
   withProps(() => ({
     _dataService: inject(EntityDataService),
     _formToDomain: inject(FormToDomain),
-    _test: inject(TempService),
   })),
   withDevtools(
     'ConditionalResetFormStore',
     withMapper((state) => ({ ...state, _formModelValue: '' })),
   ),
   withFeature((store) => {
-    const state = computed(() => store._test.val());
-
     return withFormState({
       formDataStream: store._dataService.getFormData(),
       defaultFormModel: defaultConditionalFormModel,
       mapDomainToFormFn: (domain) => store._formToDomain.mapDomainToFormModel(domain),
-      mapFormToDomainFn: (form) => store._formToDomain.mapFormModelToDomain(form, state()),
+      mapFormToDomainFn: (form) => store._formToDomain.mapFormModelToDomain(form),
       schema: querySchema,
     });
-  }), 
+  }),
   withResource(
     (store) => ({
       dbTables: rxResource({
@@ -65,7 +51,7 @@ export const FormStore = signalStore(
     { errorHandling: 'previous value' },
   ),
   withMethods((store) => {
-    // TODO - how to add to the feature?
+    // TODO - skip the domain model setting and just have this be a function from the feature?
     function save() {
       return firstValueFrom(store._dataService.save(store.domainModel()));
     }
