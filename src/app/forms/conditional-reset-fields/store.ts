@@ -8,6 +8,7 @@ import { firstValueFrom } from 'rxjs';
 import { defaultConditionalFormModel } from './form.model';
 import { FormToDomain } from './form-to-domain';
 import { withFormState } from '../withFormState.store.feature';
+import { extendResource } from '../../temp_resource_extensions';
 
 /**
  * @description Unlike reactive forms, there is no `patchValue`/`setValue` layer.
@@ -38,15 +39,19 @@ export const FormStore = signalStore(
   }),
   withResource(
     (store) => ({
-      dbTables: rxResource({
-        stream: () => store._dataService.getDbTables(),
-        defaultValue: [],
-      }),
-      dbFields: rxResource({
-        params: () => store._formModelValue().dbTable,
-        stream: (source) => store._dataService.getTableFields(source.params),
-        defaultValue: [],
-      }),
+      dbTables: extendResource(
+        rxResource({
+          stream: () => store._dataService.getDbTables(),
+          defaultValue: [],
+        }),
+      ),
+      dbFields: extendResource(
+        rxResource({
+          params: () => store._formModelValue().dbTable,
+          stream: (source) => store._dataService.getTableFields(source.params),
+          defaultValue: [],
+        }),
+      ),
     }),
     { errorHandling: 'previous value' },
   ),
