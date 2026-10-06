@@ -1,6 +1,6 @@
 import { signalStore, withFeature, withMethods, withProps } from '@ngrx/signals';
 import { querySchema } from './form.service';
-import { withDevtools, withMapper, withResource } from '@ngrx-toolkit/core';
+import { mapToResource, withDevtools, withMapper, withResource } from '@ngrx-toolkit/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { EntityDataService } from './entity.service';
 import { inject } from '@angular/core';
@@ -55,6 +55,12 @@ export const FormStore = signalStore(
     }),
     { errorHandling: 'previous value' },
   ),
+  withProps((store) => {
+    return {
+      dbTablesResource: mapToResource(store, 'dbTables'),
+      dbFieldsResource: mapToResource(store, 'dbFields'),
+    };
+  }),
   withMethods((store) => {
     // TODO - skip the domain model setting and just have this be a function from the feature?
     function save() {

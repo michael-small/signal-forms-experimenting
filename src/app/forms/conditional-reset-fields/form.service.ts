@@ -17,13 +17,10 @@ import { mapToResource } from '@ngrx-toolkit/core';
 export class FormService {
   protected readonly store = inject(FormStore);
 
-  private dbTablesResource = mapToResource(this.store, 'dbTables');
-  private dbFieldsResource = mapToResource(this.store, 'dbFields');
-
   public dropdownOptions = computed(() => {
     return {
-      dbTables: this.dbTablesResource.value(),
-      dbFields: this.dbFieldsResource.value(),
+      dbTables: this.store.dbTablesResource.value(),
+      dbFields: this.store.dbFieldsResource.value(),
     };
   });
 
