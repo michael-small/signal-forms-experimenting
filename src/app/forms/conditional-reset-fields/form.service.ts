@@ -11,15 +11,19 @@ import {
 import { defaultConditionalFormModel, type FormModel } from './form.model';
 import { FormStore } from './store';
 import { TableField } from './entity.model';
+import { mapToResource } from '@ngrx-toolkit/core';
 
 @Service()
 export class FormService {
   protected readonly store = inject(FormStore);
 
+  private dbTablesResource = mapToResource(this.store, 'dbTables');
+  private dbFieldsResource = mapToResource(this.store, 'dbFields');
+
   public dropdownOptions = computed(() => {
     return {
-      dbTables: this.store.dbTablesValue(),
-      dbFields: this.store.dbFieldsValue(),
+      dbTables: this.dbTablesResource.value(),
+      dbFields: this.dbFieldsResource.value(),
     };
   });
 
