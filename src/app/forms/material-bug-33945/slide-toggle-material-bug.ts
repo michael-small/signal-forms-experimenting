@@ -13,13 +13,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 @Component({
   selector: 'slide-toggle-material-bug',
   template: `
-    <h3>
-      <a
-        href="https://material.angular.dev/components/slide-toggle/examples#slide-toggle-forms"
-        target="_blank"
-        >Slide-toggle with forms
-      </a>
-    </h3>
+    <h3>Slide toggle</h3>
     <em>❌⚠️NO MAT-FORM-FIELD⚠️AND HAS THE BUG❌</em>
     <form class="example-form" [formRoot]="signalForm">
       <mat-slide-toggle [formField]="signalForm.acceptTerms"
