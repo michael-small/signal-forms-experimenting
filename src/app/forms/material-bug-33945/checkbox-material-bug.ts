@@ -6,13 +6,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 @Component({
   selector: 'checkbox-material-bug',
   template: `
-    <h3>
-      <a
-        href="https://material.angular.dev/components/checkbox/examples#checkbox-reactive-forms"
-        target="_blank"
-        >Checkboxes with reactive forms</a
-      >
-    </h3>
+    <h3>Checkbox</h3>
     <em>❌⚠️NO MAT-FORM-FIELD⚠️AND HAS THE BUG❌</em>
     <section class="example-section">
       <h4>Select your toppings:</h4>

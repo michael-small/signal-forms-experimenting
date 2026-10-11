@@ -8,13 +8,7 @@ import { form, FormField, required } from '@angular/forms/signals';
 @Component({
   selector: 'timepicker-material-bug',
   template: `
-    <h3>
-      <a
-        href="https://material.angular.dev/components/timepicker/overview#timepicker-forms"
-        target="_blank"
-        >Timepicker Forms Integration</a
-      >
-    </h3>
+    <h3>Time Picker</h3>
     <mat-form-field>
       <mat-label>Pick a time</mat-label>
       <input matInput [formField]="form" [matTimepicker]="picker" />

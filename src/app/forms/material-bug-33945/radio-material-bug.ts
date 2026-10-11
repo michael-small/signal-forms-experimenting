@@ -5,13 +5,7 @@ import { MatRadioModule } from '@angular/material/radio';
 @Component({
   selector: 'radio-material-bug',
   template: `
-    <h3>
-      <a
-        href="https://material.angular.dev/components/radio/examples#radio-ng-model"
-        target="_blank"
-        >Radios with ngModel</a
-      >
-    </h3>
+    <h3>Radio</h3>
     <em>⚠️NO MAT-FORM-FIELD⚠️</em>
     <label id="example-radio-group-label">Pick your favorite season</label>
     <mat-radio-group

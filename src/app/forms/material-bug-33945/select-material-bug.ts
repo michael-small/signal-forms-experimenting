@@ -12,13 +12,7 @@ interface Animal {
 @Component({
   selector: 'select-material-bug',
   template: `
-    <h3>
-      <a
-        href="https://material.angular.dev/components/select/overview#select-hint-error"
-        target="_blank"
-        >Select with form field features</a
-      >
-    </h3>
+    <h3>Select</h3>
     <h4>mat select</h4>
     <mat-form-field>
       <mat-label>Favorite animal</mat-label>

@@ -5,13 +5,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 @Component({
   selector: 'button-toggle-material-bug',
   template: `
-    <h3>
-      <a
-        href="https://material.angular.dev/components/button-toggle/examples#button-toggle-forms"
-        target="_blank"
-        >Button Toggle with Forms</a
-      >
-    </h3>
+    <h3>Button Toggle</h3>
     <em>⚠️NO MAT-FORM-FIELD⚠️</em>
     <section>
       <h4>Button Toggle inside of a Signal form</h4>

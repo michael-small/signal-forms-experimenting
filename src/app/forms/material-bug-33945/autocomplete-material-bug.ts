@@ -7,13 +7,7 @@ import { form, FormField, required } from '@angular/forms/signals';
 @Component({
   selector: 'autocomplete-material-bug',
   template: `
-    <h3>
-      <a
-        href="https://material.angular.dev/components/autocomplete/examples#autocomplete-auto-active-first-option"
-        target="_blank"
-        >Highlight the first autocomplete option</a
-      >
-    </h3>
+    <h3>Autocomplete</h3>
     <form class="example-form">
       <mat-form-field class="example-full-width">
         <mat-label>Number</mat-label>

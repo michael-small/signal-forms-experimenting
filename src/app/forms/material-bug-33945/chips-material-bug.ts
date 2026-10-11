@@ -9,13 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'chips-material-bug',
   template: `
-    <h3>
-      <a
-        href="https://material.angular.dev/components/chips/examples#chips-form-control"
-        target="_blank"
-        >Chips with form control</a
-      >
-    </h3>
+    <h3>Chips</h3>
     <div class="example-button-container">
       <button matButton="elevated" (click)="model.update(m => ({ ...m, enabled: false }))">
         Disable form control

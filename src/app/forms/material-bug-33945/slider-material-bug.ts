@@ -5,13 +5,7 @@ import { MatSliderModule } from '@angular/material/slider';
 @Component({
   selector: 'slider-material-bug',
   template: `
-    <h3>
-      <a
-        href="https://material.angular.dev/components/slider/examples#slider-formatting"
-        target="_blank"
-        >Slider with custom thumb label formatting</a
-      >
-    </h3>
+    <h3>Slider</h3>
     <em>⚠️NO MAT-FORM-FIELD⚠️</em>
     <mat-slider min="0" max="100000" step="1000" showTickMarks discrete [displayWith]="formatLabel">
       <input matSliderThumb [formField]="form" />

@@ -6,13 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 @Component({
   selector: 'form-field-material-bug',
   template: `
-    <h3>
-      <a
-        href="https://material.angular.dev/components/form-field/examples#form-field-error"
-        target="_blank"
-        >Form field with error messages</a
-      >
-    </h3>
+    <h3>Form Field + Input</h3>
     <div class="example-container">
       <mat-form-field>
         <mat-label>Enter your email</mat-label>

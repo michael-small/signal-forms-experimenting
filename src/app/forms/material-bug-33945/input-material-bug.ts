@@ -8,13 +8,7 @@ import { form, FormField, required } from '@angular/forms/signals';
 @Component({
   selector: 'input-material-bug',
   template: `
-    <h3>
-      <a
-        href="https://material.angular.dev/components/input/examples#input-clearable"
-        target="_blank"
-        >Input with a clear button</a
-      >
-    </h3>
+    <h3>Input</h3>
     <mat-form-field class="example-form-field">
       <mat-label>Clearable input</mat-label>
       <input matInput type="text" [formField]="form" />

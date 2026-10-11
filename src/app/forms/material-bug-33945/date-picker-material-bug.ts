@@ -8,13 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 @Component({
   selector: 'date-picker-material-bug',
   template: `
-    <h3>
-      <a
-        href="https://material.angular.dev/components/datepicker/examples#date-range-picker-forms"
-        target="_blank"
-        >Date Range Picker Forms Example</a
-      >
-    </h3>
+    <h3>Date Picker</h3>
     <mat-form-field>
       <mat-label>Enter a date range</mat-label>
       <mat-date-range-input [rangePicker]="picker">
