@@ -22,7 +22,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     </h3>
     <em>⚠️NO MAT-FORM-FIELD⚠️</em>
     <form class="example-form" [formRoot]="signalForm">
-      <mat-slide-toggle [formField]="signalForm.enableWifi">Enable Wifi</mat-slide-toggle>
       <mat-slide-toggle [formField]="signalForm.acceptTerms"
         >Accept Terms of Service</mat-slide-toggle
       >
@@ -61,9 +60,9 @@ export class SlideToggleMaterialBug {
   });
 
   protected signalForm = form(
-    signal({ enableWifi: false, acceptTerms: false }),
+    signal({ acceptTerms: false }),
     (p) => {
-      required(p.acceptTerms);
+      required(p.acceptTerms, { message: 'custom message' });
     },
     {
       submission: {

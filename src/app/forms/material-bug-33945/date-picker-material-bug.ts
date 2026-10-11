@@ -25,16 +25,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-date-range-picker #picker></mat-date-range-picker>
 
-      <div>
-        @if (range.start().getError('matStartDateInvalid')) {
-          <mat-error>Invalid start date</mat-error>
-        }
-      </div>
-      <div>
-        @if (range.end().getError('matEndDateInvalid')) {
-          <mat-error>Invalid end date</mat-error>
-        }
-      </div>
+      @if (range.start().getError('matStartDateInvalid')) {
+        <mat-error>Invalid start date</mat-error>
+      }
+      @if (range.end().getError('matEndDateInvalid')) {
+        <mat-error>Invalid end date</mat-error>
+      }
     </mat-form-field>
     <div>
       @if (range.start().getError('required'); as error) {

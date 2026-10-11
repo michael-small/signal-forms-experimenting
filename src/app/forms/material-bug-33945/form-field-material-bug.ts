@@ -17,11 +17,9 @@ import { MatInputModule } from '@angular/material/input';
       <mat-form-field>
         <mat-label>Enter your email</mat-label>
         <input matInput placeholder="pat@example.com" [formField]="email" />
-        <div>
-          @if (errorMessage(); as errorMessage) {
-            <mat-error>{{ errorMessage }}</mat-error>
-          }
-        </div>
+        @if (errorMessage(); as errorMessage) {
+          <mat-error>{{ errorMessage }}</mat-error>
+        }
       </mat-form-field>
       <div>
         @if (email().getError('required'); as error) {

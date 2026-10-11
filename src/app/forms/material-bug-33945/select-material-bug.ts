@@ -28,12 +28,9 @@ interface Animal {
           <mat-option [value]="animal">{{ animal.name }}</mat-option>
         }
       </mat-select>
-      <div>
-        @if (animalControl().getError('required')) {
-          <mat-error>Please choose an animal</mat-error>
-        }
-      </div>
-      <mat-hint>{{ animalControl().value()?.sound }}</mat-hint>
+      @if (animalControl().getError('required')) {
+        <mat-error>Please choose an animal</mat-error>
+      }
     </mat-form-field>
     <div>
       @if (animalControl().getError('required'); as error) {
@@ -57,11 +54,9 @@ interface Animal {
         <option value="mercedes">Mercedes</option>
         <option value="audi">Audi</option>
       </select>
-      <div>
-        @if (selectControl().getError('required')) {
-          <mat-error>This field is required</mat-error>
-        }
-      </div>
+      @if (selectControl().getError('required')) {
+        <mat-error>This field is required</mat-error>
+      }
       <mat-hint>You can pick up your favorite car here</mat-hint>
     </mat-form-field>
     <div>
@@ -81,10 +76,10 @@ interface Animal {
 })
 export class SelectMaterialBug {
   protected animalControl = form(signal<Animal | null>(null), (p) => {
-    required(p);
+    required(p, { message: 'custom message' });
   });
   protected selectControl = form(signal(''), (p) => {
-    required(p);
+    required(p, { message: 'custom message' });
   });
 
   protected animals: Animal[] = [
