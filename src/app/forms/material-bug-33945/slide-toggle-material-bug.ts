@@ -10,9 +10,6 @@ import { form, FormField, FormRoot, required } from '@angular/forms/signals';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
-/**
- * @title Slide-toggle with forms
- */
 @Component({
   selector: 'slide-toggle-material-bug',
   template: `
@@ -23,38 +20,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
         >Slide-toggle with forms
       </a>
     </h3>
-    <p>Slide Toggle using a simple NgModel.</p>
-
-    <mat-slide-toggle [(ngModel)]="isChecked"
-      >Slide Toggle Checked: {{ isChecked() }}</mat-slide-toggle
-    >
-
-    <p>Slide Toggle inside of a Template-driven form</p>
-
-    <form class="example-form" #form="ngForm" (ngSubmit)="alertFormValues(form.form)">
-      <mat-slide-toggle ngModel name="enableWifi">Enable Wifi</mat-slide-toggle>
-      <mat-slide-toggle ngModel name="acceptTerms" required
-        >Accept Terms of Service</mat-slide-toggle
-      >
-
-      <button matButton="elevated" type="submit">Save Settings</button>
-    </form>
-
-    <p>Slide Toggle inside of a Reactive form</p>
-
-    <form
-      class="example-form"
-      [formGroup]="formGroup"
-      (ngSubmit)="alertFormValues(formGroup)"
-      ngNativeValidate
-    >
-      <mat-slide-toggle formControlName="enableWifi">Enable Wifi</mat-slide-toggle>
-      <mat-slide-toggle formControlName="acceptTerms">Accept Terms of Service</mat-slide-toggle>
-
-      <p>Form Group Status: {{ formGroup.status }}</p>
-
-      <button matButton="elevated" type="submit">Save Settings</button>
-    </form>
 
     <form class="example-form" [formRoot]="signalForm">
       <mat-slide-toggle [formField]="signalForm.enableWifi">Enable Wifi</mat-slide-toggle>
@@ -71,14 +36,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
       display: block;
     }
   `,
-  imports: [
-    MatSlideToggleModule,
-    FormsModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    FormRoot,
-    FormField,
-  ],
+  imports: [MatSlideToggleModule, MatButtonModule, FormRoot, FormField],
 })
 export class SlideToggleMaterialBug {
   private _formBuilder = inject(FormBuilder);

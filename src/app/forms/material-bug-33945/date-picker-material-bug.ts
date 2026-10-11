@@ -1,12 +1,10 @@
 import { JsonPipe } from '@angular/common';
 import { Component, signal } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { form, FormField } from '@angular/forms/signals';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
-/** @title Date range picker forms integration */
 @Component({
   selector: 'date-picker-material-bug',
   template: `
@@ -38,14 +36,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     <p>Selected range: {{ range().value() | json }}</p>
   `,
   providers: [provideNativeDateAdapter()],
-  imports: [
-    MatFormFieldModule,
-    MatDatepickerModule,
-    FormsModule,
-    ReactiveFormsModule,
-    JsonPipe,
-    FormField,
-  ],
+  imports: [MatFormFieldModule, MatDatepickerModule, JsonPipe, FormField],
 })
 export class DatePickerMaterialBug {
   range = form(

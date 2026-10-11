@@ -1,11 +1,7 @@
 import { Component, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { form, FormField } from '@angular/forms/signals';
 import { MatRadioModule } from '@angular/material/radio';
 
-/**
- * @title Radios with ngModel
- */
 @Component({
   selector: 'radio-material-bug',
   template: `

@@ -1,14 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { form, FormField } from '@angular/forms/signals';
 
-/**
- * @title Input with a clear button
- */
 @Component({
   selector: 'input-material-bug',
   template: `

@@ -1,15 +1,11 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Component, inject, signal } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { disabled, form, FormField } from '@angular/forms/signals';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 
-/**
- * @title Chips with form control
- */
 @Component({
   selector: 'chips-material-bug',
   template: `

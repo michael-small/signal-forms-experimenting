@@ -3,7 +3,6 @@ import { email, form, FormField, required } from '@angular/forms/signals';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
-/** @title Form field with error messages */
 @Component({
   selector: 'form-field-material-bug',
   template: `

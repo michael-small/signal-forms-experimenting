@@ -4,9 +4,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { form, FormField } from '@angular/forms/signals';
 
-/**
- * @title Highlight the first autocomplete option
- */
 @Component({
   selector: 'autocomplete-material-bug',
   template: `

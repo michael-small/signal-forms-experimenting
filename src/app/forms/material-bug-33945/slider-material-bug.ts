@@ -1,10 +1,7 @@
 import { Component, signal } from '@angular/core';
-import { form, FormField, FormRoot, max, min } from '@angular/forms/signals';
+import { form, FormField } from '@angular/forms/signals';
 import { MatSliderModule } from '@angular/material/slider';
 
-/**
- * @title Range slider
- */
 @Component({
   selector: 'slider-material-bug',
   template: `

@@ -1,5 +1,4 @@
 import { Component, signal } from '@angular/core';
-import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -10,7 +9,6 @@ interface Animal {
   sound: string;
 }
 
-/** @title Select with form field features */
 @Component({
   selector: 'select-material-bug',
   template: `
@@ -51,14 +49,7 @@ interface Animal {
       <mat-hint>You can pick up your favorite car here</mat-hint>
     </mat-form-field>
   `,
-  imports: [
-    MatFormFieldModule,
-    MatSelectModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    FormField,
-  ],
+  imports: [MatFormFieldModule, MatSelectModule, MatInputModule, FormField],
 })
 export class SelectMaterialBug {
   protected animalControl = form(signal<Animal | null>(null), (p) => {
