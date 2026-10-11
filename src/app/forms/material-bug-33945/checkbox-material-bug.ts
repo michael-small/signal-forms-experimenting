@@ -4,9 +4,8 @@ import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { form, FormField } from '@angular/forms/signals';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
-/** @title Checkboxes with reactive forms */
 @Component({
-  selector: 'checkbox-reactive-forms-example',
+  selector: 'checkbox-material-bug',
   template: `
     <h3>
       <a
@@ -34,7 +33,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
   `,
   imports: [MatCheckboxModule, JsonPipe, FormField],
 })
-export class CheckboxReactiveFormsExample {
+export class CheckboxMaterialBug {
   readonly toppings = form(
     signal({
       pepperoni: false,

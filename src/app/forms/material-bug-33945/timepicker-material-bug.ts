@@ -8,7 +8,7 @@ import { form, FormField } from '@angular/forms/signals';
 
 /** @title Timepicker forms integration */
 @Component({
-  selector: 'timepicker-forms-example',
+  selector: 'timepicker-material-bug',
   template: `
     <h3>
       <a
@@ -31,6 +31,6 @@ import { form, FormField } from '@angular/forms/signals';
   providers: [provideNativeDateAdapter()],
   imports: [MatFormFieldModule, MatInputModule, MatTimepickerModule, FormField],
 })
-export class TimepickerFormsExample {
+export class TimepickerMaterialBug {
   form = form(signal<Date | null>(new Date(new Date().setHours(12, 30, 0))));
 }

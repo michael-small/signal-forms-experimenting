@@ -1,32 +1,32 @@
 import { Component } from '@angular/core';
-import { AutocompleteAutoActiveFirstOptionExample } from './highlight-first-autocomplete-option';
-import { ButtonToggleFormsExample } from './button-toggle-with-forms';
-import { CheckboxReactiveFormsExample } from './checkbox-with-reactive-forms';
-import { ChipsFormControlExample } from './chips-with-form-control';
-import { DateRangePickerFormsExample } from './date-range-picker-forms-integration';
-import { FormFieldErrorExample } from './form-field-with-error-messages';
-import { InputClearableExample } from './input-with-a-clear-button';
-import { RadioNgModelExample } from './radio-with-ngModel';
-import { SelectHintErrorExample } from './select-with-form-field-features';
-import { SlideToggleFormsExample } from './slide-toggle-with-forms';
-import { SliderRangeExample } from './range-slider';
-import { TimepickerFormsExample } from './timepicker-forms-integration';
+import { AutocompleteMaterialBug } from './autocomplete-material-bug';
+import { ButtonToggleMaterialBug } from './button-toggle-material-bug';
+import { CheckboxMaterialBug } from './checkbox-material-bug';
+import { ChipsMaterialBug } from './chips-material-bug';
+import { FormFieldMaterialBug } from './form-field-material-bug';
+import { InputMaterialBug } from './input-material-bug';
+import { RadioMaterialBug } from './radio-material-bug';
+import { SelectMaterialBug } from './select-material-bug';
+import { SlideToggleMaterialBug } from './slide-toggle-material-bug';
+import { SliderMaterialBug } from './slider-material-bug';
+import { TimepickerMaterialBug } from './timepicker-material-bug';
+import { DatePickerMaterialBug } from './date-picker-material-bug';
 
 @Component({
-  selector: 'app-material-modernize',
+  selector: 'app-material-bug-33945',
   imports: [
-    AutocompleteAutoActiveFirstOptionExample,
-    ButtonToggleFormsExample,
-    CheckboxReactiveFormsExample,
-    ChipsFormControlExample,
-    DateRangePickerFormsExample,
-    FormFieldErrorExample,
-    InputClearableExample,
-    RadioNgModelExample,
-    SelectHintErrorExample,
-    SlideToggleFormsExample,
-    SliderRangeExample,
-    TimepickerFormsExample,
+    AutocompleteMaterialBug,
+    ButtonToggleMaterialBug,
+    CheckboxMaterialBug,
+    ChipsMaterialBug,
+    DatePickerMaterialBug,
+    FormFieldMaterialBug,
+    InputMaterialBug,
+    RadioMaterialBug,
+    SelectMaterialBug,
+    SlideToggleMaterialBug,
+    SliderMaterialBug,
+    TimepickerMaterialBug,
   ],
   template: `
     <a href="https://github.com/angular/components/issues/33945" target="_blank"
@@ -34,18 +34,18 @@ import { TimepickerFormsExample } from './timepicker-forms-integration';
       required error that hides the schema error message #33945</a
     >
 
-    <timepicker-forms-example />
-    <slider-range-example />
-    <slide-toggle-forms-example />
-    <select-hint-error-example />
-    <radio-ng-model-example />
-    <input-clearable-example />
-    <form-field-error-example />
-    <date-range-picker-forms-example />
-    <chips-form-control-example />
-    <checkbox-reactive-forms-example />
-    <button-toggle-forms-example />
-    <autocomplete-auto-active-first-option-example />
+    <timepicker-material-bug />
+    <slider-material-bug />
+    <slide-toggle-material-bug />
+    <select-material-bug />
+    <radio-material-bug />
+    <input-material-bug />
+    <form-field-material-bug />
+    <date-picker-material-bug />
+    <chips-material-bug />
+    <checkbox-material-bug />
+    <button-toggle-material-bug />
+    <autocomplete-material-bug />
   `,
 })
-export class MaterialModernize {}
+export class MaterialBug33945 {}

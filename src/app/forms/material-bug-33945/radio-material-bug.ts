@@ -7,7 +7,7 @@ import { MatRadioModule } from '@angular/material/radio';
  * @title Radios with ngModel
  */
 @Component({
-  selector: 'radio-ng-model-example',
+  selector: 'radio-material-bug',
   template: `
     <h3>
       <a
@@ -44,7 +44,7 @@ import { MatRadioModule } from '@angular/material/radio';
   `,
   imports: [MatRadioModule, FormField],
 })
-export class RadioNgModelExample {
+export class RadioMaterialBug {
   favoriteSeason = form(signal(''));
 
   seasons: string[] = ['Winter', 'Spring', 'Summer', 'Autumn'];

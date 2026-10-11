@@ -14,7 +14,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
  * @title Slide-toggle with forms
  */
 @Component({
-  selector: 'slide-toggle-forms-example',
+  selector: 'slide-toggle-material-bug',
   template: `
     <h3>
       <a
@@ -80,7 +80,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     FormField,
   ],
 })
-export class SlideToggleFormsExample {
+export class SlideToggleMaterialBug {
   private _formBuilder = inject(FormBuilder);
 
   protected isChecked = signal(true);

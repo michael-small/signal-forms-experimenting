@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 
 /** @title Date range picker forms integration */
 @Component({
-  selector: 'date-range-picker-forms-example',
+  selector: 'date-picker-material-bug',
   template: `
     <h3>
       <a
@@ -47,7 +47,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     FormField,
   ],
 })
-export class DateRangePickerFormsExample {
+export class DatePickerMaterialBug {
   range = form(
     signal<{ start: Date | null; end: Date | null }>({
       start: null,

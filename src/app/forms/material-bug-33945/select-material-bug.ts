@@ -12,7 +12,7 @@ interface Animal {
 
 /** @title Select with form field features */
 @Component({
-  selector: 'select-hint-error-example',
+  selector: 'select-material-bug',
   template: `
     <h3>
       <a
@@ -60,7 +60,7 @@ interface Animal {
     FormField,
   ],
 })
-export class SelectHintErrorExample {
+export class SelectMaterialBug {
   protected animalControl = form(signal<Animal | null>(null), (p) => {
     required(p);
   });

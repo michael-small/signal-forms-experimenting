@@ -10,7 +10,7 @@ import { form, FormField } from '@angular/forms/signals';
  * @title Input with a clear button
  */
 @Component({
-  selector: 'input-clearable-example',
+  selector: 'input-material-bug',
   template: `
     <h3>
       <a
@@ -36,7 +36,7 @@ import { form, FormField } from '@angular/forms/signals';
   `,
   imports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, FormField],
 })
-export class InputClearableExample {
+export class InputMaterialBug {
   protected value = signal('');
   protected form = form(this.value);
 }

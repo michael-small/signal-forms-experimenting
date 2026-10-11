@@ -5,7 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 
 /** @title Form field with error messages */
 @Component({
-  selector: 'form-field-error-example',
+  selector: 'form-field-material-bug',
   template: `
     <h3>
       <a
@@ -31,7 +31,7 @@ import { MatInputModule } from '@angular/material/input';
   `,
   imports: [MatFormFieldModule, MatInputModule, FormField],
 })
-export class FormFieldErrorExample {
+export class FormFieldMaterialBug {
   email = form(signal(''), (p) => {
     required(p, { message: 'You must enter a value' });
     email(p, { message: 'Not a valid email' });

@@ -8,7 +8,7 @@ import { form, FormField } from '@angular/forms/signals';
  * @title Highlight the first autocomplete option
  */
 @Component({
-  selector: 'autocomplete-auto-active-first-option-example',
+  selector: 'autocomplete-material-bug',
   template: `
     <h3>
       <a
@@ -49,7 +49,7 @@ import { form, FormField } from '@angular/forms/signals';
   `,
   imports: [MatFormFieldModule, MatInputModule, MatAutocompleteModule, FormField],
 })
-export class AutocompleteAutoActiveFirstOptionExample {
+export class AutocompleteMaterialBug {
   protected form = form(signal(''));
 
   protected filteredOptions = computed<string[]>(() => {

@@ -6,7 +6,7 @@ import { MatSliderModule } from '@angular/material/slider';
  * @title Range slider
  */
 @Component({
-  selector: 'slider-range-example',
+  selector: 'slider-material-bug',
   template: `
     <h3>
       <a
@@ -27,7 +27,7 @@ import { MatSliderModule } from '@angular/material/slider';
   `,
   imports: [MatSliderModule, FormField],
 })
-export class SliderRangeExample {
+export class SliderMaterialBug {
   form = form(signal(0));
 
   formatLabel(value: number): string {

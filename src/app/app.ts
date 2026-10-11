@@ -6,6 +6,7 @@ import { LargeFormSplittingStrategies } from './large-form/large-form-splitting-
 import { ShowingErrorsConditions } from './forms/showing-errors-conditions/showing-errors-conditions';
 import { MaterialModernize } from './forms/material-modernize/material-modernize';
 import { FormFieldCustomControlExample } from './forms/material-custom/form-field-custom-control-example';
+import { MaterialBug33945 } from './forms/material-bug-33945/material-bug-33945';
 
 @Component({
   selector: 'app-root',
@@ -17,9 +18,12 @@ import { FormFieldCustomControlExample } from './forms/material-custom/form-fiel
     ShowingErrorsConditions,
     MaterialModernize,
     FormFieldCustomControlExample,
+    MaterialBug33945,
   ],
   template: `
     <h1>Signal Forms Playground</h1>
+
+    <app-material-bug-33945 />
 
     <app-form-field-custom-control-example />
 

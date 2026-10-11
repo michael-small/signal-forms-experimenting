@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
  * @title Chips with form control
  */
 @Component({
-  selector: 'chips-form-control-example',
+  selector: 'chips-material-bug',
   template: `
     <h3>
       <a
@@ -63,7 +63,7 @@ import { MatIconModule } from '@angular/material/icon';
   `,
   imports: [MatButtonModule, MatFormFieldModule, MatChipsModule, MatIconModule, FormField],
 })
-export class ChipsFormControlExample {
+export class ChipsMaterialBug {
   readonly keywords = signal(['angular', 'how-to', 'tutorial', 'accessibility']);
 
   protected model = signal({
