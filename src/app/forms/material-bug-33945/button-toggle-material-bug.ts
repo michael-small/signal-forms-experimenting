@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { form, FormField } from '@angular/forms/signals';
+import { form, FormField, required } from '@angular/forms/signals';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @Component({
@@ -20,10 +20,24 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
         <mat-button-toggle value="underline">Underline</mat-button-toggle>
       </mat-button-toggle-group>
       <p>Chosen value is {{ fontStyleForm().value() }}</p>
+      <div>
+        @if (fontStyleForm().getError('required'); as error) {
+          <div style="border: 1px solid red; display: flex; gap: 4px">
+            {{ error.message ?? error.kind }}
+          </div>
+        }
+      </div>
+      @for (error of fontStyleForm().errors(); track $index) {
+        <div style="border: 1px solid green; display: flex; gap: 4px">
+          {{ error.message ?? error.kind }}
+        </div>
+      }
     </section>
   `,
   imports: [MatButtonToggleModule, FormField],
 })
 export class ButtonToggleMaterialBug {
-  fontStyleForm = form(signal(''));
+  fontStyleForm = form(signal(''), (p) => {
+    required(p, { message: 'A font style is required' });
+  });
 }

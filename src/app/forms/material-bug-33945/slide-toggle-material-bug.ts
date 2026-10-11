@@ -26,6 +26,18 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
       <mat-slide-toggle [formField]="signalForm.acceptTerms"
         >Accept Terms of Service</mat-slide-toggle
       >
+      <div>
+        @if (signalForm.acceptTerms().getError('required'); as error) {
+          <div style="border: 1px solid red; display: flex; gap: 4px">
+            {{ error.message ?? error.kind }}
+          </div>
+        }
+      </div>
+      @for (error of signalForm.acceptTerms().errors(); track $index) {
+        <div style="border: 1px solid green; display: flex; gap: 4px">
+          {{ error.message ?? error.kind }}
+        </div>
+      }
       <p>Signal Form valid: {{ signalForm().valid() }}</p>
       <button matButton="elevated" type="submit">Save Settings</button>
     </form>

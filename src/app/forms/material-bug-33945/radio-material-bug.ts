@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { form, FormField } from '@angular/forms/signals';
+import { form, FormField, required } from '@angular/forms/signals';
 import { MatRadioModule } from '@angular/material/radio';
 
 @Component({
@@ -25,6 +25,18 @@ import { MatRadioModule } from '@angular/material/radio';
       }
     </mat-radio-group>
     <div>Your favorite season is: {{ favoriteSeason().value() }}</div>
+    <div>
+      @if (favoriteSeason().getError('required'); as error) {
+        <div style="border: 1px solid red; display: flex; gap: 4px">
+          {{ error.message ?? error.kind }}
+        </div>
+      }
+    </div>
+    @for (error of favoriteSeason().errors(); track $index) {
+      <div style="border: 1px solid green; display: flex; gap: 4px">
+        {{ error.message ?? error.kind }}
+      </div>
+    }
   `,
   styles: `
     .example-radio-group {
@@ -41,7 +53,9 @@ import { MatRadioModule } from '@angular/material/radio';
   imports: [MatRadioModule, FormField],
 })
 export class RadioMaterialBug {
-  favoriteSeason = form(signal(''));
+  favoriteSeason = form(signal(''), (p) => {
+    required(p, { message: 'Choose a favorite season' });
+  });
 
   seasons: string[] = ['Winter', 'Spring', 'Summer', 'Autumn'];
 }

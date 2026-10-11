@@ -3,7 +3,7 @@ import { MatTimepickerModule } from '@angular/material/timepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { form, FormField } from '@angular/forms/signals';
+import { form, FormField, required } from '@angular/forms/signals';
 
 @Component({
   selector: 'timepicker-material-bug',
@@ -21,6 +21,18 @@ import { form, FormField } from '@angular/forms/signals';
       <mat-timepicker-toggle matIconSuffix [for]="picker" />
       <mat-timepicker #picker />
     </mat-form-field>
+    <div>
+      @if (form().getError('required'); as error) {
+        <div style="border: 1px solid red; display: flex; gap: 4px">
+          {{ error.message ?? error.kind }}
+        </div>
+      }
+    </div>
+    @for (error of form().errors(); track $index) {
+      <div style="border: 1px solid green; display: flex; gap: 4px">
+        {{ error.message ?? error.kind }}
+      </div>
+    }
 
     <p>Value: {{ form().value() }}</p>
     <p>Touched: {{ form().touched() }}</p>
@@ -30,5 +42,7 @@ import { form, FormField } from '@angular/forms/signals';
   imports: [MatFormFieldModule, MatInputModule, MatTimepickerModule, FormField],
 })
 export class TimepickerMaterialBug {
-  form = form(signal<Date | null>(new Date(new Date().setHours(12, 30, 0))));
+  form = form(signal<Date | null>(new Date(new Date().setHours(12, 30, 0))), (p) => {
+    required(p, { message: 'A time is required' });
+  });
 }

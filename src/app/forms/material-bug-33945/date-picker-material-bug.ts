@@ -1,6 +1,6 @@
 import { JsonPipe } from '@angular/common';
 import { Component, signal } from '@angular/core';
-import { form, FormField } from '@angular/forms/signals';
+import { form, FormField, required } from '@angular/forms/signals';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -25,13 +25,29 @@ import { MatFormFieldModule } from '@angular/material/form-field';
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-date-range-picker #picker></mat-date-range-picker>
 
-      @if (range.start().getError('matStartDateInvalid')) {
-        <mat-error>Invalid start date</mat-error>
-      }
-      @if (range.end().getError('matEndDateInvalid')) {
-        <mat-error>Invalid end date</mat-error>
-      }
+      <div>
+        @if (range.start().getError('matStartDateInvalid')) {
+          <mat-error>Invalid start date</mat-error>
+        }
+      </div>
+      <div>
+        @if (range.end().getError('matEndDateInvalid')) {
+          <mat-error>Invalid end date</mat-error>
+        }
+      </div>
     </mat-form-field>
+    <div>
+      @if (range.start().getError('required'); as error) {
+        <div style="border: 1px solid red; display: flex; gap: 4px">
+          {{ error.message ?? error.kind }}
+        </div>
+      }
+    </div>
+    @for (error of range.start().errors(); track $index) {
+      <div style="border: 1px solid green; display: flex; gap: 4px">
+        {{ error.message ?? error.kind }}
+      </div>
+    }
 
     <p>Selected range: {{ range().value() | json }}</p>
   `,
@@ -44,5 +60,8 @@ export class DatePickerMaterialBug {
       start: null,
       end: null,
     }),
+    (p) => {
+      required(p.start, { message: 'A start date is required' });
+    },
   );
 }

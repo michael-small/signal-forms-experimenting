@@ -3,7 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { form, FormField } from '@angular/forms/signals';
+import { form, FormField, required } from '@angular/forms/signals';
 
 @Component({
   selector: 'input-material-bug',
@@ -18,12 +18,26 @@ import { form, FormField } from '@angular/forms/signals';
     <mat-form-field class="example-form-field">
       <mat-label>Clearable input</mat-label>
       <input matInput type="text" [formField]="form" />
-      @if (value()) {
-        <button matSuffix matIconButton aria-label="Clear" (click)="value.set('')">
-          <mat-icon>close</mat-icon>
-        </button>
-      }
+      <div>
+        @if (value()) {
+          <button matSuffix matIconButton aria-label="Clear" (click)="value.set('')">
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+      </div>
     </mat-form-field>
+    <div>
+      @if (form().getError('required'); as error) {
+        <div style="border: 1px solid red; display: flex; gap: 4px">
+          {{ error.message ?? error.kind }}
+        </div>
+      }
+    </div>
+    @for (error of form().errors(); track $index) {
+      <div style="border: 1px solid green; display: flex; gap: 4px">
+        {{ error.message ?? error.kind }}
+      </div>
+    }
   `,
   styles: `
     .example-form-field {
@@ -34,5 +48,7 @@ import { form, FormField } from '@angular/forms/signals';
 })
 export class InputMaterialBug {
   protected value = signal('');
-  protected form = form(this.value);
+  protected form = form(this.value, (p) => {
+    required(p, { message: 'A value is required' });
+  });
 }

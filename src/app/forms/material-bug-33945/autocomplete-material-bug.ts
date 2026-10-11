@@ -2,7 +2,7 @@ import { Component, computed, signal } from '@angular/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { form, FormField } from '@angular/forms/signals';
+import { form, FormField, required } from '@angular/forms/signals';
 
 @Component({
   selector: 'autocomplete-material-bug',
@@ -31,6 +31,18 @@ import { form, FormField } from '@angular/forms/signals';
           }
         </mat-autocomplete>
       </mat-form-field>
+      <div>
+        @if (form().getError('required'); as error) {
+          <div style="border: 1px solid red; display: flex; gap: 4px">
+            {{ error.message ?? error.kind }}
+          </div>
+        }
+      </div>
+      @for (error of form().errors(); track $index) {
+        <div style="border: 1px solid green; display: flex; gap: 4px">
+          {{ error.message ?? error.kind }}
+        </div>
+      }
     </form>
   `,
   styles: `
@@ -47,7 +59,9 @@ import { form, FormField } from '@angular/forms/signals';
   imports: [MatFormFieldModule, MatInputModule, MatAutocompleteModule, FormField],
 })
 export class AutocompleteMaterialBug {
-  protected form = form(signal(''));
+  protected form = form(signal(''), (p) => {
+    required(p, { message: 'A number is required' });
+  });
 
   protected filteredOptions = computed<string[]>(() => {
     const formValue = this.form().value();

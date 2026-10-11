@@ -28,11 +28,25 @@ interface Animal {
           <mat-option [value]="animal">{{ animal.name }}</mat-option>
         }
       </mat-select>
-      @if (animalControl().getError('required')) {
-        <mat-error>Please choose an animal</mat-error>
-      }
+      <div>
+        @if (animalControl().getError('required')) {
+          <mat-error>Please choose an animal</mat-error>
+        }
+      </div>
       <mat-hint>{{ animalControl().value()?.sound }}</mat-hint>
     </mat-form-field>
+    <div>
+      @if (animalControl().getError('required'); as error) {
+        <div style="border: 1px solid red; display: flex; gap: 4px">
+          {{ error.message ?? error.kind }}
+        </div>
+      }
+    </div>
+    @for (error of animalControl().errors(); track $index) {
+      <div style="border: 1px solid green; display: flex; gap: 4px">
+        {{ error.message ?? error.kind }}
+      </div>
+    }
 
     <h4>native html select</h4>
     <mat-form-field>
@@ -43,11 +57,25 @@ interface Animal {
         <option value="mercedes">Mercedes</option>
         <option value="audi">Audi</option>
       </select>
-      @if (selectControl().getError('required')) {
-        <mat-error>This field is required</mat-error>
-      }
+      <div>
+        @if (selectControl().getError('required')) {
+          <mat-error>This field is required</mat-error>
+        }
+      </div>
       <mat-hint>You can pick up your favorite car here</mat-hint>
     </mat-form-field>
+    <div>
+      @if (selectControl().getError('required'); as error) {
+        <div style="border: 1px solid red; display: flex; gap: 4px">
+          {{ error.message ?? error.kind }}
+        </div>
+      }
+    </div>
+    @for (error of selectControl().errors(); track $index) {
+      <div style="border: 1px solid green; display: flex; gap: 4px">
+        {{ error.message ?? error.kind }}
+      </div>
+    }
   `,
   imports: [MatFormFieldModule, MatSelectModule, MatInputModule, FormField],
 })

@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { form, FormField } from '@angular/forms/signals';
+import { form, FormField, required } from '@angular/forms/signals';
 import { MatSliderModule } from '@angular/material/slider';
 
 @Component({
@@ -16,6 +16,18 @@ import { MatSliderModule } from '@angular/material/slider';
       <input matSliderThumb [formField]="form" />
     </mat-slider>
     <p>{{ form().value() }}</p>
+    <div>
+      @if (form().getError('required'); as error) {
+        <div style="border: 1px solid red; display: flex; gap: 4px">
+          {{ error.message ?? error.kind }}
+        </div>
+      }
+    </div>
+    @for (error of form().errors(); track $index) {
+      <div style="border: 1px solid green; display: flex; gap: 4px">
+        {{ error.message ?? error.kind }}
+      </div>
+    }
   `,
   styles: `
     mat-slider {
@@ -25,7 +37,9 @@ import { MatSliderModule } from '@angular/material/slider';
   imports: [MatSliderModule, FormField],
 })
 export class SliderMaterialBug {
-  form = form(signal(0));
+  form = form(signal(0), (p) => {
+    required(p, { message: 'A slider value is required' });
+  });
 
   formatLabel(value: number): string {
     if (value >= 1000) {

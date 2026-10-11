@@ -1,6 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Component, inject, signal } from '@angular/core';
-import { disabled, form, FormField } from '@angular/forms/signals';
+import { disabled, form, FormField, required } from '@angular/forms/signals';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -45,6 +45,18 @@ import { MatIconModule } from '@angular/material/icon';
         (matChipInputTokenEnd)="add($event)"
       />
     </mat-form-field>
+    <div>
+      @if (form.word().getError('required'); as error) {
+        <div style="border: 1px solid red; display: flex; gap: 4px">
+          {{ error.message ?? error.kind }}
+        </div>
+      }
+    </div>
+    @for (error of form.word().errors(); track $index) {
+      <div style="border: 1px solid green; display: flex; gap: 4px">
+        {{ error.message ?? error.kind }}
+      </div>
+    }
 
     <p><strong>The following keywords are entered:</strong> {{ form.word().value() }}</p>
   `,
@@ -67,6 +79,7 @@ export class ChipsMaterialBug {
     enabled: true,
   });
   readonly form = form(this.model, (p) => {
+    required(p.word, { message: 'Enter at least one keyword' });
     disabled(p, {
       when: ({ valueOf }) => !valueOf(p.enabled),
     });
