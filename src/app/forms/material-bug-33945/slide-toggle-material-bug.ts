@@ -20,7 +20,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
         >Slide-toggle with forms
       </a>
     </h3>
-    <em>⚠️NO MAT-FORM-FIELD⚠️</em>
+    <em>❌⚠️NO MAT-FORM-FIELD⚠️ AND HAS THE BUG ❌</em>
     <form class="example-form" [formRoot]="signalForm">
       <mat-slide-toggle [formField]="signalForm.acceptTerms"
         >Accept Terms of Service</mat-slide-toggle
