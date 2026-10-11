@@ -1,6 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { Component, inject, signal } from '@angular/core';
-import { disabled, form, FormField, required } from '@angular/forms/signals';
+import { Component, effect, ElementRef, inject, signal, viewChild } from '@angular/core';
+import { disabled, form, FormField, minLength, required } from '@angular/forms/signals';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -40,25 +40,31 @@ import { MatIconModule } from '@angular/material/icon';
         }
       </mat-chip-grid>
       <input
+        #inputEl
         placeholder="New keyword..."
         [matChipInputFor]="chipGrid"
         (matChipInputTokenEnd)="add($event)"
       />
-    </mat-form-field>
-    <div>
-      @if (form.word().getError('required'); as error) {
-        <div style="border: 1px solid red; display: flex; gap: 4px">
-          {{ error.message ?? error.kind }}
-        </div>
-      }
-    </div>
-    @for (error of form.word().errors(); track $index) {
-      <div style="border: 1px solid green; display: flex; gap: 4px">
-        {{ error.message ?? error.kind }}
-      </div>
-    }
 
-    <p><strong>The following keywords are entered:</strong> {{ form.word().value() }}</p>
+      <mat-error>
+        @if (form.word().getError('required'); as error) {
+          <mat-error style="border: 1px solid red; display: flex; gap: 4px">
+            {{ error.message ?? error.kind }}
+          </mat-error>
+        }
+      </mat-error>
+      @for (error of form.word().errors(); track $index) {
+        <mat-error style="border: 1px solid green; display: flex; gap: 4px">
+          {{ error.message ?? error.kind }}
+        </mat-error>
+      }
+    </mat-form-field>
+
+    <br />
+    <br />
+    <div>
+      <p><strong>The following keywords are entered:</strong> {{ form.word().value() }}</p>
+    </div>
   `,
   styles: `
     .example-form-field {
@@ -72,14 +78,19 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [MatButtonModule, MatFormFieldModule, MatChipsModule, MatIconModule, FormField],
 })
 export class ChipsMaterialBug {
-  readonly keywords = signal(['angular']);
+  constructor() {
+    this.form.word().markAsTouched();
+  }
+
+  readonly keywords = signal<string[]>([]);
 
   protected model = signal({
-    word: 'angular',
+    word: '',
     enabled: true,
   });
   readonly form = form(this.model, (p) => {
-    required(p.word, { message: 'custom message' });
+    required(p.word, { message: 'custom message required' });
+    minLength(p.word, 1, { message: 'custom message minLength' });
     disabled(p, {
       when: ({ valueOf }) => !valueOf(p.enabled),
     });

@@ -42,7 +42,7 @@ import { form, FormField, required } from '@angular/forms/signals';
   imports: [MatFormFieldModule, MatInputModule, MatTimepickerModule, FormField],
 })
 export class TimepickerMaterialBug {
-  form = form(signal<Date | null>(new Date(new Date().setHours(12, 30, 0))), (p) => {
+  form = form(signal<Date | null>(null), (p) => {
     required(p, { message: 'custom message' });
   });
 }

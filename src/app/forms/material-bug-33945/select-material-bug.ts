@@ -57,7 +57,6 @@ interface Animal {
       @if (selectControl().getError('required')) {
         <mat-error>This field is required</mat-error>
       }
-      <mat-hint>You can pick up your favorite car here</mat-hint>
     </mat-form-field>
     <div>
       @if (selectControl().getError('required'); as error) {

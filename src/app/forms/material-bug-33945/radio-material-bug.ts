@@ -58,5 +58,5 @@ export class RadioMaterialBug {
     required(p, { message: 'custom message' });
   });
 
-  seasons: string[] = ['Winter', 'Spring', 'Summer', 'Autumn'];
+  seasons: string[] = ['Winter', 'Spring', 'Summer', 'Autumn', ''];
 }
