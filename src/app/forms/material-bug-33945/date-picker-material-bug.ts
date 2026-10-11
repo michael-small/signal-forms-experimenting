@@ -57,7 +57,7 @@ export class DatePickerMaterialBug {
       end: null,
     }),
     (p) => {
-      required(p.start, { message: 'A start date is required' });
+      required(p.start, { message: 'custom message' });
     },
   );
 }

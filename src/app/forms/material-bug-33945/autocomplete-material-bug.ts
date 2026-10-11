@@ -60,7 +60,7 @@ import { form, FormField, required } from '@angular/forms/signals';
 })
 export class AutocompleteMaterialBug {
   protected form = form(signal(''), (p) => {
-    required(p, { message: 'A number is required' });
+    required(p, { message: 'custom message' });
   });
 
   protected filteredOptions = computed<string[]>(() => {

@@ -55,7 +55,7 @@ import { MatRadioModule } from '@angular/material/radio';
 })
 export class RadioMaterialBug {
   favoriteSeason = form(signal(''), (p) => {
-    required(p, { message: 'Choose a favorite season' });
+    required(p, { message: 'custom message' });
   });
 
   seasons: string[] = ['Winter', 'Spring', 'Summer', 'Autumn'];

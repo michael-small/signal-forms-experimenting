@@ -53,7 +53,7 @@ export class CheckboxMaterialBug {
       mushroom: false,
     }),
     (p) => {
-      required(p.pepperoni, { message: 'Choose whether to add pepperoni' });
+      required(p.pepperoni, { message: 'custom message' });
     },
   );
 }

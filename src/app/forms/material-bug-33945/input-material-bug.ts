@@ -49,6 +49,6 @@ import { form, FormField, required } from '@angular/forms/signals';
 export class InputMaterialBug {
   protected value = signal('');
   protected form = form(this.value, (p) => {
-    required(p, { message: 'A value is required' });
+    required(p, { message: 'custom message' });
   });
 }

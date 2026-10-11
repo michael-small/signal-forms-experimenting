@@ -43,6 +43,6 @@ import { form, FormField, required } from '@angular/forms/signals';
 })
 export class TimepickerMaterialBug {
   form = form(signal<Date | null>(new Date(new Date().setHours(12, 30, 0))), (p) => {
-    required(p, { message: 'A time is required' });
+    required(p, { message: 'custom message' });
   });
 }

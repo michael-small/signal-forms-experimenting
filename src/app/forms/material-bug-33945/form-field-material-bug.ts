@@ -44,8 +44,7 @@ import { MatInputModule } from '@angular/material/input';
 })
 export class FormFieldMaterialBug {
   email = form(signal(''), (p) => {
-    required(p, { message: 'You must enter a value' });
-    email(p, { message: 'Not a valid email' });
+    required(p, { message: 'custom message' });
   });
 
   errorMessage = computed<string>(() => {

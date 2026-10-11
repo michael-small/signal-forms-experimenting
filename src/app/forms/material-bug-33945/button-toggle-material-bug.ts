@@ -39,6 +39,6 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 })
 export class ButtonToggleMaterialBug {
   fontStyleForm = form(signal(''), (p) => {
-    required(p, { message: 'A font style is required' });
+    required(p, { message: 'custom message' });
   });
 }

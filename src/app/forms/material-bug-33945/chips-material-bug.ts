@@ -79,7 +79,7 @@ export class ChipsMaterialBug {
     enabled: true,
   });
   readonly form = form(this.model, (p) => {
-    required(p.word, { message: 'Enter at least one keyword' });
+    required(p.word, { message: 'custom message' });
     disabled(p, {
       when: ({ valueOf }) => !valueOf(p.enabled),
     });

@@ -38,8 +38,8 @@ import { MatSliderModule } from '@angular/material/slider';
   imports: [MatSliderModule, FormField],
 })
 export class SliderMaterialBug {
-  form = form(signal(0), (p) => {
-    required(p, { message: 'A slider value is required' });
+  form = form(signal<number | null>(null), (p) => {
+    required(p, { message: 'custom message' });
   });
 
   formatLabel(value: number): string {
