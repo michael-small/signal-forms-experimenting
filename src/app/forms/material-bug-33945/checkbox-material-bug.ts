@@ -13,6 +13,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
         >Checkboxes with reactive forms</a
       >
     </h3>
+    <em>⚠️NO MAT-FORM-FIELD⚠️</em>
     <section class="example-section">
       <h4>Select your toppings:</h4>
       <p><mat-checkbox [formField]="toppings.pepperoni">Pepperoni</mat-checkbox></p>

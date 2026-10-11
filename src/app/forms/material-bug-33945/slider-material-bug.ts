@@ -12,6 +12,7 @@ import { MatSliderModule } from '@angular/material/slider';
         >Slider with custom thumb label formatting</a
       >
     </h3>
+    <em>⚠️NO MAT-FORM-FIELD⚠️</em>
     <mat-slider min="0" max="100000" step="1000" showTickMarks discrete [displayWith]="formatLabel">
       <input matSliderThumb [formField]="form" />
     </mat-slider>
