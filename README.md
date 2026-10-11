@@ -1,21 +1,51 @@
-# Signal Forms Experimenting
+# Reproduction cases for Material Bug "bug(mat-checkbox): with Signal Forms required(), MatCheckbox's own validator adds a duplicate required error that hides the schema error message #33945"
 
-> I showcased this project on an [Angular Space livestream, with Armen Vardanyan](https://youtu.be/4MUTRInJ7Lo). Thank you everyone for the support and questions. I will drop this project in a StackBlitz once it supports the Node version of Angular 22.
+## How to Run
 
-Learning about signal forms via practice.
+- `npm i`
+- `ng serve`
 
-This project is where I messed around with various signal forms concepts for the last few
-months. Though some of this includes some exploration with third party libraries that I use,
-most examples are vanilla Angular code.
+---
 
-For a showcase of Angular 22 stuff, including a bit of talk on signal forms, check out my [v22 showcase repo](https://github.com/michael-small/v22).
+### Is this a regression?
 
-## Development server
+- [ ] Yes, this behavior used to work in the previous version
 
-To start a local development server, run:
+### The previous version in which this bug was not present was
 
-```bash
-ng serve
-```
+_No response_
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`.
+### Description
+
+When a `mat-checkbox` is bound to a Signal Forms field with `[formField]` and the schema uses `required()`, the field ends up with **two** errors of kind `required`:
+
+1. the schema error from `required(path, { message })` - has the custom `message`;
+2. a `CompatValidationError` (kind `required`, no `message`) produced by `MatCheckbox.validate()`.
+
+This happens with many components which have 'required' input and validate method from Validators interface.
+
+### Reproduction
+
+StackBlitz link: https://stackblitz.com/edit/1sinlau9-qd7bhr37?file=src%2Fexample%2Fcheckbox-signal-forms-example.ts
+Steps to reproduce:
+
+1. Open the console
+2. Click the 'Show errors' button. The first `getError('required)` log shows `kind: required` and `message: undefined`. The second `errors()` log shows 2 errors.
+
+As the result nothing is rendered
+
+### Expected Behavior
+
+- The field has a single `required` error, the one from the schema.
+
+### Actual Behavior
+
+- `errors()` contains two `required` errors: first a `CompatValidationError` from `MatCheckbox.validate()` (`message` is `undefined`), then the schema error.
+- `getError('required')` returns the first one, so `getError('required')?.message` is `undefined` and nothing is rendered.
+
+### Environment
+
+- Angular: 22.0.6
+- CDK/Material: 22.0.4
+- Browser(s): Google Chrome Version 154.0.8037.98
+- Operating System: MacOs 27.0
