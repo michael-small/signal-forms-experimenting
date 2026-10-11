@@ -72,7 +72,7 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [MatButtonModule, MatFormFieldModule, MatChipsModule, MatIconModule, FormField],
 })
 export class ChipsMaterialBug {
-  readonly keywords = signal(['angular', 'how-to', 'tutorial', 'accessibility']);
+  readonly keywords = signal(['angular']);
 
   protected model = signal({
     word: 'angular',

@@ -19,6 +19,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
         <mat-button-toggle value="bold">Bold</mat-button-toggle>
         <mat-button-toggle value="italic">Italic</mat-button-toggle>
         <mat-button-toggle value="underline">Underline</mat-button-toggle>
+        <mat-button-toggle value="">EMPTY</mat-button-toggle>
       </mat-button-toggle-group>
       <p>Chosen value is {{ fontStyleForm().value() }}</p>
       <div>
