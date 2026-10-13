@@ -43,6 +43,7 @@ export const emailAgeSchema = schema<EmailAgeValue>((path) => {
   selector: 'app-form-field-custom-control-example',
   template: `
     <h2>Reactive Form + Signal Form both using a custom Material form component</h2>
+    <p>NOTE: There are various reasons that this is a bad approach lol. Just workshoping things.</p>
 
     <h3>Signal Form</h3>
     <app-example-email-age-input [formField]="signalForm.profile" />

@@ -5,15 +5,9 @@ import { ComplexTopics } from './forms/complex-topics';
 import { LargeFormSplittingStrategies } from './large-form/large-form-splitting-strategies';
 import { ShowingErrorsConditions } from './forms/showing-errors-conditions/showing-errors-conditions';
 import { MaterialModernize } from './forms/material-modernize/material-modernize';
-import { FormFieldCustomControlExample } from './forms/material-custom/form-field-custom-control-example';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'custom-control' },
-  {
-    path: 'custom-control',
-    component: FormFieldCustomControlExample,
-    title: 'Custom Form Control',
-  },
   {
     path: 'form-primitives',
     component: FormPrimitiveExamples,
@@ -38,3 +32,11 @@ export const routes: Routes = [
   },
   { path: '**', redirectTo: 'custom-control' },
 ];
+
+// Bad idea all together (multi fields in one object, form logic duplicated over)
+// https://angular.dev/guide/forms/signals/model-design#fields-that-are-treated-atomically-by-the-ui-control
+// {
+//   path: 'custom-control',
+//   component: FormFieldCustomControlExample,
+//   title: 'Custom Form Control',
+// },
