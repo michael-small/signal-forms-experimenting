@@ -13,7 +13,7 @@ import { ProfileFormFormValueControl } from './form-value-control/profile-form';
     ProfileFormFormValueControl,
   ],
   template: `
-    <h1>Large Form splitting strategies</h1>
+    <h2>Large Form splitting strategies</h2>
 
     <p>
       <a
@@ -23,12 +23,16 @@ import { ProfileFormFormValueControl } from './form-value-control/profile-form';
       >
     </p>
 
+    <h3>Input Tree</h3>
     <app-profile-form-input-tree />
 
+    <h3>Input Model</h3>
     <app-profile-form-input-model />
 
+    <h3>Service</h3>
     <app-profile-form-service />
 
+    <h3>FormValueControl</h3>
     <app-profile-form-form-value-control />
   `,
 })

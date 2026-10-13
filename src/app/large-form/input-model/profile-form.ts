@@ -7,7 +7,6 @@ import { JsonPipe } from '@angular/common';
   selector: 'app-profile-form-input-model',
   imports: [AccountFormInputModel, JsonPipe],
   template: `
-    <h2>Input Model</h2>
     <form>
       <app-account-form-input-model [(model)]="model().account.firstName" />
     </form>

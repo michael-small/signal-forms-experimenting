@@ -31,6 +31,7 @@ import { SliderMaterial } from './material/extras/slider';
     SliderMaterial,
   ],
   template: `
+    <h2>Form Primitives</h2>
     <div id="primitives">
       <div>
         <p>

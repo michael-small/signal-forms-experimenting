@@ -25,11 +25,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
           </a>
         </li>
         <li>
-          <a
-            routerLink="/form-primitives"
-            routerLinkActive="active"
-            ariaCurrentWhenActive="page"
-          >
+          <a routerLink="/form-primitives" routerLinkActive="active" ariaCurrentWhenActive="page">
             Form primitive examples
           </a>
         </li>
@@ -39,11 +35,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
           </a>
         </li>
         <li>
-          <a
-            routerLink="/showing-errors"
-            routerLinkActive="active"
-            ariaCurrentWhenActive="page"
-          >
+          <a routerLink="/showing-errors" routerLinkActive="active" ariaCurrentWhenActive="page">
             Showing errors conditions
           </a>
         </li>
@@ -53,11 +45,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
           </a>
         </li>
         <li>
-          <a
-            routerLink="/large-form"
-            routerLinkActive="active"
-            ariaCurrentWhenActive="page"
-          >
+          <a routerLink="/large-form" routerLinkActive="active" ariaCurrentWhenActive="page">
             Large form splitting strategies
           </a>
         </li>
@@ -74,6 +62,19 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
     </nav>
 
     <router-outlet />
+  `,
+  styles: `
+    a {
+      // color: red;
+    }
+    .active {
+      color: black;
+      text-decoration: none;
+    }
+    .active::after {
+      content: '<---';
+      margin-left: 4px; /* adds a small space between text and emoji */
+    }
   `,
 })
 export class App {}

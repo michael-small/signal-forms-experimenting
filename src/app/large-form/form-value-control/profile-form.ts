@@ -7,7 +7,6 @@ import { accountSchema, createAccountModel, Profile } from '../form.model';
   selector: 'app-profile-form-form-value-control',
   imports: [AccountFormFormValueControl, FormRoot, FormField],
   template: `
-    <h2>FormValueControl</h2>
     <form [formRoot]="form">
       <app-account-form-form-value-control [formField]="form.account.firstName" />
     </form>

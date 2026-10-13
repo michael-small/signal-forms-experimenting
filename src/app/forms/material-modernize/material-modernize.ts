@@ -29,6 +29,7 @@ import { TimepickerFormsExample } from './timepicker-forms-integration';
     TimepickerFormsExample,
   ],
   template: `
+    <h2>Material Modernize</h2>
     <em
       >NOTE: I name these to be exactly what they were based on from the docs, even though these are
       with signal forms and not reactive/template forms.</em

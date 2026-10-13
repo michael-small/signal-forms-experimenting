@@ -17,6 +17,7 @@ import { FullCRUD } from './full-crud/full-crud';
     MatTabsModule,
   ],
   template: `
+    <h2>Complex Topics</h2>
     <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
       <mat-tab label="Validation Combinations Exercise">
         <app-password-requirements />

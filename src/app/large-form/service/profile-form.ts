@@ -7,7 +7,6 @@ import { FormService } from './form-service';
   selector: 'app-profile-form-service',
   imports: [AccountFormService, FormRoot],
   template: `
-    <h2>Service</h2>
     <form [formRoot]="formService.form">
       <app-account-form-service />
     </form>

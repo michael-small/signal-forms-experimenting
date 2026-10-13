@@ -7,7 +7,6 @@ import { accountSchema, createAccountModel, Profile } from '../form.model';
   selector: 'app-profile-form-input-tree',
   imports: [AccountFormInputTree, FormRoot],
   template: `
-    <h2>Input Tree</h2>
     <form [formRoot]="form">
       <app-account-form-input-tree [form]="form.account" />
     </form>
