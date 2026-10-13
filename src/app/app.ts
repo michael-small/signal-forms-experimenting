@@ -1,27 +1,11 @@
 import { Component } from '@angular/core';
-import { FormArrays } from './forms/form-arrays/form-arrays';
-import { FormPrimitiveExamples } from './forms/form-primitive-examples/form-primitive-examples';
-import { ComplexTopics } from './forms/complex-topics';
-import { LargeFormSplittingStrategies } from './large-form/large-form-splitting-strategies';
-import { ShowingErrorsConditions } from './forms/showing-errors-conditions/showing-errors-conditions';
-import { MaterialModernize } from './forms/material-modernize/material-modernize';
-import { FormFieldCustomControlExample } from './forms/material-custom/form-field-custom-control-example';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    FormArrays,
-    FormPrimitiveExamples,
-    ComplexTopics,
-    LargeFormSplittingStrategies,
-    ShowingErrorsConditions,
-    MaterialModernize,
-    FormFieldCustomControlExample,
-  ],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet],
   template: `
     <h1>Signal Forms Playground</h1>
-
-    <app-form-field-custom-control-example />
 
     <p>
       <a href="https://angular.dev/guide/forms/signals/overview" target="_blank">Signal Forms</a>
@@ -33,28 +17,63 @@ import { FormFieldCustomControlExample } from './forms/material-custom/form-fiel
       most examples are vanilla Angular code.
     </p>
 
-    <h2>Form Primitive Examples</h2>
-    <app-form-primitive-examples />
+    <nav aria-label="Form examples">
+      <ul>
+        <li>
+          <a routerLink="/custom-control" routerLinkActive="active" ariaCurrentWhenActive="page">
+            Custom form control
+          </a>
+        </li>
+        <li>
+          <a
+            routerLink="/form-primitives"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+          >
+            Form primitive examples
+          </a>
+        </li>
+        <li>
+          <a routerLink="/form-arrays" routerLinkActive="active" ariaCurrentWhenActive="page">
+            Form arrays
+          </a>
+        </li>
+        <li>
+          <a
+            routerLink="/showing-errors"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+          >
+            Showing errors conditions
+          </a>
+        </li>
+        <li>
+          <a routerLink="/complex-topics" routerLinkActive="active" ariaCurrentWhenActive="page">
+            Complex topics
+          </a>
+        </li>
+        <li>
+          <a
+            routerLink="/large-form"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+          >
+            Large form splitting strategies
+          </a>
+        </li>
+        <li>
+          <a
+            routerLink="/material-modernize"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+          >
+            Material modernize examples
+          </a>
+        </li>
+      </ul>
+    </nav>
 
-    <h2>Form Arrays</h2>
-    <app-form-arrays />
-
-    <h2>Showing Errors Conditions</h2>
-    <app-showing-errors-conditions />
-
-    <h2>Complex Topics</h2>
-    <app-complex-topics />
-
-    <app-large-form-splitting-strategies />
-
-    <h2>Material Modernize examples</h2>
-    <app-material-modernize />
-  `,
-  styles: `
-    #info {
-      display: flex;
-      gap: 2rem;
-    }
+    <router-outlet />
   `,
 })
 export class App {}
