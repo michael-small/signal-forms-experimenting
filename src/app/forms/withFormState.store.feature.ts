@@ -25,7 +25,6 @@ export function withFormState<DomainModel, FormModel>(args: {
   formDataStream: Observable<DomainModel>;
   defaultFormModel: FormModel;
   mapDomainToFormFn: (domain: DomainModel, extras?: unknown) => FormModel;
-  mapFormToDomainFn: (form: FormModel, extras?: unknown) => DomainModel;
   schema: (schema: SchemaPathTree<FormModel>) => void;
 }) {
   return signalStoreFeature(
@@ -42,9 +41,6 @@ export function withFormState<DomainModel, FormModel>(args: {
       getFormModel: () => store._formModelValue(),
       setFormModel: (formValue: FormModel) =>
         updateState(store, 'set Form State', { _formModelValue: formValue }),
-    })),
-    withComputed((store) => ({
-      domainModel: () => args.mapFormToDomainFn(store._formModelValue()),
     })),
     withProps((store) => ({
       _form: form(

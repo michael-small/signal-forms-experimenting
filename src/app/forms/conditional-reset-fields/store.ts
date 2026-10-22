@@ -33,7 +33,6 @@ export const FormStore = signalStore(
       formDataStream: store._dataService.getFormData(),
       defaultFormModel: defaultConditionalFormModel,
       mapDomainToFormFn: (domain) => store._formToDomain.mapDomainToFormModel(domain),
-      mapFormToDomainFn: (form) => store._formToDomain.mapFormModelToDomain(form),
       schema: querySchema,
     });
   }),
@@ -64,7 +63,9 @@ export const FormStore = signalStore(
   withMethods((store) => {
     // TODO - skip the domain model setting and just have this be a function from the feature?
     function save() {
-      return firstValueFrom(store._dataService.save(store.domainModel()));
+      return firstValueFrom(
+        store._dataService.save(store._formToDomain.mapFormModelToDomain(store.getFormModel())),
+      );
     }
 
     return {

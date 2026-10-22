@@ -52,7 +52,8 @@ export class FormService {
 
   public async submit() {
     await submit(this.form, async (field) => {
-      await this.store.save();
+      const saveData = await this.store.save();
+      console.log(await saveData);
     });
   }
 
