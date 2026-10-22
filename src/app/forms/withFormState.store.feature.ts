@@ -10,7 +10,7 @@ import {
   withProps,
 } from '@ngrx/signals';
 import { map, Observable } from 'rxjs';
-import { linkedSignal, signal } from '@angular/core';
+import { effect, linkedSignal, signal } from '@angular/core';
 import { FieldTree, form, SchemaPathTree } from '@angular/forms/signals';
 
 /**
@@ -56,24 +56,16 @@ export function withFormState<DomainModel, FormModel>(args: {
       _submitting: signal<boolean | null>(null),
     })),
     withMethods((store) => ({
-      syncFormForDevtoolsTracking: signalMethod<{
-        form: FieldTree<FormModel, string | number, 'writable'>;
-        touched: boolean;
-        dirty: boolean;
-        submitting: boolean;
-      }>(
-        (f: {
-          form: FieldTree<FormModel, string | number, 'writable'>;
-          touched: boolean;
-          dirty: boolean;
-          submitting: boolean;
-        }) => {
-          store._form = f.form;
-          store._dirty.set(f.dirty);
-          store._touched.set(f.touched);
-          store._submitting.set(f.submitting);
-        },
-      ),
+      syncTouchedDirtySubmitting: (form: FieldTree<FormModel, string | number, 'writable'>) => {
+        effect(
+          () => {
+            store._dirty.set(form().dirty());
+            store._touched.set(form().touched());
+            store._submitting.set(form().submitting());
+          },
+          { debugName: 'form feature tracking dirty/touched/submitting' },
+        );
+      },
     })),
     withLinkedState((store) => {
       const _form = store._form;
