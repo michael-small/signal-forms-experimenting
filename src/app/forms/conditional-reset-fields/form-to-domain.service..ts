@@ -2,8 +2,12 @@ import { Service } from '@angular/core';
 import { DomainModel } from './entity.model';
 import { FormModel } from './form.model';
 
+interface FormToDomainService {
+  mapDomainToFormModel(domain: DomainModel): FormModel;
+}
+
 @Service()
-export class FormToDomainService {
+export class ConditionalFormToDomainService implements FormToDomainService {
   public mapDomainToFormModel(domain: DomainModel): FormModel {
     return {
       dbTable: domain.databaseTable,

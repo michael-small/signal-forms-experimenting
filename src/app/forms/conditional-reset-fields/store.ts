@@ -6,7 +6,7 @@ import { EntityDataService } from './entity.service';
 import { inject } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { defaultConditionalFormModel } from './form.model';
-import { FormToDomainService } from './form-to-domain.service.';
+import { ConditionalFormToDomainService } from './form-to-domain.service.';
 import { withFormState } from '../withFormState.store.feature';
 import { extendResource } from '../../temp_resource_extensions';
 
@@ -22,7 +22,7 @@ export const FormStore = signalStore(
   { providedIn: 'root' },
   withProps(() => ({
     _dataService: inject(EntityDataService),
-    _formToDomainService: inject(FormToDomainService),
+    _formToDomainService: inject(ConditionalFormToDomainService),
   })),
   withDevtools(
     'ConditionalResetFormStore',
