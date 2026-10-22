@@ -6,7 +6,7 @@ import { EntityDataService } from './entity.service';
 import { inject } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { defaultConditionalFormModel } from './form.model';
-import { FormToDomain } from './form-to-domain';
+import { FormToDomainService } from './form-to-domain.service.';
 import { withFormState } from '../withFormState.store.feature';
 import { extendResource } from '../../temp_resource_extensions';
 
@@ -22,7 +22,7 @@ export const FormStore = signalStore(
   { providedIn: 'root' },
   withProps(() => ({
     _dataService: inject(EntityDataService),
-    _formToDomain: inject(FormToDomain),
+    _formToDomainService: inject(FormToDomainService),
   })),
   withDevtools(
     'ConditionalResetFormStore',
@@ -32,7 +32,7 @@ export const FormStore = signalStore(
     return withFormState({
       formDataStream: store._dataService.getFormData(),
       defaultFormModel: defaultConditionalFormModel,
-      mapDomainToFormFn: (domain) => store._formToDomain.mapDomainToFormModel(domain),
+      mapDomainToFormFn: (domain) => store._formToDomainService.mapDomainToFormModel(domain),
       schema: querySchema,
     });
   }),
@@ -61,10 +61,11 @@ export const FormStore = signalStore(
     };
   }),
   withMethods((store) => {
-    // TODO - skip the domain model setting and just have this be a function from the feature?
     function save() {
       return firstValueFrom(
-        store._dataService.save(store._formToDomain.mapFormModelToDomain(store.getFormModel())),
+        store._dataService.save(
+          store._formToDomainService.mapFormModelToDomain(store.getFormModel()),
+        ),
       );
     }
 

@@ -3,7 +3,7 @@ import { DomainModel } from './entity.model';
 import { FormModel } from './form.model';
 
 @Service()
-export class FormToDomain {
+export class FormToDomainService {
   public mapDomainToFormModel(domain: DomainModel): FormModel {
     return {
       dbTable: domain.databaseTable,
