@@ -32,11 +32,3 @@ export const routes: Routes = [
   },
   { path: '**', redirectTo: 'custom-control' },
 ];
-
-// Bad idea all together (multi fields in one object, form logic duplicated over)
-// https://angular.dev/guide/forms/signals/model-design#fields-that-are-treated-atomically-by-the-ui-control
-// {
-//   path: 'custom-control',
-//   component: FormFieldCustomControlExample,
-//   title: 'Custom Form Control',
-// },

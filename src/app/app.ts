@@ -20,11 +20,6 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
     <nav aria-label="Form examples">
       <ul>
         <li>
-          <a ariaCurrentWhenActive="page" routerLink="/custom-control" routerLinkActive="active">
-            Custom form control
-          </a>
-        </li>
-        <li>
           <a ariaCurrentWhenActive="page" routerLink="/form-primitives" routerLinkActive="active">
             Form primitive examples
           </a>
