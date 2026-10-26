@@ -8,7 +8,7 @@ import { form, FormField } from '@angular/forms/signals';
  * @title Highlight the first autocomplete option
  */
 @Component({
-  selector: 'autocomplete-auto-active-first-option-example',
+  selector: 'app-autocomplete-auto-active-first-option-example',
   template: `
     <h3>
       <a
@@ -21,14 +21,14 @@ import { form, FormField } from '@angular/forms/signals';
       <mat-form-field class="example-full-width">
         <mat-label>Number</mat-label>
         <input
-          type="text"
-          placeholder="Pick one"
           aria-label="Number"
           matInput
+          placeholder="Pick one"
+          type="text"
           [formField]="form"
           [matAutocomplete]="auto"
         />
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
           @for (option of filteredOptions(); track option) {
             <mat-option [value]="option">{{ option }}</mat-option>
           }

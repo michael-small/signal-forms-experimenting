@@ -1,12 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
+import { Component, signal } from '@angular/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { form, FormField, required } from '@angular/forms/signals';
 import { JsonPipe } from '@angular/common';

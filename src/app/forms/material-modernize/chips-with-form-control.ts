@@ -1,6 +1,5 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Component, inject, signal } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { disabled, form, FormField } from '@angular/forms/signals';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
@@ -11,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
  * @title Chips with form control
  */
 @Component({
-  selector: 'chips-form-control-example',
+  selector: 'app-chips-form-control-example',
   template: `
     <h3>
       <a
@@ -21,10 +20,18 @@ import { MatIconModule } from '@angular/material/icon';
       >
     </h3>
     <div class="example-button-container">
-      <button matButton="elevated" (click)="model.update(m => ({ ...m, enabled: false }))">
+      <button
+        matButton="elevated"
+        type="button"
+        (click)="model.update(m => ({ ...m, enabled: false }))"
+      >
         Disable form control
       </button>
-      <button matButton="elevated" (click)="model.update(m => ({ ...m, enabled: true }))">
+      <button
+        matButton="elevated"
+        type="button"
+        (click)="model.update(m => ({ ...m, enabled: true }))"
+      >
         Enable form control
       </button>
     </div>
@@ -37,7 +44,7 @@ import { MatIconModule } from '@angular/material/icon';
         @for (keyword of keywords(); track keyword) {
           <mat-chip-row (removed)="removeKeyword(keyword)">
             {{ keyword }}
-            <button matChipRemove [attr.aria-label]="'remove ' + keyword">
+            <button matChipRemove type="button" [attr.aria-label]="'remove ' + keyword">
               <mat-icon>cancel</mat-icon>
             </button>
           </mat-chip-row>

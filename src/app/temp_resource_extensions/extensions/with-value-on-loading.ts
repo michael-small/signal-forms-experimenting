@@ -24,7 +24,7 @@ import { ResourceExtension } from '../models';
  * ```
  */
 export function withValueOnLoading<R extends Resource<unknown>>(
-  value: R extends Resource<infer V> ? V : never
+  value: R extends Resource<infer V> ? V : never,
 ): ResourceExtension<R> {
   return {
     type: LOADING_EXTENSION_TYPE,

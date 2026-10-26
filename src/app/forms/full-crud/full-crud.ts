@@ -1,5 +1,5 @@
 import { Component, inject, linkedSignal } from '@angular/core';
-import { patchState, signalStore, withMethods, withProps, withState } from '@ngrx/signals';
+import { patchState, signalStore, withMethods, withProps } from '@ngrx/signals';
 import { HttpClient } from '@angular/common/http';
 import { rxMutation, withResource } from '@ngrx-toolkit/core';
 import { FormsModule } from '@angular/forms';
@@ -8,12 +8,12 @@ import { map } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
-interface Todo {
+type Todo = {
   id: number;
   title: string;
   completed: boolean;
   userId: number;
-}
+};
 
 let currentId = 11;
 
@@ -101,21 +101,21 @@ const TodoStore = signalStore(
           <tr>
             <td>{{ todo.id }}</td>
             <td>
-              <input [formField]="form[$index].title" type="text" />
+              <input type="text" [formField]="form[$index].title" />
             </td>
             <td>
-              <mat-checkbox [formField]="form[$index].completed"></mat-checkbox>
+              <mat-checkbox [formField]="form[$index].completed" />
             </td>
             <td>
-              <button (click)="saveTodo(todo)">Save</button>
-              <button (click)="removeTodo(todo.id)">X</button>
+              <button type="submit" (click)="saveTodo(todo)">Save</button>
+              <button type="button" (click)="removeTodo(todo.id)">X</button>
             </td>
           </tr>
         }
       </tbody>
     </table>
     <div>
-      <button (click)="addTodo()">Add Todo</button>
+      <button type="button" (click)="addTodo()">Add Todo</button>
     </div>
   `,
 })

@@ -7,7 +7,7 @@ Use Angular's HTTP APIs for backend communication so requests participate in dep
 In Angular v21 and later, `HttpClient` is available for injection by default. Add `provideHttpClient(...)` only when an app needs to configure HTTP features for a specific injector:
 
 ```ts
-import {provideHttpClient, withInterceptors} from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 export const appConfig = {
   providers: [provideHttpClient(withInterceptors([authInterceptor]))],
@@ -26,8 +26,8 @@ export const appConfig = {
 Encapsulate backend calls in injectable services, not components:
 
 ```ts
-import {HttpClient} from '@angular/common/http';
-import {Service, inject} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Service, inject } from '@angular/core';
 
 @Service()
 export class UserService {
@@ -63,7 +63,7 @@ import {
 } from '@angular/common/http';
 
 export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
-  return next(req.clone({setHeaders: {Authorization: 'Bearer token'}}));
+  return next(req.clone({ setHeaders: { Authorization: 'Bearer token' } }));
 }
 
 export const appConfig = {
@@ -89,8 +89,8 @@ export const appConfig = {
 Use `httpResource` to create an asynchronous derivation that fetches data over HTTP and exposes the result as reactive signals.
 
 ```ts
-import {httpResource} from '@angular/common/http';
-import {input} from '@angular/core';
+import { httpResource } from '@angular/common/http';
+import { input } from '@angular/core';
 
 export class UserProfile {
   readonly userId = input.required<string>();

@@ -1,7 +1,6 @@
 import { JsonPipe } from '@angular/common';
-import { Component, input, model } from '@angular/core';
-import { FieldTree, form, FormField, FormRoot, minLength, required } from '@angular/forms/signals';
-import { min } from 'rxjs';
+import { Component, input } from '@angular/core';
+import { FieldTree, FormField, FormRoot } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-sub-a-field-tree-inputs',
@@ -11,7 +10,7 @@ import { min } from 'rxjs';
     <form [formRoot]="form">
       <label>
         First Name
-        <input [formField]="form" type="text" />
+        <input type="text" [formField]="form" />
       </label>
     </form>
 

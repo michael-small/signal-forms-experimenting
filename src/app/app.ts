@@ -20,40 +20,40 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
     <nav aria-label="Form examples">
       <ul>
         <li>
-          <a routerLink="/custom-control" routerLinkActive="active" ariaCurrentWhenActive="page">
+          <a ariaCurrentWhenActive="page" routerLink="/custom-control" routerLinkActive="active">
             Custom form control
           </a>
         </li>
         <li>
-          <a routerLink="/form-primitives" routerLinkActive="active" ariaCurrentWhenActive="page">
+          <a ariaCurrentWhenActive="page" routerLink="/form-primitives" routerLinkActive="active">
             Form primitive examples
           </a>
         </li>
         <li>
-          <a routerLink="/form-arrays" routerLinkActive="active" ariaCurrentWhenActive="page">
+          <a ariaCurrentWhenActive="page" routerLink="/form-arrays" routerLinkActive="active">
             Form arrays
           </a>
         </li>
         <li>
-          <a routerLink="/showing-errors" routerLinkActive="active" ariaCurrentWhenActive="page">
+          <a ariaCurrentWhenActive="page" routerLink="/showing-errors" routerLinkActive="active">
             Showing errors conditions
           </a>
         </li>
         <li>
-          <a routerLink="/complex-topics" routerLinkActive="active" ariaCurrentWhenActive="page">
+          <a ariaCurrentWhenActive="page" routerLink="/complex-topics" routerLinkActive="active">
             Complex topics
           </a>
         </li>
         <li>
-          <a routerLink="/large-form" routerLinkActive="active" ariaCurrentWhenActive="page">
+          <a ariaCurrentWhenActive="page" routerLink="/large-form" routerLinkActive="active">
             Large form splitting strategies
           </a>
         </li>
         <li>
           <a
+            ariaCurrentWhenActive="page"
             routerLink="/material-modernize"
             routerLinkActive="active"
-            ariaCurrentWhenActive="page"
           >
             Material modernize examples
           </a>

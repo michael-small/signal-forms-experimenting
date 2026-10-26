@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SubAService } from './sub-a';
 import { SubBService } from './sub-b';
 import { JsonPipe } from '@angular/common';

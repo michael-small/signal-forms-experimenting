@@ -79,7 +79,7 @@ Do not read `value()` directly in a template or computed signal without a guard,
 You can optimistically update the resource's value directly. This changes the status to `'local'`.
 
 ```ts
-this.userResource.value.set({name: 'Optimistic Update'});
+this.userResource.value.set({ name: 'Optimistic Update' });
 ```
 
 ## Reactive Data Fetching with `httpResource`

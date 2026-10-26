@@ -35,18 +35,18 @@ import { TimepickerFormsExample } from './timepicker-forms-integration';
       with signal forms and not reactive/template forms.</em
     >
 
-    <timepicker-forms-example />
-    <slider-range-example />
-    <slide-toggle-forms-example />
-    <select-hint-error-example />
-    <radio-ng-model-example />
-    <input-clearable-example />
-    <form-field-error-example />
-    <date-range-picker-forms-example />
-    <chips-form-control-example />
-    <checkbox-reactive-forms-example />
-    <button-toggle-forms-example />
-    <autocomplete-auto-active-first-option-example />
+    <app-timepicker-forms-example />
+    <app-slider-range-example />
+    <app-slide-toggle-forms-example />
+    <app-select-hint-error-example />
+    <app-radio-ng-model-example />
+    <app-input-clearable-example />
+    <app-form-field-error-example />
+    <app-date-range-picker-forms-example />
+    <app-chips-form-control-example />
+    <app-checkbox-reactive-forms-example />
+    <app-button-toggle-forms-example />
+    <app-autocomplete-auto-active-first-option-example />
   `,
 })
 export class MaterialModernize {}

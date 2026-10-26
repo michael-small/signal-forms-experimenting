@@ -1,7 +1,6 @@
 import { JsonPipe } from '@angular/common';
 import { Component, model } from '@angular/core';
 import { form, FormField, FormRoot, minLength, required } from '@angular/forms/signals';
-import { min } from 'rxjs';
 
 @Component({
   selector: 'app-sub-a-model-inputs',
@@ -10,7 +9,7 @@ import { min } from 'rxjs';
     <form [formRoot]="form">
       <label>
         First Name
-        <input [formField]="form" type="text" />
+        <input type="text" [formField]="form" />
       </label>
     </form>
 

@@ -27,9 +27,7 @@ import { ResourceExtension } from '../models';
  * // rather than `undefined`.
  * ```
  */
-export function withPreviousValueOnLoading<
-  R extends Resource<unknown>,
->(): ResourceExtension<R> {
+export function withPreviousValueOnLoading<R extends Resource<unknown>>(): ResourceExtension<R> {
   return {
     type: LOADING_EXTENSION_TYPE,
     apply: (resource) => {

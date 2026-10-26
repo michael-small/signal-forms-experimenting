@@ -22,7 +22,7 @@ import { MatRadioModule } from '@angular/material/radio';
       Subform A:
       <input type="text" [formField]="form.a.value" />
     </label>
-    <button (click)="formService.removeItem(this.index())">Remove</button>
+    <button type="button" (click)="formService.removeItem(this.index())">Remove</button>
   `,
 })
 export class SubformA {

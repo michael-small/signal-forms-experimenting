@@ -41,7 +41,7 @@ import { SliderMaterial } from './material/extras/slider';
             >Basic Native Form Controls</a
           >
         </p>
-        <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
+        <mat-tab-group animationDuration="0ms" mat-align-tabs="start" mat-stretch-tabs="false">
           <mat-tab label="Radio"> <app-radio /></mat-tab>
           <mat-tab label="Text"> <app-text /></mat-tab>
           <mat-tab label="Checkbox"> <app-checkbox /></mat-tab>
@@ -55,7 +55,7 @@ import { SliderMaterial } from './material/extras/slider';
             >Material examples</a
           >
         </p>
-        <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
+        <mat-tab-group animationDuration="0ms" mat-align-tabs="start" mat-stretch-tabs="false">
           <mat-tab label="Radio"> <app-radio-material /></mat-tab>
           <mat-tab label="Text"> <app-text-material /></mat-tab>
           <mat-tab label="Checkbox"> <app-checkbox-material /></mat-tab>
@@ -70,7 +70,7 @@ import { SliderMaterial } from './material/extras/slider';
           >Material, more stuff</a
         >
       </p>
-      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
+      <mat-tab-group animationDuration="0ms" mat-align-tabs="start" mat-stretch-tabs="false">
         <mat-tab label="Autocomplete"> <app-autocomplete-material /></mat-tab>
         <mat-tab label="Button Toggle"> <app-button-toggle-material /></mat-tab>
         <mat-tab label="Slide Toggle"> <app-slide-toggle-material /></mat-tab>

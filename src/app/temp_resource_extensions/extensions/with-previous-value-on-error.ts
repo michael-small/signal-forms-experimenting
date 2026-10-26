@@ -29,9 +29,7 @@ import { overrideHasValueOnError } from './utils';
  * // before, rather than throwing an error.
  * ```
  */
-export function withPreviousValueOnError<
-  R extends Resource<unknown>,
->(): ResourceExtension<R> {
+export function withPreviousValueOnError<R extends Resource<unknown>>(): ResourceExtension<R> {
   return {
     type: ERROR_EXTENSION_TYPE,
     apply: (resource) => {

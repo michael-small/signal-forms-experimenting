@@ -7,7 +7,7 @@
  * last one takes effect.
  */
 export const LOADING_EXTENSION_TYPE = Symbol(
-  typeof ngDevMode !== 'undefined' && ngDevMode ? 'LOADING_EXTENSION_TYPE' : ''
+  typeof ngDevMode !== 'undefined' && ngDevMode ? 'LOADING_EXTENSION_TYPE' : '',
 );
 
 /**
@@ -19,5 +19,5 @@ export const LOADING_EXTENSION_TYPE = Symbol(
  * only the last one takes effect.
  */
 export const ERROR_EXTENSION_TYPE = Symbol(
-  typeof ngDevMode !== 'undefined' && ngDevMode ? 'ERROR_EXTENSION_TYPE' : ''
+  typeof ngDevMode !== 'undefined' && ngDevMode ? 'ERROR_EXTENSION_TYPE' : '',
 );

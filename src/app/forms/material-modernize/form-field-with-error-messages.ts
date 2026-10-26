@@ -5,7 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 
 /** @title Form field with error messages */
 @Component({
-  selector: 'form-field-error-example',
+  selector: 'app-form-field-error-example',
   template: `
     <h3>
       <a

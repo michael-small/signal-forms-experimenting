@@ -7,8 +7,8 @@ Pipes transform data declaratively inside Angular templates using the `|` operat
 Import the pipe class and add it to the component's `imports` array.
 
 ```ts
-import {Component} from '@angular/core';
-import {DatePipe, CurrencyPipe} from '@angular/common';
+import { Component } from '@angular/core';
+import { DatePipe, CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-invoice',
@@ -41,10 +41,10 @@ export function toKebabCase(value: string): string {
 
 ```ts
 // kebab-case.pipe.ts
-import {Pipe, PipeTransform} from '@angular/core';
-import {toKebabCase} from './kebab-case';
+import { Pipe, PipeTransform } from '@angular/core';
+import { toKebabCase } from './kebab-case';
 
-@Pipe({name: 'kebabCase'})
+@Pipe({ name: 'kebabCase' })
 export class KebabCasePipe implements PipeTransform {
   transform(value: string): string {
     return toKebabCase(value);
@@ -54,8 +54,8 @@ export class KebabCasePipe implements PipeTransform {
 
 ```ts
 // formatter.service.ts — import the function, NOT the pipe
-import {Service} from '@angular/core';
-import {toKebabCase} from './kebab-case';
+import { Service } from '@angular/core';
+import { toKebabCase } from './kebab-case';
 
 @Service()
 export class FormatterService {
@@ -80,8 +80,8 @@ Inject `LOCALE_ID` to get the current locale and pass it to the function.
 
 ```ts
 // CORRECT — use formatNumber instead of injecting DecimalPipe
-import {Service, LOCALE_ID, inject} from '@angular/core';
-import {formatNumber} from '@angular/common';
+import { Service, LOCALE_ID, inject } from '@angular/core';
+import { formatNumber } from '@angular/common';
 
 @Service()
 export class PriceService {
@@ -95,8 +95,8 @@ export class PriceService {
 
 ```ts
 // WRONG — do not inject pipe classes
-import {Service, inject} from '@angular/core';
-import {DecimalPipe} from '@angular/common';
+import { Service, inject } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 
 @Service()
 export class PriceService {
@@ -116,9 +116,9 @@ ng generate pipe path/to/my-pipe
 A pipe needs a `@Pipe` decorator with a `name` and a `transform` method implementing `PipeTransform`.
 
 ```ts
-import {Pipe, PipeTransform} from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({name: 'truncate'})
+@Pipe({ name: 'truncate' })
 export class TruncatePipe implements PipeTransform {
   transform(value: string, limit = 50): string {
     return value.length > limit ? value.slice(0, limit) + '…' : value;
@@ -134,7 +134,7 @@ export class TruncatePipe implements PipeTransform {
 Mark a pipe `pure: false` only when you need to detect mutations inside arrays or objects. Impure pipes run on every change-detection cycle and can hurt performance.
 
 ```ts
-@Pipe({name: 'filterItems', pure: false})
+@Pipe({ name: 'filterItems', pure: false })
 export class FilterItemsPipe implements PipeTransform {
   transform(items: string[], query: string): string[] {
     return items.filter((i) => i.includes(query));

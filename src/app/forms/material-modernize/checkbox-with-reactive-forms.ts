@@ -1,12 +1,11 @@
 import { JsonPipe } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, signal } from '@angular/core';
 import { form, FormField } from '@angular/forms/signals';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 /** @title Checkboxes with reactive forms */
 @Component({
-  selector: 'checkbox-reactive-forms-example',
+  selector: 'app-checkbox-reactive-forms-example',
   template: `
     <h3>
       <a

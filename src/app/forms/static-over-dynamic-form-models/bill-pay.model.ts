@@ -2,7 +2,7 @@
 // TL;DR Domain models are not always the same as form models.
 
 // Normally would be in its own file, but easier to compare here
-export interface BillPayDomainModel {
+export type BillPayDomainModel = {
   name: string;
   method: {
     type: string;
@@ -16,10 +16,10 @@ export interface BillPayDomainModel {
       routing: string; // different
     };
   };
-}
+};
 
 // Normally would be in its own file, but easier to compare here
-export interface BillPayFormModel {
+export type BillPayFormModel = {
   name: string;
   method: {
     type: string;
@@ -33,9 +33,10 @@ export interface BillPayFormModel {
       routingNumber: string; // different
     };
   };
-}
+};
 
 export class DomainAndFormMappings {
+  // eslint-disable-next-line complexity
   public static mapDomainToForm(domainModel: BillPayDomainModel): BillPayFormModel {
     return {
       name: domainModel?.name ?? '',
@@ -54,6 +55,7 @@ export class DomainAndFormMappings {
     };
   }
 
+  // eslint-disable-next-line complexity
   public static mapFormToDomain(formModel: BillPayFormModel): BillPayDomainModel {
     return {
       name: formModel?.name ?? '',

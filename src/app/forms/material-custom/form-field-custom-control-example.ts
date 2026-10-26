@@ -4,15 +4,15 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
   apply,
   email,
+  form,
   FormField,
   FormValueControl,
-  form,
   max,
   min,
   required,
   validate,
 } from '@angular/forms/signals';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { SignalFormControl } from '@angular/forms/signals/compat';
 import { schema } from '@angular/forms/signals';

@@ -13,7 +13,7 @@ ng generate service my-data
 Or you can manually create a TypeScript class and decorate it with `@Service()`. For reactive state management, store data in a private `signal()` and expose it publicly via `.asReadonly()`:
 
 ```ts
-import {Service, signal} from '@angular/core';
+import { Service, signal } from '@angular/core';
 
 @Service()
 export class BasicDataStore {
@@ -47,8 +47,8 @@ Once a service is created, you can inject it into components, directives, or oth
 ### Injecting into a Component
 
 ```ts
-import {Component, inject} from '@angular/core';
-import {BasicDataStore} from './basic-data-store.service';
+import { Component, inject } from '@angular/core';
+import { BasicDataStore } from './basic-data-store.service';
 
 @Component({
   selector: 'app-example',
@@ -70,8 +70,8 @@ export class Example {
 Services can inject other services in the exact same way. Use `computed()` to derive values from injected services reactively:
 
 ```ts
-import {Service, computed, inject, signal} from '@angular/core';
-import {AdvancedDataStore} from './advanced-data-store.service';
+import { Service, computed, inject, signal } from '@angular/core';
+import { AdvancedDataStore } from './advanced-data-store.service';
 
 @Service()
 export class CombinedDataStore {

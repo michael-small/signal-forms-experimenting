@@ -2,9 +2,9 @@ import { Component, inject, signal } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
-  Validators,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { form, FormField, FormRoot, required } from '@angular/forms/signals';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,7 +14,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
  * @title Slide-toggle with forms
  */
 @Component({
-  selector: 'slide-toggle-forms-example',
+  selector: 'app-slide-toggle-forms-example',
   template: `
     <h3>
       <a
@@ -31,9 +31,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
     <p>Slide Toggle inside of a Template-driven form</p>
 
-    <form class="example-form" #form="ngForm" (ngSubmit)="alertFormValues(form.form)">
-      <mat-slide-toggle ngModel name="enableWifi">Enable Wifi</mat-slide-toggle>
-      <mat-slide-toggle ngModel name="acceptTerms" required
+    <form #form="ngForm" class="example-form" (ngSubmit)="alertFormValues(form.form)">
+      <mat-slide-toggle name="enableWifi" ngModel>Enable Wifi</mat-slide-toggle>
+      <mat-slide-toggle name="acceptTerms" ngModel required
         >Accept Terms of Service</mat-slide-toggle
       >
 
@@ -44,9 +44,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
     <form
       class="example-form"
+      ngNativeValidate
       [formGroup]="formGroup"
       (ngSubmit)="alertFormValues(formGroup)"
-      ngNativeValidate
     >
       <mat-slide-toggle formControlName="enableWifi">Enable Wifi</mat-slide-toggle>
       <mat-slide-toggle formControlName="acceptTerms">Accept Terms of Service</mat-slide-toggle>
@@ -97,8 +97,8 @@ export class SlideToggleFormsExample {
     },
     {
       submission: {
-        action: async (form) => {
-          alert(JSON.stringify(form().value(), null, 2));
+        action: async (frm) => {
+          alert(JSON.stringify(frm().value(), null, 2));
         },
       },
     },

@@ -1,4 +1,4 @@
-import { Injectable, Service } from '@angular/core';
+import { Service } from '@angular/core';
 import { delay, Observable, of } from 'rxjs';
 import { DomainModel, TableField } from './entity.model';
 
@@ -16,7 +16,7 @@ export class EntityDataService {
   }
 
   public getTableFields(tableId: string): Observable<TableField[]> {
-    let fields: TableField[] = [];
+    let fields: TableField[];
 
     if (tableId === 'users') {
       fields = [

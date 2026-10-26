@@ -1,17 +1,12 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { Component, computed, signal } from '@angular/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { form, FormField } from '@angular/forms/signals';
 
-export interface User {
+export type User = {
   name: string;
-}
+};
 
 /**
  * @title Display value autocomplete
@@ -23,10 +18,10 @@ export interface User {
       <mat-form-field class="example-full-width">
         <mat-label>Number</mat-label>
         <input
-          type="text"
-          placeholder="Pick one"
           aria-label="Number"
           matInput
+          placeholder="Pick one"
+          type="text"
           [formField]="form"
           [matAutocomplete]="auto"
         />

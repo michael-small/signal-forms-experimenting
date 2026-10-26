@@ -5,13 +5,12 @@ import {
   min,
   readonly,
   required,
-  submit,
   type SchemaPathTree,
+  submit,
 } from '@angular/forms/signals';
 import { defaultConditionalFormModel, type FormModel } from './form.model';
 import { FormStore } from './store';
 import { TableField } from './entity.model';
-import { mapToResource } from '@ngrx-toolkit/core';
 
 @Service()
 export class FormService {
@@ -51,7 +50,7 @@ export class FormService {
   }
 
   public async submit() {
-    await submit(this.form, async (field) => {
+    await submit(this.form, async (_field) => {
       const saveData = await this.store.save();
       console.log(await saveData);
     });

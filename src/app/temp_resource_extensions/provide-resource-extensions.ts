@@ -8,9 +8,9 @@ import { ResourceExtension } from './models';
  * Injection token that holds the resource extensions registered for the
  * current injector scope via `provideResourceExtensions`.
  */
-export const RESOURCE_EXTENSIONS = new InjectionToken<
-  ResourceExtension<Resource<unknown>>[]
->(typeof ngDevMode !== 'undefined' && ngDevMode ? 'RESOURCE_EXTENSIONS' : '');
+export const RESOURCE_EXTENSIONS = new InjectionToken<ResourceExtension<Resource<unknown>>[]>(
+  typeof ngDevMode !== 'undefined' && ngDevMode ? 'RESOURCE_EXTENSIONS' : '',
+);
 
 /**
  * @experimental

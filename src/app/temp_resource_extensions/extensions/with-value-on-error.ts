@@ -25,7 +25,7 @@ import { overrideHasValueOnError } from './utils';
  * ```
  */
 export function withValueOnError<R extends Resource<unknown>>(
-  value: R extends Resource<infer V> ? V : never
+  value: R extends Resource<infer V> ? V : never,
 ): ResourceExtension<R> {
   return {
     type: ERROR_EXTENSION_TYPE,

@@ -9,7 +9,7 @@ import { form, FormField, FormRoot, minLength, required } from '@angular/forms/s
     <form [formRoot]="form">
       <label>
         Last Name
-        <input [formField]="form" type="text" />
+        <input type="text" [formField]="form" />
       </label>
     </form>
 

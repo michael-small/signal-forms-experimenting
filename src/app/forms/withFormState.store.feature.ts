@@ -1,14 +1,6 @@
 import { updateState, withResource } from '@ngrx-toolkit/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import {
-  signalMethod,
-  signalStoreFeature,
-  withComputed,
-  withHooks,
-  withLinkedState,
-  withMethods,
-  withProps,
-} from '@ngrx/signals';
+import { signalStoreFeature, withLinkedState, withMethods, withProps } from '@ngrx/signals';
 import { map, Observable } from 'rxjs';
 import { effect, linkedSignal, signal } from '@angular/core';
 import { FieldTree, form, SchemaPathTree } from '@angular/forms/signals';
@@ -52,12 +44,12 @@ export function withFormState<DomainModel, FormModel>(args: {
       _submitting: signal<boolean | null>(null),
     })),
     withMethods((store) => ({
-      syncTouchedDirtySubmitting: (form: FieldTree<FormModel, string | number, 'writable'>) => {
+      syncTouchedDirtySubmitting: (frm: FieldTree<FormModel, string | number, 'writable'>) => {
         effect(
           () => {
-            store._dirty.set(form().dirty());
-            store._touched.set(form().touched());
-            store._submitting.set(form().submitting());
+            store._dirty.set(frm().dirty());
+            store._touched.set(frm().touched());
+            store._submitting.set(frm().submitting());
           },
           { debugName: 'form feature tracking dirty/touched/submitting' },
         );

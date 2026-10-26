@@ -1,5 +1,4 @@
 import { Component, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { form, FormField } from '@angular/forms/signals';
 import { MatRadioModule } from '@angular/material/radio';
 
@@ -7,7 +6,7 @@ import { MatRadioModule } from '@angular/material/radio';
  * @title Radios with ngModel
  */
 @Component({
-  selector: 'radio-ng-model-example',
+  selector: 'app-radio-ng-model-example',
   template: `
     <h3>
       <a
@@ -16,10 +15,11 @@ import { MatRadioModule } from '@angular/material/radio';
         >Radios with ngModel</a
       >
     </h3>
-    <label id="example-radio-group-label">Pick your favorite season</label>
+    <label for="radio" id="example-radio-group-label">Pick your favorite season</label>
     <mat-radio-group
       aria-labelledby="example-radio-group-label"
       class="example-radio-group"
+      id="radio"
       [formField]="favoriteSeason"
     >
       @for (season of seasons; track season) {

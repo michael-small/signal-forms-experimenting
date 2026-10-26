@@ -7,7 +7,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
  * @title Button-toggles with forms
  */
 @Component({
-  selector: 'button-toggle-forms-example',
+  selector: 'app-button-toggle-forms-example',
   template: `
     <h3>
       <a
@@ -18,7 +18,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     </h3>
     <section>
       <h4>Button Toggle inside of a Signal form</h4>
-      <mat-button-toggle-group [formField]="fontStyleForm" aria-label="Font Style">
+      <mat-button-toggle-group aria-label="Font Style" [formField]="fontStyleForm">
         <mat-button-toggle value="bold">Bold</mat-button-toggle>
         <mat-button-toggle value="italic">Italic</mat-button-toggle>
         <mat-button-toggle value="underline">Underline</mat-button-toggle>
@@ -28,7 +28,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
     <section>
       <h4>Button Toggle inside of a Template-driven form</h4>
-      <mat-button-toggle-group [(ngModel)]="fontStyle" aria-label="Font Style">
+      <mat-button-toggle-group aria-label="Font Style" [(ngModel)]="fontStyle">
         <mat-button-toggle value="bold">Bold</mat-button-toggle>
         <mat-button-toggle value="italic">Italic</mat-button-toggle>
         <mat-button-toggle value="underline">Underline</mat-button-toggle>
@@ -38,7 +38,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
     <section>
       <h4>Button Toggle inside of a Reactive form</h4>
-      <mat-button-toggle-group [formControl]="fontStyleControl" aria-label="Font Style">
+      <mat-button-toggle-group aria-label="Font Style" [formControl]="fontStyleControl">
         <mat-button-toggle value="bold">Bold</mat-button-toggle>
         <mat-button-toggle value="italic">Italic</mat-button-toggle>
         <mat-button-toggle value="underline">Underline</mat-button-toggle>

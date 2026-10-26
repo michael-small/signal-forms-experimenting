@@ -1,7 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { form, FormField } from '@angular/forms/signals';
@@ -10,7 +9,7 @@ import { form, FormField } from '@angular/forms/signals';
  * @title Input with a clear button
  */
 @Component({
-  selector: 'input-clearable-example',
+  selector: 'app-input-clearable-example',
   template: `
     <h3>
       <a
@@ -23,7 +22,7 @@ import { form, FormField } from '@angular/forms/signals';
       <mat-label>Clearable input</mat-label>
       <input matInput type="text" [formField]="form" />
       @if (value()) {
-        <button matSuffix matIconButton aria-label="Clear" (click)="value.set('')">
+        <button aria-label="Clear" matIconButton matSuffix type="button" (click)="value.set('')">
           <mat-icon>close</mat-icon>
         </button>
       }

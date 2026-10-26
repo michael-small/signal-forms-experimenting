@@ -1,10 +1,10 @@
 import { required, SchemaPathTree } from '@angular/forms/signals';
 
-export interface Profile {
+export type Profile = {
   account: Account;
 }
 
-export interface Account {
+export type Account = {
   firstName: string;
 }
 

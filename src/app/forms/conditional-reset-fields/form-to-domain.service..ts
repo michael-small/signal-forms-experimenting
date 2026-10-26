@@ -2,7 +2,7 @@ import { Service } from '@angular/core';
 import { DomainModel } from './entity.model';
 import { FormModel } from './form.model';
 
-interface FormToDomainService {
+type FormToDomainService = {
   mapDomainToFormModel(domain: DomainModel): FormModel;
 }
 

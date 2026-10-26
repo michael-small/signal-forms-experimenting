@@ -45,7 +45,7 @@ export const environment = {
 Import the environment where needed:
 
 ```ts
-import {environment} from '../environments/environment';
+import { environment } from '../environments/environment';
 
 const apiUrl = environment.apiUrl;
 ```
@@ -79,9 +79,9 @@ initialization.
 Load the configuration before the application starts:
 
 ```ts
-import {Service, inject} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {tap} from 'rxjs';
+import { Service, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { tap } from 'rxjs';
 
 interface AppConfig {
   apiUrl: string;
@@ -110,7 +110,7 @@ export class AppConfigService {
 Register the loader during application bootstrap:
 
 ```ts
-import {provideAppInitializer, inject} from '@angular/core';
+import { provideAppInitializer, inject } from '@angular/core';
 
 provideAppInitializer(() => {
   const config = inject(AppConfigService);

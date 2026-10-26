@@ -1,5 +1,4 @@
 import { Component, signal } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,7 +7,7 @@ import { form, FormField } from '@angular/forms/signals';
 
 /** @title Timepicker forms integration */
 @Component({
-  selector: 'timepicker-forms-example',
+  selector: 'app-timepicker-forms-example',
   template: `
     <h3>
       <a

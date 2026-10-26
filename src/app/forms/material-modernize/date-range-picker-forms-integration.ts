@@ -1,6 +1,6 @@
 import { JsonPipe } from '@angular/common';
 import { Component, signal } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { form, FormField } from '@angular/forms/signals';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 
 /** @title Date range picker forms integration */
 @Component({
-  selector: 'date-range-picker-forms-example',
+  selector: 'app-date-range-picker-forms-example',
   template: `
     <h3>
       <a
@@ -20,12 +20,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     <mat-form-field>
       <mat-label>Enter a date range</mat-label>
       <mat-date-range-input [rangePicker]="picker">
-        <input matStartDate [formField]="range.start" placeholder="Start date" />
-        <input matEndDate [formField]="range.end" placeholder="End date" />
+        <input matStartDate placeholder="Start date" [formField]="range.start" />
+        <input matEndDate placeholder="End date" [formField]="range.end" />
       </mat-date-range-input>
       <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-date-range-picker #picker></mat-date-range-picker>
+      <mat-datepicker-toggle matIconSuffix [for]="picker" />
+      <mat-date-range-picker #picker />
 
       @if (range.start().getError('matStartDateInvalid')) {
         <mat-error>Invalid start date</mat-error>

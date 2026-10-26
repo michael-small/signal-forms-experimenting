@@ -6,7 +6,7 @@ import { MatSliderModule } from '@angular/material/slider';
 @Component({
   selector: 'app-slider-material',
   template: `
-    <mat-slider min="0" max="100" step="1" showTickMarks discrete>
+    <mat-slider discrete max="100" min="0" showTickMarks step="1">
       <input matSliderThumb [formField]="sliderForm" />
     </mat-slider>
 

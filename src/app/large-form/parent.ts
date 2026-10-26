@@ -13,7 +13,7 @@ export class Parent {
     },
   });
 
-  profileForm = form(this.model, (p) => {
+  profileForm = form(this.model, (_p) => {
     //...
   });
 }

@@ -1,18 +1,18 @@
 import { Component, signal } from '@angular/core';
-import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { form, FormField, required } from '@angular/forms/signals';
 
-interface Animal {
+type Animal = {
   name: string;
   sound: string;
-}
+};
 
 /** @title Select with form field features */
 @Component({
-  selector: 'select-hint-error-example',
+  selector: 'app-select-hint-error-example',
   template: `
     <h3>
       <a

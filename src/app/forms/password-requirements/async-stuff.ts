@@ -1,7 +1,6 @@
 // Required subset of SWAPI schema for async validation example
-
-import { HttpClient, httpResource } from '@angular/common/http';
-import { computed, inject, Injectable } from '@angular/core';
+import { httpResource } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 // curl https://swapi.info/api/films/schema
 export type SWAPIStarWarsMovies = {

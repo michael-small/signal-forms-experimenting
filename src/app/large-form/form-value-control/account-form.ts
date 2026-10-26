@@ -9,8 +9,8 @@ import { FormValueControl, ValidationError, WithOptionalFieldTree } from '@angul
       <input
         type="text"
         [value]="value()"
-        (input)="value.set($event.target.value)"
         (blur)="touched.set(true)"
+        (input)="value.set($event.target.value)"
       />
       @if (invalid() && touched()) {
         <div class="error-messages" role="alert">

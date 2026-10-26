@@ -1,7 +1,7 @@
 import { JsonPipe } from '@angular/common';
-import { Component, inject, model } from '@angular/core';
-import { form, FormField, FormRoot, minLength, required } from '@angular/forms/signals';
-import { min } from 'rxjs';
+import { Component, inject } from '@angular/core';
+import { FormField, FormRoot } from '@angular/forms/signals';
+
 import { FormService } from './form-service';
 
 @Component({
@@ -11,7 +11,7 @@ import { FormService } from './form-service';
     <form [formRoot]="form">
       <label>
         First Name
-        <input [formField]="form" type="text" />
+        <input type="text" [formField]="form" />
       </label>
     </form>
 

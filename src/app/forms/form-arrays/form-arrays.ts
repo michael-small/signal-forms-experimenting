@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { form, FormField, FormRoot } from '@angular/forms/signals';
+import { form, FormField } from '@angular/forms/signals';
 import { SubformA } from './subform-a';
 import { SubformB } from './subform-b';
 import { FormService } from './form.service';
@@ -12,7 +12,7 @@ import { MatTabsModule } from '@angular/material/tabs';
   providers: [FormService],
   template: `
     <h2>Form Arrays</h2>
-    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
+    <mat-tab-group animationDuration="0ms" mat-align-tabs="start" mat-stretch-tabs="false">
       <mat-tab label="Basic Array & Array Tracking">
         <h3>Basic Array & Array Tracking</h3>
 
@@ -38,7 +38,7 @@ import { MatTabsModule } from '@angular/material/tabs';
           </p>
         </blockquote>
         <p>
-          <a [href]="docLinks.trackingValuesForArrayFields" target="_blank"
+          <a target="_blank" [href]="docLinks.trackingValuesForArrayFields"
             >-- Angular Docs: "Tracking values for array fields"</a
           >
         </p>
@@ -50,7 +50,7 @@ import { MatTabsModule } from '@angular/material/tabs';
           others.
         </p>
 
-        <button type="button" (click)="formService.addItem()" id="add-item">Add Item</button>
+        <button id="add-item" type="button" (click)="formService.addItem()">Add Item</button>
 
         <div id="differing-objects-array">
           @for (item of formService.differingObjectsArrayForm.items; track item) {

@@ -50,12 +50,9 @@ export function extendResource<R extends Resource<unknown>>(
   resource: R,
   ...extensions: ResourceExtension<NoInfer<R>>[]
 ): R {
-  const providedExtensions =
-    inject(RESOURCE_EXTENSIONS, { optional: true }) ?? [];
+  const providedExtensions = inject(RESOURCE_EXTENSIONS, { optional: true }) ?? [];
   const allExtensions = [...providedExtensions, ...extensions];
-  const uniqueExtensions = new Map(
-    allExtensions.map((ext) => [ext.type, ext])
-  ).values();
+  const uniqueExtensions = new Map(allExtensions.map((ext) => [ext.type, ext])).values();
 
   for (const extension of uniqueExtensions) {
     extension.apply(resource);
