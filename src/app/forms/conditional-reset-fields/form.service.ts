@@ -31,10 +31,16 @@ export class FormService {
    */
   protected formModel = linkedSignal<FormModel>(() => this.store.getFormModel(), {
     set: (value) => {
-      const { newFormValue, fieldToReset } = this.deriveResetState(value);
+      const { newFormValue, fieldToReset } = this.deriveResetState({
+        newValue: value,
+        oldValue: this.store.getFormModel(),
+        storeDBFields: this.store.dbFieldsResource.value(),
+      });
 
+      // Signal forms `.reset()` only resets `dirty`/`touched`, not `value`.
+      // So here you need to set the new value
       this.store.setFormModel(newFormValue);
-
+      // And here you are just resetting the `dirty`/`touched`
       this.resetFormFields(fieldToReset);
     },
   });
@@ -67,11 +73,19 @@ export class FormService {
   /**
    * @description Determines fields to reset and new form value overall based off of new and old form value
    */
-  private deriveResetState(value: FormModel): {
+  private deriveResetState({
+    newValue,
+    oldValue,
+    storeDBFields,
+  }: {
+    newValue: FormModel;
+    oldValue: FormModel;
+    storeDBFields: TableField[];
+  }): {
     newFormValue: FormModel;
     fieldToReset: 'numbers' | 'text' | null;
   } {
-    return this.#deriveResetState(value, this.store.getFormModel(), this.store.dbFieldsValue());
+    return this.#deriveResetState(newValue, oldValue, storeDBFields);
   }
 
   #deriveResetState(
