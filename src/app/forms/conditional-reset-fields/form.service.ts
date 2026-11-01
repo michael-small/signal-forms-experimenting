@@ -32,8 +32,8 @@ export class FormService {
   protected formModel = linkedSignal<FormModel>(() => this.store.getFormModel(), {
     set: (value) => {
       const { newFormValue, fieldToReset } = this.deriveResetState({
-        newValue: value,
         oldValue: this.store.getFormModel(),
+        newValue: value,
         storeDBFields: this.store.dbFieldsResource.value(),
       });
 
@@ -89,29 +89,31 @@ export class FormService {
   }
 
   #deriveResetState(
-    value: FormModel,
-    formValue: FormModel,
+    prevValue: FormModel,
+    newValue: FormModel,
     dbFieldsValue: TableField[],
   ): {
     newFormValue: FormModel;
     fieldToReset: 'numbers' | 'text' | null;
   } {
-    const oldDbField = formValue.dbField;
-    const newDbField = value.dbField;
+    const prevDbFieldId = prevValue.dbField;
+    const newDbFieldId = newValue.dbField;
 
-    const prevDBField = dbFieldsValue?.find((field) => field.id === oldDbField);
-    const newDBField = dbFieldsValue?.find((field) => field.id === newDbField);
+    const prevDBField = dbFieldsValue?.find((field) => field.id === prevDbFieldId);
+    const newDBField = dbFieldsValue?.find((field) => field.id === newDbFieldId);
 
-    const newFormValueWithResets =
+    const newFormValueWithResets: FormModel =
       newDBField && newDBField !== prevDBField
         ? {
-            ...value,
+            ...newValue,
             fieldType: newDBField?.type,
             numbers:
-              newDBField?.type === 'number' ? value.numbers : defaultConditionalFormModel.numbers,
-            text: newDBField?.type === 'text' ? value.text : defaultConditionalFormModel.text,
+              newDBField?.type === 'number'
+                ? newValue.numbers
+                : defaultConditionalFormModel.numbers,
+            text: newDBField?.type === 'text' ? newValue.text : defaultConditionalFormModel.text,
           }
-        : value;
+        : newValue;
 
     let fieldToReset: 'numbers' | 'text' | null = null;
     if (prevDBField?.type !== newDBField?.type) {
