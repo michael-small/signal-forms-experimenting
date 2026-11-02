@@ -2,7 +2,7 @@ import { JsonPipe } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { applyEach, form, FormField, required, validate } from '@angular/forms/signals';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-no-repeats-in-array',
@@ -11,7 +11,11 @@ import { MatInputModule } from '@angular/material/input';
       @for (item of itemsForm.tags; track $index) {
         <mat-form-field>
           <mat-label>Item Name:</mat-label>
-          <input matInput [formField]="item.name" />
+          <mat-select [formField]="item.name">
+            @for (option of options; track option) {
+              <mat-option [value]="option">{{ option }}</mat-option>
+            }
+          </mat-select>
           @for (error of item.name().errors(); track error) {
             <mat-error>{{ error.message }}</mat-error>
           }
@@ -20,7 +24,7 @@ import { MatInputModule } from '@angular/material/input';
     </div>
     <pre>{{ itemsForm().errorSummary() | json }}</pre>
   `,
-  imports: [FormField, JsonPipe, MatFormFieldModule, MatInputModule],
+  imports: [FormField, JsonPipe, MatFormFieldModule, MatSelectModule],
   styles: `
     mat-form-field {
       display: flex;
@@ -30,6 +34,8 @@ import { MatInputModule } from '@angular/material/input';
   `,
 })
 export class NoRepeatsInArray {
+  protected options = ['Angular', 'Signals', 'Forms', 'Validation'];
+
   private itemsModel = signal({
     tags: [
       { id: '1', name: 'Angular' },
