@@ -1,27 +1,46 @@
 import { JsonPipe } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { applyEach, form, FormField, required, validate } from '@angular/forms/signals';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-no-repeats-in-array',
   template: `
-    @for (item of itemsForm.tags; track $index) {
-      <mat-form-field>
-        <mat-label>Item Name:</mat-label>
-        <input matInput [formField]="item.name" />
-        @for (error of item.name().errors(); track error) {
-          <mat-error>{{ error.message }}</mat-error>
-        }
-      </mat-form-field>
-    }
+    <div>
+      @for (item of itemsForm.tags; track $index) {
+        <mat-form-field>
+          <mat-label>Item Name:</mat-label>
+          <mat-select [formField]="item.name">
+            @for (option of options; track option) {
+              <mat-option
+                [disabled]="option !== item.name().value() && unavailableOptions().has(option)"
+                [value]="option"
+                >{{ option }}</mat-option
+              >
+            }
+          </mat-select>
+          @for (error of item.name().errors(); track error) {
+            <mat-error>{{ error.message }}</mat-error>
+          }
+        </mat-form-field>
+      }
+    </div>
     <pre>{{ itemsForm().errorSummary() | json }}</pre>
   `,
-  imports: [FormField, JsonPipe, MatFormFieldModule, MatInputModule],
+  imports: [FormField, JsonPipe, MatFormFieldModule, MatSelectModule],
+  styles: `
+    mat-form-field {
+      display: flex;
+      flex-direction: column;
+      max-width: 50%;
+    }
+  `,
 })
 export class NoRepeatsInArray {
-  itemsModel = signal({
+  protected options = ['Angular', 'Signals', 'Forms', 'Validation'];
+
+  private itemsModel = signal({
     tags: [
       { id: '1', name: 'Angular' },
       { id: '2', name: 'Signals' },
@@ -29,8 +48,12 @@ export class NoRepeatsInArray {
     ],
   });
 
-  itemsForm = form(this.itemsModel, (schemaPath) => {
-    // Iterate through the array of forms
+  protected unavailableOptions = computed<Set<string>>(
+    () => new Set(this.itemsModel().tags.map((tag) => tag.name)),
+  );
+
+  protected itemsForm = form(this.itemsModel, (schemaPath) => {
+    // Iterate through array of forms
     applyEach(schemaPath.tags, (tagObjPath) => {
       required(tagObjPath.name, { message: 'Tag name is required' });
 
@@ -39,12 +62,15 @@ export class NoRepeatsInArray {
 
         const allTagObjects = valueOf(schemaPath.tags) || [];
 
-        const occurrences = allTagObjects.filter((tag) => tag.name === currentName).length;
+        const currentId = valueOf(tagObjPath.id);
+        const duplicateIndices = allTagObjects.flatMap((tag, index) =>
+          tag.name === currentName && tag.id !== currentId ? [index + 1] : [],
+        );
 
-        if (occurrences > 1 && currentName) {
+        if (duplicateIndices.length > 0 && currentName) {
           return {
             kind: 'duplicateName',
-            message: 'Tag already exists',
+            message: `Tag name already exists at item ${duplicateIndices.join(', ')}`,
           };
         }
 
