@@ -48,7 +48,7 @@ export class NoRepeatsInArray {
     ],
   });
 
-  protected unavailableOptions = computed(
+  protected unavailableOptions = computed<Set<string>>(
     () => new Set(this.itemsModel().tags.map((tag) => tag.name)),
   );
 
