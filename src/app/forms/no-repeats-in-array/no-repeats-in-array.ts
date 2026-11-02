@@ -7,21 +7,30 @@ import { MatInputModule } from '@angular/material/input';
 @Component({
   selector: 'app-no-repeats-in-array',
   template: `
-    @for (item of itemsForm.tags; track $index) {
-      <mat-form-field>
-        <mat-label>Item Name:</mat-label>
-        <input matInput [formField]="item.name" />
-        @for (error of item.name().errors(); track error) {
-          <mat-error>{{ error.message }}</mat-error>
-        }
-      </mat-form-field>
-    }
+    <div>
+      @for (item of itemsForm.tags; track $index) {
+        <mat-form-field>
+          <mat-label>Item Name:</mat-label>
+          <input matInput [formField]="item.name" />
+          @for (error of item.name().errors(); track error) {
+            <mat-error>{{ error.message }}</mat-error>
+          }
+        </mat-form-field>
+      }
+    </div>
     <pre>{{ itemsForm().errorSummary() | json }}</pre>
   `,
   imports: [FormField, JsonPipe, MatFormFieldModule, MatInputModule],
+  styles: `
+    mat-form-field {
+      display: flex;
+      flex-direction: column;
+      max-width: 50%;
+    }
+  `,
 })
 export class NoRepeatsInArray {
-  itemsModel = signal({
+  private itemsModel = signal({
     tags: [
       { id: '1', name: 'Angular' },
       { id: '2', name: 'Signals' },
@@ -29,8 +38,8 @@ export class NoRepeatsInArray {
     ],
   });
 
-  itemsForm = form(this.itemsModel, (schemaPath) => {
-    // Iterate through the array of forms
+  protected itemsForm = form(this.itemsModel, (schemaPath) => {
+    // Iterate through array of forms
     applyEach(schemaPath.tags, (tagObjPath) => {
       required(tagObjPath.name, { message: 'Tag name is required' });
 
