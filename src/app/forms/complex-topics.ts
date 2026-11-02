@@ -5,6 +5,7 @@ import { ConditionalReset } from './conditional-reset-fields/conditional-reset';
 import { StaticOverDynamicFormModels } from './static-over-dynamic-form-models/static-over-dynamic-form-models';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FullCRUD } from './full-crud/full-crud';
+import { NoRepeatsInArray } from './no-repeats-in-array/no-repeats-in-array';
 
 @Component({
   selector: 'app-complex-topics',
@@ -15,10 +16,14 @@ import { FullCRUD } from './full-crud/full-crud';
     StaticOverDynamicFormModels,
     FullCRUD,
     MatTabsModule,
+    NoRepeatsInArray,
   ],
   template: `
     <h2>Complex Topics</h2>
     <mat-tab-group animationDuration="0ms" mat-align-tabs="start" mat-stretch-tabs="false">
+      <mat-tab label="Array of Objects with Duplicate Validation">
+        <app-no-repeats-in-array />
+      </mat-tab>
       <mat-tab label="Validation Combinations Exercise">
         <app-password-requirements />
       </mat-tab>
