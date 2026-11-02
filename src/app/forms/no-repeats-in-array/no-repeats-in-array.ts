@@ -48,12 +48,15 @@ export class NoRepeatsInArray {
 
         const allTagObjects = valueOf(schemaPath.tags) || [];
 
-        const occurrences = allTagObjects.filter((tag) => tag.name === currentName).length;
+        const currentId = valueOf(tagObjPath.id);
+        const duplicateIndices = allTagObjects.flatMap((tag, index) =>
+          tag.name === currentName && tag.id !== currentId ? [index + 1] : [],
+        );
 
-        if (occurrences > 1 && currentName) {
+        if (duplicateIndices.length > 0 && currentName) {
           return {
             kind: 'duplicateName',
-            message: 'Tag already exists',
+            message: `Tag name already exists at item ${duplicateIndices.join(', ')}`,
           };
         }
 
