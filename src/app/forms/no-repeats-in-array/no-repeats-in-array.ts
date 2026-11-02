@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { applyEach, form, FormField, required, validate } from '@angular/forms/signals';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -13,7 +13,11 @@ import { MatSelectModule } from '@angular/material/select';
           <mat-label>Item Name:</mat-label>
           <mat-select [formField]="item.name">
             @for (option of options; track option) {
-              <mat-option [value]="option">{{ option }}</mat-option>
+              <mat-option
+                [disabled]="option !== item.name().value() && unavailableOptions().has(option)"
+                [value]="option"
+                >{{ option }}</mat-option
+              >
             }
           </mat-select>
           @for (error of item.name().errors(); track error) {
@@ -43,6 +47,10 @@ export class NoRepeatsInArray {
       { id: '3', name: 'Angular' },
     ],
   });
+
+  protected unavailableOptions = computed(
+    () => new Set(this.itemsModel().tags.map((tag) => tag.name)),
+  );
 
   protected itemsForm = form(this.itemsModel, (schemaPath) => {
     // Iterate through array of forms
