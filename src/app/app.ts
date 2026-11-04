@@ -53,6 +53,15 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
             Material modernize examples
           </a>
         </li>
+        <li>
+          <a
+            ariaCurrentWhenActive="page"
+            routerLink="/password-game-clone"
+            routerLinkActive="active"
+          >
+            Password game clone
+          </a>
+        </li>
       </ul>
     </nav>
 

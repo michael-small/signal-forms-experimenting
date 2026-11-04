@@ -5,6 +5,7 @@ import { ComplexTopics } from './forms/complex-topics';
 import { LargeFormSplittingStrategies } from './large-form/large-form-splitting-strategies';
 import { ShowingErrorsConditions } from './forms/showing-errors-conditions/showing-errors-conditions';
 import { MaterialModernize } from './forms/material-modernize/material-modernize';
+import { PasswordGameClone } from './forms/password-game-clone/password-game-clone';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'custom-control' },
@@ -29,6 +30,11 @@ export const routes: Routes = [
     path: 'material-modernize',
     component: MaterialModernize,
     title: 'Material Modernize Examples',
+  },
+  {
+    path: 'password-game-clone',
+    component: PasswordGameClone,
+    title: 'Password Game Clone',
   },
   { path: '**', redirectTo: 'custom-control' },
 ];
