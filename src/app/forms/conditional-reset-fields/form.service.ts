@@ -40,6 +40,8 @@ export class FormService {
       // Signal forms `.reset()` only resets `dirty`/`touched`, not `value`.
       // So here you need to set the new value
       this.store.setFormModel(newFormValue);
+
+      console.log(newFormValue);
       // And here you are just resetting the `dirty`/`touched`
       this.resetFormFields(fieldToReset);
     },
@@ -85,7 +87,7 @@ export class FormService {
     newFormValue: FormModel;
     fieldToReset: 'numbers' | 'text' | null;
   } {
-    return this.#deriveResetState(newValue, oldValue, storeDBFields);
+    return this.#deriveResetState(oldValue, newValue, storeDBFields);
   }
 
   #deriveResetState(
