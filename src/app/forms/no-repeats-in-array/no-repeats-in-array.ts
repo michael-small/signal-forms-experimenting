@@ -7,6 +7,12 @@ import { MatSelectModule } from '@angular/material/select';
 @Component({
   selector: 'app-no-repeats-in-array',
   template: `
+    <p>
+      While disabling already chosen dropdown options prevents new values being duplicated, this
+      does not cover legacy data which did not used to have this restriction. While this problem
+      could have been solved in various ways, the clients I worked with just wanted form validation
+      to give warnings about duplicates for legacy data where there is duplicated values.
+    </p>
     <div>
       @for (item of itemsForm.tags; track $index) {
         <mat-form-field>

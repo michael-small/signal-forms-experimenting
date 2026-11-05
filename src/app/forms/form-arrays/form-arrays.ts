@@ -5,10 +5,11 @@ import { SubformB } from './subform-b';
 import { FormService } from './form.service';
 import { JsonPipe } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
+import { NoRepeatsInArray } from '../no-repeats-in-array/no-repeats-in-array';
 
 @Component({
   selector: 'app-form-arrays',
-  imports: [FormField, SubformA, SubformB, JsonPipe, MatTabsModule],
+  imports: [FormField, SubformA, SubformB, JsonPipe, MatTabsModule, NoRepeatsInArray],
   providers: [FormService],
   template: `
     <h2>Form Arrays</h2>
@@ -64,6 +65,10 @@ import { MatTabsModule } from '@angular/material/tabs';
 
         <pre>{{ formService.differingObjectsArrayForm().value() | json }}</pre>
         <pre>Errors: {{ formService.differingObjectsArrayForm().errorSummary() | json }}</pre>
+      </mat-tab>
+
+      <mat-tab label="Validation across array">
+        <app-no-repeats-in-array />
       </mat-tab>
     </mat-tab-group>
   `,
