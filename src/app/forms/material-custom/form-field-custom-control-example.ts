@@ -79,6 +79,13 @@ export class FormFieldCustomControlExample {
 @Component({
   selector: 'app-example-email-age-input',
   template: `
+    <p>
+      Note: this is a condensed down version from the documentation for Material. That said, there
+      is issues with the child being coupled directly to its own form. This is an option, but IMO
+      after experimenting in other projects, I wouldn't recommend it. This approach being used now
+      saves on needing to do some confusing boilerplate for errors to be shown, but IMO it has
+      issues with how FormValueControl should work in practice.
+    </p>
     <mat-form-field>
       <mat-label>Email</mat-label>
       <input matInput type="email" [formField]="emailAgeForm.email" />
