@@ -1,9 +1,7 @@
-import { Injectable, signal } from '@angular/core';
+import { Service, signal } from '@angular/core';
 import { form, minLength, required } from '@angular/forms/signals';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class FormService {
   private names = signal({
     first: '',

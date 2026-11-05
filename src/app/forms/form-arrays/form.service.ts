@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Service, signal } from '@angular/core';
 import { applyEach, form, hidden, required, SchemaPathTree } from '@angular/forms/signals';
 
 type DifferingObject = {
@@ -45,7 +45,7 @@ function ItemSchema(item: SchemaPathTree<DifferingObject>) {
   required(item.b.value, { message: 'Value for B is required' });
 }
 
-@Injectable()
+@Service({ autoProvided: false })
 export class FormService {
   private model = signal<{ items: DifferingObject[] }>({
     items: initialDifferingObjects,

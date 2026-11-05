@@ -1,6 +1,6 @@
 // Required subset of SWAPI schema for async validation example
 import { httpResource } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 
 // curl https://swapi.info/api/films/schema
 export type SWAPIStarWarsMovies = {
@@ -12,9 +12,7 @@ export type SWAPIStarWarsMovies = {
   [key: string]: unknown;
 };
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class SWAPIStore {
   public movies = httpResource<SWAPIStarWarsMovies[]>(() => 'https://swapi.info/api/films', {
     defaultValue: [],
