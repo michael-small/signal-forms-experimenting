@@ -1,86 +1,10 @@
 import { Component, inject, linkedSignal } from '@angular/core';
-import { patchState, signalStore, withMethods, withProps } from '@ngrx/signals';
-import { HttpClient } from '@angular/common/http';
-import { rxMutation, withResource } from '@ngrx-toolkit/core';
 import { FormsModule } from '@angular/forms';
 import { form, FormField } from '@angular/forms/signals';
-import { map } from 'rxjs';
-import { rxResource } from '@angular/core/rxjs-interop';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-
-type Todo = {
-  id: number;
-  title: string;
-  completed: boolean;
-  userId: number;
-};
+import { Todo, TodoStore } from './store';
 
 let currentId = 11;
-
-const TodoStore = signalStore(
-  { providedIn: 'root' },
-  withProps(() => ({
-    _http: inject(HttpClient),
-  })),
-  withResource(
-    (store) => {
-      return {
-        todos: rxResource({
-          stream: () => {
-            return store._http
-              .get<Todo[]>('https://jsonplaceholder.typicode.com/todos')
-              .pipe(map((todos) => todos.slice(0, 10)));
-          },
-          defaultValue: [],
-        }),
-      };
-    },
-    {
-      errorHandling: 'previous value',
-    },
-  ),
-  withMethods((store) => ({
-    addTodo: rxMutation({
-      operation(todo: Todo) {
-        return store._http.post<Todo>('https://jsonplaceholder.typicode.com/todos', todo);
-      },
-      onSuccess(todo) {
-        patchState(store, { todosValue: [...store.todosValue(), todo] });
-      },
-    }),
-    removeTodo: rxMutation({
-      operation(id: number) {
-        return store._http.delete<Todo>(`https://jsonplaceholder.typicode.com/todos/${id}`);
-      },
-      onSuccess(_removedTodo, id) {
-        patchState(store, {
-          todosValue: store.todosValue().filter((filteredTodo) => filteredTodo.id !== id),
-        });
-      },
-    }),
-    saveTodo: rxMutation({
-      operation(todo: Todo) {
-        return store._http.put<Todo>(`https://jsonplaceholder.typicode.com/todos/${todo.id}`, todo);
-      },
-      onSuccess(updatedTodo) {
-        patchState(store, {
-          todosValue: store
-            .todosValue()
-            .map((filteredTodo) =>
-              filteredTodo.id === updatedTodo.id ? updatedTodo : filteredTodo,
-            ),
-        });
-      },
-    }),
-    patchTodos: (updatedTodos: Todo[]) =>
-      patchState(store, {
-        todosValue: store.todosValue().map((todo) => {
-          const updatedTodo = updatedTodos.find((t) => t.id === todo.id);
-          return updatedTodo ? updatedTodo : todo;
-        }),
-      }),
-  })),
-);
 
 @Component({
   selector: 'app-full-crud',
@@ -122,7 +46,7 @@ const TodoStore = signalStore(
 export class FullCRUD {
   readonly #todoStore = inject(TodoStore);
 
-  readonly #todos = linkedSignal(() => this.#todoStore.todosValue(), {
+  readonly #todos = linkedSignal<Todo[]>(() => this.#todoStore.todosValue(), {
     set: (todos) => this.#todoStore.patchTodos(todos),
   });
 
