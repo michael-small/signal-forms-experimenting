@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { catchError, delay, firstValueFrom, of, switchMap, throwError } from 'rxjs';
 import { BillPayDomainModel } from './bill-pay.model';
 
@@ -18,9 +18,7 @@ export const defaultBillPayData: BillPayDomainModel = {
   },
 };
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class BillPayService {
   getCurrentBillingInfo() {
     const prefilledBankInfo: BillPayDomainModel = {
